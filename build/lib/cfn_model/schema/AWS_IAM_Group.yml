@@ -1,0 +1,24 @@
+---
+type: map
+mapping:
+  Type:
+    type: str
+    pattern: AWS::IAM::Group
+  Properties:
+    type: map
+    required: no
+    mapping:
+      ManagedPolicyArns:
+        type:   seq
+        required: no
+        sequence:
+          - type:   any
+      Policies:
+        type:   seq
+        required: no
+        sequence:
+          - type:   any
+      =:
+        type: any
+  =:
+    type: any

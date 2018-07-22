@@ -1,24 +1,24 @@
-cfn_validator
+cloudformation_validator
 =========================
 
 
 Features
 --------
-cfn_validator provides type checking and other base functionality out of the box and
+cloudformation_validator provides type checking and other base functionality out of the box and
 is designed to be non-blocking and easily extensible, allowing for custom
 validation. It has no dependencies and is thoroughly tested under Python 2.7, Python 3.3, Python 3.4,
 Python 3.5, Python 3.6.
 
 Funding
 -------
-cfn_validator is a open source, collaboratively funded project. If you run
-a business and are using cfn_validator in a revenue-generating product, it would
+cloudformation_validator is a open source, collaboratively funded project. If you run
+a business and are using cloudformation_validator in a revenue-generating product, it would
 make business sense to sponsor its development: it ensures the project that
 your product relies on stays healthy and actively maintained. Individual users
 are also welcome to make a recurring pledge or a one time donation if cfn-validator
 has helped you in your work or personal projects.
 
-Every single sign-up makes a significant impact towards making cfn_validator possible.
+Every single sign-up makes a significant impact towards making cloudformation_validator possible.
 
 Want Custom Rules and Support For Your Application
 ---------------------------------------------------
@@ -31,7 +31,7 @@ it added.
 Installation
 ------------
 
-cfn_validator is on PyPI so all you need is:
+cloudformation_validator is on PyPI so all you need is:
 
 .. code-block:: console
 
@@ -140,7 +140,7 @@ Programmatically call cfn-validator to analyze a file
 
 .. code-block:: console
 
-    from cfn_validator.ValidateUtility import ValidateUtility
+    from cloudformation_validator.ValidateUtility import ValidateUtility
 
     config_dict = {}
     config_dict['template_file'] = '/tmp/template.json'
@@ -169,7 +169,7 @@ I you get some errors and warnings in your out put, you can pass-in the flag to 
 
 .. code-block:: console
 
-    from cfn_validator.ValidateUtility import ValidateUtility
+    from cloudformation_validator.ValidateUtility import ValidateUtility
 
     config_dict = {}
     config_dict['suppress_errors'] = True
@@ -197,7 +197,7 @@ I you get some errors and warnings in your out put, you can pass-in the flag to 
 
 Writing your own rules
 
-    * Utilize the format for existing rules in the /cfn_validator/custom_rules directory
+    * Utilize the format for existing rules in the /cloudformation_validator/custom_rules directory
     * Places the files in a new directory
     * The __init__, rule_text, rule_type and rule_id methods should be amount the same, just change of the rule, the text for a failure, and the type to either 'VIOLATION::FAILING_VIOLATION' or VIOLATION::WARNNING'
     * Set the id to 'W' for warnings, and 'F' for failure.  Pick a number not utilized elsewhere...
@@ -258,6 +258,6 @@ I am just getting started on this, so any suggestions would be welcome.
 Copyright
 ---------
 
-cfn_validator is an open source project by Will Rubel <https://www.linkedin.com/in/will-rubel-03205b2a/>,
+cloudformation_validator is an open source project by Will Rubel <https://www.linkedin.com/in/will-rubel-03205b2a/>,
 that was ported from a ruby project by Stelligent.
 See the original LICENSE information <https://github.com/stelligent/cfn_nag/blob/master/LICENSE.md>.

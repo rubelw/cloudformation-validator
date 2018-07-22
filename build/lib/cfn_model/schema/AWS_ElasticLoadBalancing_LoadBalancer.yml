@@ -1,0 +1,18 @@
+---
+type: map
+mapping:
+  Type:
+    type: str
+    required: yes
+    pattern: AWS::ElasticLoadBalancing::LoadBalancer
+  Properties:
+    type: map
+    required: yes
+    mapping:
+      Listeners:
+        type:   any
+        required: yes
+      =:
+        type: any
+  =:
+    type: any
