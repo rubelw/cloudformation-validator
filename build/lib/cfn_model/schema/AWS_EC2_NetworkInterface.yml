@@ -1,0 +1,18 @@
+---
+type: map
+mapping:
+  Type:
+    type: str
+    required: yes
+    pattern: AWS::EC2::NetworkInterface
+  Properties:
+    type: map
+    required: yes
+    mapping:
+      SubnetId:
+        type: any
+        required: yes
+      =:
+        type: any
+  =:
+    type: any

@@ -1,0 +1,1110 @@
+versions pytest-3.5.1, py-1.5.4, python-3.6.5.final.0
+cwd=/Users/rubelwi/projects/github/cfn_nagger/test
+args=['--maxfail=2', '-rf', '-s', 'test_sns_policy.py', '--debug']
+
+  pytest_cmdline_main [hook]
+      config: <_pytest.config.Config object at 0x10c3c89e8>
+    pytest_plugin_registered [hook]
+        plugin: <Session 'cfn_nagger'>
+        manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+    finish pytest_plugin_registered --> [] [hook]
+    pytest_configure [hook]
+        config: <_pytest.config.Config object at 0x10c3c89e8>
+      pytest_plugin_registered [hook]
+          plugin: <_pytest.cacheprovider.LFPlugin object at 0x10d7400b8>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <_pytest.cacheprovider.NFPlugin object at 0x10d5b6748>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <_pytest.logging.LoggingPlugin object at 0x10d724ba8>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+    find_module called for: py._io [assertion]
+    find_module called for: py._io.terminalwriter [assertion]
+    find_module called for: termios [assertion]
+    find_module called for: fcntl [assertion]
+      pytest_plugin_registered [hook]
+          plugin: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <_pytest.config.Config object at 0x10c3c89e8>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.mark' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/mark/__init__.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.main' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/main.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.terminal' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/terminal.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.runner' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/runner.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.python' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/python.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.fixtures' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/fixtures.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.debugging' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/debugging.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.unittest' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/unittest.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.capture' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/capture.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.skipping' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/skipping.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.tmpdir' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/tmpdir.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.monkeypatch' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/monkeypatch.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.recwarn' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/recwarn.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.pastebin' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/pastebin.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.helpconfig' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/helpconfig.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.nose' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/nose.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.assertion' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/assertion/__init__.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.junitxml' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/junitxml.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.resultlog' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/resultlog.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.doctest' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/doctest.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.cacheprovider' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/cacheprovider.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.freeze_support' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/freeze_support.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.setuponly' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/setuponly.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.setupplan' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/setupplan.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.warnings' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/warnings.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.logging' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/logging.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module 'xdist.plugin' (<_pytest.assertion.rewrite.AssertionRewritingHook object at 0x10c4cc320>)>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module 'xdist.looponfail' (<_pytest.assertion.rewrite.AssertionRewritingHook object at 0x10c4cc320>)>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module 'pytest_pylint' (<_pytest.assertion.rewrite.AssertionRewritingHook object at 0x10c4cc320>)>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module 'pytest_forked' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/pytest_forked/__init__.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module 'pytest_flake8' (<_pytest.assertion.rewrite.AssertionRewritingHook object at 0x10c4cc320>)>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module 'pytest_cov.plugin' (<_pytest.assertion.rewrite.AssertionRewritingHook object at 0x10c4cc320>)>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <_pytest.capture.CaptureManager object at 0x10d71b320>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <Session 'cfn_nagger'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <_pytest.cacheprovider.LFPlugin object at 0x10d7400b8>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <_pytest.cacheprovider.NFPlugin object at 0x10d5b6748>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <_pytest.logging.LoggingPlugin object at 0x10d724ba8>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <_pytest.terminal.TerminalReporter object at 0x10d724b00>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+    finish pytest_configure --> [] [hook]
+    pytest_sessionstart [hook]
+        session: <Session 'cfn_nagger'>
+      pytest_plugin_registered [hook]
+          plugin: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <_pytest.config.Config object at 0x10c3c89e8>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.mark' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/mark/__init__.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.main' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/main.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.terminal' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/terminal.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.runner' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/runner.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.python' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/python.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.fixtures' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/fixtures.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.debugging' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/debugging.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.unittest' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/unittest.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.capture' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/capture.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.skipping' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/skipping.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.tmpdir' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/tmpdir.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.monkeypatch' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/monkeypatch.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.recwarn' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/recwarn.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.pastebin' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/pastebin.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.helpconfig' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/helpconfig.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.nose' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/nose.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.assertion' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/assertion/__init__.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.junitxml' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/junitxml.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.resultlog' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/resultlog.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.doctest' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/doctest.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.cacheprovider' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/cacheprovider.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.freeze_support' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/freeze_support.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.setuponly' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/setuponly.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.setupplan' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/setupplan.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.warnings' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/warnings.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module '_pytest.logging' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/logging.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module 'xdist.plugin' (<_pytest.assertion.rewrite.AssertionRewritingHook object at 0x10c4cc320>)>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module 'xdist.looponfail' (<_pytest.assertion.rewrite.AssertionRewritingHook object at 0x10c4cc320>)>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module 'pytest_pylint' (<_pytest.assertion.rewrite.AssertionRewritingHook object at 0x10c4cc320>)>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module 'pytest_forked' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/pytest_forked/__init__.py'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module 'pytest_flake8' (<_pytest.assertion.rewrite.AssertionRewritingHook object at 0x10c4cc320>)>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <module 'pytest_cov.plugin' (<_pytest.assertion.rewrite.AssertionRewritingHook object at 0x10c4cc320>)>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <_pytest.capture.CaptureManager object at 0x10d71b320>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <Session 'cfn_nagger'>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <_pytest.cacheprovider.LFPlugin object at 0x10d7400b8>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <_pytest.cacheprovider.NFPlugin object at 0x10d5b6748>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <_pytest.logging.LoggingPlugin object at 0x10d724ba8>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <_pytest.terminal.TerminalReporter object at 0x10d724b00>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_plugin_registered [hook]
+          plugin: <_pytest.fixtures.FixtureManager object at 0x10d74a748>
+          manager: <_pytest.config.PytestPluginManager object at 0x10ba334a8>
+      finish pytest_plugin_registered --> [] [hook]
+      pytest_report_header [hook]
+          config: <_pytest.config.Config object at 0x10c3c89e8>
+          startdir: /Users/rubelwi/projects/github/cfn_nagger/test
+      finish pytest_report_header --> [['rootdir: /Users/rubelwi/projects/github/cfn_nagger, inifile: pytest.ini', 'plugins: xdist-1.22.2, pylint-0.9.0, forked-0.2, flake8-1.0.1, cov-2.5.1'], ['using: pytest-3.5.1 pylib-1.5.4', 'setuptools registered plugins:', '  pytest-xdist-1.22.2 at /Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/xdist/plugin.py', '  pytest-xdist-1.22.2 at /Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/xdist/looponfail.py', '  pytest-pylint-0.9.0 at /Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/pytest_pylint.py', '  pytest-forked-0.2 at /Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/pytest_forked/__init__.py', '  pytest-flake8-1.0.1 at /Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/pytest_flake8.py', '  pytest-cov-2.5.1 at /Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/pytest_cov/plugin.py']] [hook]
+    finish pytest_sessionstart --> [] [hook]
+    pytest_collection [hook]
+        session: <Session 'cfn_nagger'>
+    perform_collect <Session 'cfn_nagger'> ['test_sns_policy.py'] [collection]
+        pytest_collectstart [hook]
+            collector: <Session 'cfn_nagger'>
+        finish pytest_collectstart --> [] [hook]
+        pytest_make_collect_report [hook]
+            collector: <Session 'cfn_nagger'>
+        processing argument /Users/rubelwi/projects/github/cfn_nagger/test/test_sns_policy.py [collection]
+            pytest_collect_file [hook]
+                path: /Users/rubelwi/projects/github/cfn_nagger/test/test_sns_policy.py
+                parent: <Session 'cfn_nagger'>
+              pytest_pycollect_makemodule [hook]
+                  path: /Users/rubelwi/projects/github/cfn_nagger/test/test_sns_policy.py
+                  parent: <Session 'cfn_nagger'>
+              finish pytest_pycollect_makemodule --> <Module 'test/test_sns_policy.py'> [hook]
+            finish pytest_collect_file --> [<Module 'test/test_sns_policy.py'>] [hook]
+          matchnodes [<Module 'test/test_sns_policy.py'>] [] [collection]
+            matchnodes finished ->  1 nodes [collection]
+        finish pytest_make_collect_report --> <CollectReport '' lenresult=1 outcome='passed'> [hook]
+        pytest_collectreport [hook]
+            report: <CollectReport '' lenresult=1 outcome='passed'>
+        finish pytest_collectreport --> [] [hook]
+    genitems <Module 'test/test_sns_policy.py'> [collection]
+      pytest_collectstart [hook]
+          collector: <Module 'test/test_sns_policy.py'>
+      finish pytest_collectstart --> [] [hook]
+      pytest_make_collect_report [hook]
+          collector: <Module 'test/test_sns_policy.py'>
+      find_module called for: test [assertion]
+      find_module called for: test.test_sns_policy [assertion]
+      matched test file (was specified on cmdline): '/Users/rubelwi/projects/github/cfn_nagger/test/test_sns_policy.py' [assertion]
+      found cached rewritten pyc for '/Users/rubelwi/projects/github/cfn_nagger/test/test_sns_policy.py' [assertion]
+      find_module called for: mock [assertion]
+      find_module called for: mock.mock [assertion]
+      find_module called for: pbr [assertion]
+      find_module called for: pbr.version [assertion]
+      find_module called for: cfn_nagger [assertion]
+      find_module called for: cfn_nagger.ValidateUtility [assertion]
+      find_module called for: cfn_model [assertion]
+      find_module called for: cfn_model.parser [assertion]
+      find_module called for: cfn_model.parser.CfnParser [assertion]
+      find_module called for: dill [assertion]
+      find_module called for: dill.info [assertion]
+      find_module called for: dill.dill [assertion]
+      find_module called for: gc [assertion]
+      find_module called for: _pyio [assertion]
+      find_module called for: cStringIO [assertion]
+      find_module called for: dill.settings [assertion]
+      find_module called for: dill.source [assertion]
+      find_module called for: dill.temp [assertion]
+      find_module called for: dill.detect [assertion]
+      find_module called for: dill.pointers [assertion]
+      find_module called for: dill.objtypes [assertion]
+      find_module called for: cfn_model.validator [assertion]
+      find_module called for: cfn_model.validator.CloudformationValidator [assertion]
+      find_module called for: jsonschema [assertion]
+      find_module called for: jsonschema.exceptions [assertion]
+      find_module called for: jsonschema._utils [assertion]
+      find_module called for: jsonschema.compat [assertion]
+      find_module called for: urllib.request [assertion]
+      find_module called for: http [assertion]
+      find_module called for: http.client [assertion]
+      find_module called for: ssl [assertion]
+      find_module called for: ipaddress [assertion]
+      find_module called for: _ssl [assertion]
+      find_module called for: urllib.error [assertion]
+      find_module called for: urllib.response [assertion]
+      find_module called for: _scproxy [assertion]
+      find_module called for: jsonschema._format [assertion]
+      find_module called for: rfc3987 [assertion]
+      find_module called for: strict_rfc3339 [assertion]
+      find_module called for: isodate [assertion]
+      find_module called for: webcolors [assertion]
+      find_module called for: jsonschema.validators [assertion]
+      find_module called for: requests [assertion]
+      find_module called for: urllib3 [assertion]
+      find_module called for: urllib3.connectionpool [assertion]
+      find_module called for: urllib3.exceptions [assertion]
+      find_module called for: urllib3.packages [assertion]
+      find_module called for: urllib3.packages.ssl_match_hostname [assertion]
+      find_module called for: urllib3.packages.six [assertion]
+      find_module called for: urllib3.packages.six.moves [assertion]
+      find_module called for: urllib3.packages.six.moves.http_client [assertion]
+      find_module called for: queue [assertion]
+      find_module called for: urllib3.connection [assertion]
+      find_module called for: urllib3.util [assertion]
+      find_module called for: urllib3.util.connection [assertion]
+      find_module called for: urllib3.util.wait [assertion]
+      find_module called for: urllib3.util.request [assertion]
+      find_module called for: urllib3.util.response [assertion]
+      find_module called for: urllib3.util.ssl_ [assertion]
+      find_module called for: hmac [assertion]
+      find_module called for: urllib3.util.timeout [assertion]
+      find_module called for: urllib3.util.retry [assertion]
+      find_module called for: urllib3.util.url [assertion]
+      find_module called for: urllib3._collections [assertion]
+      find_module called for: urllib3.request [assertion]
+      find_module called for: urllib3.filepost [assertion]
+      find_module called for: urllib3.fields [assertion]
+      find_module called for: mimetypes [assertion]
+      find_module called for: winreg [assertion]
+      find_module called for: urllib3.packages.six.moves.urllib [assertion]
+      find_module called for: urllib3.packages.six.moves.urllib.parse [assertion]
+      find_module called for: urllib3.response [assertion]
+      find_module called for: urllib3.util.queue [assertion]
+      find_module called for: urllib3.poolmanager [assertion]
+      find_module called for: chardet [assertion]
+      find_module called for: chardet.compat [assertion]
+      find_module called for: chardet.universaldetector [assertion]
+      find_module called for: chardet.charsetgroupprober [assertion]
+      find_module called for: chardet.enums [assertion]
+      find_module called for: chardet.charsetprober [assertion]
+      find_module called for: chardet.escprober [assertion]
+      find_module called for: chardet.codingstatemachine [assertion]
+      find_module called for: chardet.escsm [assertion]
+      find_module called for: chardet.latin1prober [assertion]
+      find_module called for: chardet.mbcsgroupprober [assertion]
+      find_module called for: chardet.utf8prober [assertion]
+      find_module called for: chardet.mbcssm [assertion]
+      find_module called for: chardet.sjisprober [assertion]
+      find_module called for: chardet.mbcharsetprober [assertion]
+      find_module called for: chardet.chardistribution [assertion]
+      find_module called for: chardet.euctwfreq [assertion]
+      find_module called for: chardet.euckrfreq [assertion]
+      find_module called for: chardet.gb2312freq [assertion]
+      find_module called for: chardet.big5freq [assertion]
+      find_module called for: chardet.jisfreq [assertion]
+      find_module called for: chardet.jpcntx [assertion]
+      find_module called for: chardet.eucjpprober [assertion]
+      find_module called for: chardet.gb2312prober [assertion]
+      find_module called for: chardet.euckrprober [assertion]
+      find_module called for: chardet.cp949prober [assertion]
+      find_module called for: chardet.big5prober [assertion]
+      find_module called for: chardet.euctwprober [assertion]
+      find_module called for: chardet.sbcsgroupprober [assertion]
+      find_module called for: chardet.sbcharsetprober [assertion]
+      find_module called for: chardet.langcyrillicmodel [assertion]
+      find_module called for: chardet.langgreekmodel [assertion]
+      find_module called for: chardet.langbulgarianmodel [assertion]
+      find_module called for: chardet.langthaimodel [assertion]
+      find_module called for: chardet.langhebrewmodel [assertion]
+      find_module called for: chardet.hebrewprober [assertion]
+      find_module called for: chardet.langturkishmodel [assertion]
+      find_module called for: chardet.version [assertion]
+      find_module called for: requests.exceptions [assertion]
+      find_module called for: urllib3.contrib [assertion]
+      find_module called for: urllib3.contrib.pyopenssl [assertion]
+      find_module called for: OpenSSL [assertion]
+      find_module called for: OpenSSL.crypto [assertion]
+      find_module called for: cryptography [assertion]
+      find_module called for: cryptography.__about__ [assertion]
+      find_module called for: cryptography.x509 [assertion]
+      find_module called for: cryptography.x509.certificate_transparency [assertion]
+      find_module called for: cryptography.x509.base [assertion]
+      find_module called for: cryptography.utils [assertion]
+      find_module called for: cryptography.hazmat [assertion]
+      find_module called for: cryptography.hazmat.primitives [assertion]
+      find_module called for: cryptography.hazmat.primitives.asymmetric [assertion]
+      find_module called for: cryptography.hazmat.primitives.asymmetric.dsa [assertion]
+      find_module called for: cryptography.hazmat.primitives.asymmetric.ec [assertion]
+      find_module called for: cryptography.hazmat.primitives.asymmetric.rsa [assertion]
+      find_module called for: cryptography.exceptions [assertion]
+      find_module called for: cryptography.hazmat.backends [assertion]
+      find_module called for: cryptography.hazmat.backends.interfaces [assertion]
+      find_module called for: cryptography.x509.extensions [assertion]
+      find_module called for: asn1crypto [assertion]
+      find_module called for: asn1crypto.version [assertion]
+      find_module called for: asn1crypto.keys [assertion]
+      find_module called for: asn1crypto._elliptic_curve [assertion]
+      find_module called for: asn1crypto._int [assertion]
+      find_module called for: asn1crypto.util [assertion]
+      find_module called for: asn1crypto._errors [assertion]
+      find_module called for: asn1crypto._iri [assertion]
+      find_module called for: encodings.idna [assertion]
+      find_module called for: stringprep [assertion]
+      find_module called for: unicodedata [assertion]
+      find_module called for: asn1crypto._types [assertion]
+      find_module called for: asn1crypto._ordereddict [assertion]
+      find_module called for: asn1crypto._ffi [assertion]
+      find_module called for: asn1crypto._perf [assertion]
+      find_module called for: asn1crypto._perf._big_num_ctypes [assertion]
+      find_module called for: asn1crypto.algos [assertion]
+      find_module called for: asn1crypto.core [assertion]
+      find_module called for: asn1crypto._teletex_codec [assertion]
+      find_module called for: asn1crypto.parser [assertion]
+      find_module called for: cryptography.hazmat.primitives.constant_time [assertion]
+      find_module called for: cryptography.hazmat.bindings [assertion]
+      find_module called for: cryptography.hazmat.bindings._constant_time [assertion]
+      find_module called for: _cffi_backend [assertion]
+      find_module called for: cryptography.hazmat.primitives.serialization [assertion]
+      find_module called for: cryptography.x509.general_name [assertion]
+      find_module called for: idna [assertion]
+      find_module called for: idna.package_data [assertion]
+      find_module called for: idna.core [assertion]
+      find_module called for: idna.idnadata [assertion]
+      find_module called for: idna.intranges [assertion]
+      find_module called for: cryptography.x509.name [assertion]
+      find_module called for: cryptography.x509.oid [assertion]
+      find_module called for: cryptography.hazmat.primitives.hashes [assertion]
+      find_module called for: OpenSSL._util [assertion]
+      find_module called for: cryptography.hazmat.bindings.openssl [assertion]
+      find_module called for: cryptography.hazmat.bindings.openssl.binding [assertion]
+      find_module called for: cryptography.hazmat.bindings._openssl [assertion]
+      find_module called for: cryptography.hazmat.bindings.openssl._conditional [assertion]
+      find_module called for: OpenSSL.SSL [assertion]
+      find_module called for: OpenSSL.version [assertion]
+      find_module called for: cryptography.hazmat.backends.openssl [assertion]
+      find_module called for: cryptography.hazmat.backends.openssl.backend [assertion]
+      find_module called for: cryptography.hazmat.backends.openssl.aead [assertion]
+      find_module called for: cryptography.hazmat.backends.openssl.ciphers [assertion]
+      find_module called for: cryptography.hazmat.primitives.ciphers [assertion]
+      find_module called for: cryptography.hazmat.primitives.ciphers.base [assertion]
+      find_module called for: cryptography.hazmat.primitives.ciphers.modes [assertion]
+      find_module called for: cryptography.hazmat.backends.openssl.cmac [assertion]
+      find_module called for: cryptography.hazmat.primitives.mac [assertion]
+      find_module called for: cryptography.hazmat.backends.openssl.decode_asn1 [assertion]
+      find_module called for: cryptography.hazmat.backends.openssl.dh [assertion]
+      find_module called for: cryptography.hazmat.primitives.asymmetric.dh [assertion]
+      find_module called for: cryptography.hazmat.backends.openssl.dsa [assertion]
+      find_module called for: cryptography.hazmat.backends.openssl.utils [assertion]
+      find_module called for: cryptography.hazmat.primitives.asymmetric.utils [assertion]
+      find_module called for: cryptography.hazmat.backends.openssl.ec [assertion]
+      find_module called for: cryptography.hazmat.backends.openssl.encode_asn1 [assertion]
+      find_module called for: cryptography.hazmat.backends.openssl.hashes [assertion]
+      find_module called for: cryptography.hazmat.backends.openssl.hmac [assertion]
+      find_module called for: cryptography.hazmat.backends.openssl.rsa [assertion]
+      find_module called for: cryptography.hazmat.primitives.asymmetric.padding [assertion]
+      find_module called for: cryptography.hazmat.backends.openssl.x25519 [assertion]
+      find_module called for: cryptography.hazmat.primitives.asymmetric.x25519 [assertion]
+      find_module called for: cryptography.hazmat.backends.openssl.x509 [assertion]
+      find_module called for: cryptography.hazmat.primitives.ciphers.algorithms [assertion]
+      find_module called for: cryptography.hazmat.primitives.kdf [assertion]
+      find_module called for: cryptography.hazmat.primitives.kdf.scrypt [assertion]
+      find_module called for: cryptography.x509.UnsupportedExtension [assertion]
+      find_module called for: urllib3.packages.backports [assertion]
+      find_module called for: urllib3.packages.backports.makefile [assertion]
+      find_module called for: requests.__version__ [assertion]
+      find_module called for: requests.utils [assertion]
+      find_module called for: requests.certs [assertion]
+      find_module called for: certifi [assertion]
+      find_module called for: certifi.core [assertion]
+      find_module called for: requests._internal_utils [assertion]
+      find_module called for: requests.compat [assertion]
+      find_module called for: simplejson [assertion]
+      find_module called for: simplejson.errors [assertion]
+      find_module called for: simplejson.raw_json [assertion]
+      find_module called for: simplejson.decoder [assertion]
+      find_module called for: simplejson.compat [assertion]
+      find_module called for: simplejson.scanner [assertion]
+      find_module called for: simplejson._speedups [assertion]
+      find_module called for: simplejson.encoder [assertion]
+      find_module called for: http.cookiejar [assertion]
+      find_module called for: http.cookies [assertion]
+      find_module called for: requests.cookies [assertion]
+      find_module called for: requests.structures [assertion]
+      find_module called for: requests.packages [assertion]
+      find_module called for: requests.models [assertion]
+      find_module called for: requests.hooks [assertion]
+      find_module called for: requests.auth [assertion]
+      find_module called for: requests.status_codes [assertion]
+      find_module called for: requests.api [assertion]
+      find_module called for: requests.sessions [assertion]
+      find_module called for: requests.adapters [assertion]
+      find_module called for: urllib3.contrib.socks [assertion]
+      find_module called for: socks [assertion]
+      find_module called for: jsonschema._validators [assertion]
+      find_module called for: jsonschema._version [assertion]
+      find_module called for: pykwalify [assertion]
+      find_module called for: logging.config [assertion]
+      find_module called for: logging.handlers [assertion]
+      find_module called for: socketserver [assertion]
+      find_module called for: pykwalify.core [assertion]
+      find_module called for: pykwalify.compat [assertion]
+      find_module called for: ruamel [assertion]
+      find_module called for: yaml [assertion]
+      find_module called for: yaml.error [assertion]
+      find_module called for: yaml.tokens [assertion]
+      find_module called for: yaml.events [assertion]
+      find_module called for: yaml.nodes [assertion]
+      find_module called for: yaml.loader [assertion]
+      find_module called for: yaml.reader [assertion]
+      find_module called for: yaml.scanner [assertion]
+      find_module called for: yaml.parser [assertion]
+      find_module called for: yaml.composer [assertion]
+      find_module called for: yaml.constructor [assertion]
+      find_module called for: yaml.resolver [assertion]
+      find_module called for: yaml.dumper [assertion]
+      find_module called for: yaml.emitter [assertion]
+      find_module called for: yaml.serializer [assertion]
+      find_module called for: yaml.representer [assertion]
+      find_module called for: yaml.cyaml [assertion]
+      find_module called for: _yaml [assertion]
+      find_module called for: pykwalify.errors [assertion]
+      find_module called for: pykwalify.rule [assertion]
+      find_module called for: pykwalify.types [assertion]
+      find_module called for: dateutil [assertion]
+      find_module called for: dateutil._version [assertion]
+      find_module called for: dateutil.parser [assertion]
+      find_module called for: dateutil.parser._parser [assertion]
+      find_module called for: dateutil.relativedelta [assertion]
+      find_module called for: dateutil._common [assertion]
+      find_module called for: dateutil.tz [assertion]
+      find_module called for: dateutil.tz.tz [assertion]
+      find_module called for: dateutil.tz._common [assertion]
+      find_module called for: dateutil.tz._factories [assertion]
+      find_module called for: dateutil.tz.win [assertion]
+      find_module called for: six.moves.winreg [assertion]
+      find_module called for: dateutil.parser.isoparser [assertion]
+      find_module called for: cfn_model.validator.SchemaGenerator [assertion]
+      find_module called for: cfn_model.validator.ResourceTypeValidator [assertion]
+      find_module called for: cfn_model.parser.ParserError [assertion]
+      find_module called for: cfn_model.parser.Error [assertion]
+      find_module called for: schema [assertion]
+      find_module called for: cfn_model.parser.TransformRegistry [assertion]
+      find_module called for: cfn_model.transforms [assertion]
+      find_module called for: cfn_model.transforms.Serverless [assertion]
+      find_module called for: cfn_model.validator.ReferenceValidator [assertion]
+      find_module called for: cfn_model.model [assertion]
+      find_module called for: cfn_model.model.CfnModel [assertion]
+      find_module called for: cfn_model.model.References [assertion]
+      find_module called for: cfn_model.model.IAMManagedPolicy [assertion]
+      find_module called for: cfn_model.model.ModelElement [assertion]
+      find_module called for: cfn_model.model.IAMRole [assertion]
+      find_module called for: cfn_model.model.IAMUser [assertion]
+      find_module called for: cfn_model.model.IAMGroup [assertion]
+      find_module called for: cfn_model.model.IAMPolicy [assertion]
+      find_module called for: cfn_model.model.EC2Instance [assertion]
+      find_module called for: cfn_model.model.EC2SecurityGroup [assertion]
+      find_module called for: cfn_model.model.EC2SecurityGroupEgress [assertion]
+      find_module called for: cfn_model.model.EC2SecurityGroupIngress [assertion]
+      find_module called for: cfn_model.model.ElasticLoadBalancingLoadBalancer [assertion]
+      find_module called for: cfn_model.model.ElasticLoadBalancingV2LoadBalancer [assertion]
+      find_module called for: cfn_model.model.S3BucketPolicy [assertion]
+      find_module called for: cfn_model.model.SNSTopicPolicy [assertion]
+      find_module called for: cfn_model.model.SQSQueuePolicy [assertion]
+      find_module called for: cfn_model.model.Parameter [assertion]
+      find_module called for: cfn_model.parser.ParserRegistry [assertion]
+      find_module called for: cfn_model.parser.SecurityGroupParser [assertion]
+      find_module called for: cfn_model.parser.Ec2NetworkInterfaceParser [assertion]
+      find_module called for: cfn_model.parser.Ec2InstanceParser [assertion]
+      find_module called for: cfn_model.parser.LoadBalancerParser [assertion]
+      find_module called for: cfn_model.parser.LoadBalancerV2Parser [assertion]
+      find_module called for: cfn_model.parser.IamGroupParser [assertion]
+      find_module called for: cfn_model.model.Policy [assertion]
+      find_module called for: cfn_model.parser.PolicyDocumentParser [assertion]
+      find_module called for: cfn_model.model.PolicyDocument [assertion]
+      find_module called for: cfn_model.model.Statement [assertion]
+      find_module called for: cfn_model.model.Principal [assertion]
+      find_module called for: cfn_model.parser.IamUserParser [assertion]
+      find_module called for: cfn_model.parser.IamRoleParser [assertion]
+      find_module called for: cfn_model.parser.WithPolicyDocumentParser [assertion]
+      find_module called for: cfn_nagger.CustomRuleLoader [assertion]
+      find_module called for: cfn_nagger.RuleRegistry [assertion]
+      find_module called for: cfn_nagger.RuleDefinition [assertion]
+      find_module called for: cfn_nagger.custom_rules [assertion]
+      find_module called for: cfn_nagger.custom_rules.IamRoleWildcardResourceOnPermissionsPolicyRule [assertion]
+      find_module called for: cfn_nagger.Violation [assertion]
+      find_module called for: cfn_nagger.custom_rules.BaseRule [assertion]
+      find_module called for: cfn_nagger.ProfileLoader [assertion]
+      find_module called for: cfn_nagger.Profile [assertion]
+      find_module called for: cfn_nagger.TemplateDiscovery [assertion]
+      find_module called for: cfn_nagger.result_views [assertion]
+      find_module called for: cfn_nagger.result_views.JsonResults [assertion]
+      find_module called for: cfn_nagger.result_views.SimpleStdoutResults [assertion]
+        pytest_pycollect_makeitem [hook]
+            collector: <Module 'test/test_sns_policy.py'>
+            name: __name__
+            obj: test.test_sns_policy
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            collector: <Module 'test/test_sns_policy.py'>
+            name: __doc__
+            obj: None
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            collector: <Module 'test/test_sns_policy.py'>
+            name: __package__
+            obj: test
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            collector: <Module 'test/test_sns_policy.py'>
+            name: __loader__
+            obj: <_pytest.assertion.rewrite.AssertionRewritingHook object at 0x10c4cc320>
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            collector: <Module 'test/test_sns_policy.py'>
+            name: __spec__
+            obj: ModuleSpec(name='test.test_sns_policy', loader=<_pytest.assertion.rewrite.AssertionRewritingHook object at 0x10c4cc320>)
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            collector: <Module 'test/test_sns_policy.py'>
+            name: __file__
+            obj: /Users/rubelwi/projects/github/cfn_nagger/test/test_sns_policy.py
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            collector: <Module 'test/test_sns_policy.py'>
+            name: __cached__
+            obj: /Users/rubelwi/projects/github/cfn_nagger/test/__pycache__/test_sns_policy.cpython-36-PYTEST.pyc
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            collector: <Module 'test/test_sns_policy.py'>
+            name: __builtins__
+            obj: {'__name__': 'builtins', '__doc__': "Built-in functions, exceptions, and other objects.\n\nNoteworthy: None is the `nil' object; Ellipsis represents `...' in slices.", '__package__': '', '__loader__': <class '_frozen_importlib.BuiltinImporter'>, '__spec__': ModuleSpec(name='builtins', loader=<class '_frozen_importlib.BuiltinImporter'>), '__build_class__': <built-in function __build_class__>, '__import__': <built-in function __import__>, 'abs': <built-in function abs>, 'all': <built-in function all>, 'any': <built-in function any>, 'ascii': <built-in function ascii>, 'bin': <built-in function bin>, 'callable': <built-in function callable>, 'chr': <built-in function chr>, 'compile': <built-in function compile>, 'delattr': <built-in function delattr>, 'dir': <built-in function dir>, 'divmod': <built-in function divmod>, 'eval': <built-in function eval>, 'exec': <built-in function exec>, 'format': <built-in function format>, 'getattr': <built-in function getattr>, 'globals': <built-in function globals>, 'hasattr': <built-in function hasattr>, 'hash': <built-in function hash>, 'hex': <built-in function hex>, 'id': <built-in function id>, 'input': <built-in function input>, 'isinstance': <built-in function isinstance>, 'issubclass': <built-in function issubclass>, 'iter': <built-in function iter>, 'len': <built-in function len>, 'locals': <built-in function locals>, 'max': <built-in function max>, 'min': <built-in function min>, 'next': <built-in function next>, 'oct': <built-in function oct>, 'ord': <built-in function ord>, 'pow': <built-in function pow>, 'print': <built-in function print>, 'repr': <built-in function repr>, 'round': <built-in function round>, 'setattr': <built-in function setattr>, 'sorted': <built-in function sorted>, 'sum': <built-in function sum>, 'vars': <built-in function vars>, 'None': None, 'Ellipsis': Ellipsis, 'NotImplemented': NotImplemented, 'False': False, 'True': True, 'bool': <class 'bool'>, 'memoryview': <class 'memoryview'>, 'bytearray': <class 'bytearray'>, 'bytes': <class 'bytes'>, 'classmethod': <class 'classmethod'>, 'complex': <class 'complex'>, 'dict': <class 'dict'>, 'enumerate': <class 'enumerate'>, 'filter': <class 'filter'>, 'float': <class 'float'>, 'frozenset': <class 'frozenset'>, 'property': <class 'property'>, 'int': <class 'int'>, 'list': <class 'list'>, 'map': <class 'map'>, 'object': <class 'object'>, 'range': <class 'range'>, 'reversed': <class 'reversed'>, 'set': <class 'set'>, 'slice': <class 'slice'>, 'staticmethod': <class 'staticmethod'>, 'str': <class 'str'>, 'super': <class 'super'>, 'tuple': <class 'tuple'>, 'type': <class 'type'>, 'zip': <class 'zip'>, '__debug__': True, 'BaseException': <class 'BaseException'>, 'Exception': <class 'Exception'>, 'TypeError': <class 'TypeError'>, 'StopAsyncIteration': <class 'StopAsyncIteration'>, 'StopIteration': <class 'StopIteration'>, 'GeneratorExit': <class 'GeneratorExit'>, 'SystemExit': <class 'SystemExit'>, 'KeyboardInterrupt': <class 'KeyboardInterrupt'>, 'ImportError': <class 'ImportError'>, 'ModuleNotFoundError': <class 'ModuleNotFoundError'>, 'OSError': <class 'OSError'>, 'EnvironmentError': <class 'OSError'>, 'IOError': <class 'OSError'>, 'EOFError': <class 'EOFError'>, 'RuntimeError': <class 'RuntimeError'>, 'RecursionError': <class 'RecursionError'>, 'NotImplementedError': <class 'NotImplementedError'>, 'NameError': <class 'NameError'>, 'UnboundLocalError': <class 'UnboundLocalError'>, 'AttributeError': <class 'AttributeError'>, 'SyntaxError': <class 'SyntaxError'>, 'IndentationError': <class 'IndentationError'>, 'TabError': <class 'TabError'>, 'LookupError': <class 'LookupError'>, 'IndexError': <class 'IndexError'>, 'KeyError': <class 'KeyError'>, 'ValueError': <class 'ValueError'>, 'UnicodeError': <class 'UnicodeError'>, 'UnicodeEncodeError': <class 'UnicodeEncodeError'>, 'UnicodeDecodeError': <class 'UnicodeDecodeError'>, 'UnicodeTranslateError': <class 'UnicodeTranslateError'>, 'AssertionError': <class 'AssertionError'>, 'ArithmeticError': <class 'ArithmeticError'>, 'FloatingPointError': <class 'FloatingPointError'>, 'OverflowError': <class 'OverflowError'>, 'ZeroDivisionError': <class 'ZeroDivisionError'>, 'SystemError': <class 'SystemError'>, 'ReferenceError': <class 'ReferenceError'>, 'BufferError': <class 'BufferError'>, 'MemoryError': <class 'MemoryError'>, 'Warning': <class 'Warning'>, 'UserWarning': <class 'UserWarning'>, 'DeprecationWarning': <class 'DeprecationWarning'>, 'PendingDeprecationWarning': <class 'PendingDeprecationWarning'>, 'SyntaxWarning': <class 'SyntaxWarning'>, 'RuntimeWarning': <class 'RuntimeWarning'>, 'FutureWarning': <class 'FutureWarning'>, 'ImportWarning': <class 'ImportWarning'>, 'UnicodeWarning': <class 'UnicodeWarning'>, 'BytesWarning': <class 'BytesWarning'>, 'ResourceWarning': <class 'ResourceWarning'>, 'ConnectionError': <class 'ConnectionError'>, 'BlockingIOError': <class 'BlockingIOError'>, 'BrokenPipeError': <class 'BrokenPipeError'>, 'ChildProcessError': <class 'ChildProcessError'>, 'ConnectionAbortedError': <class 'ConnectionAbortedError'>, 'ConnectionRefusedError': <class 'ConnectionRefusedError'>, 'ConnectionResetError': <class 'ConnectionResetError'>, 'FileExistsError': <class 'FileExistsError'>, 'FileNotFoundError': <class 'FileNotFoundError'>, 'IsADirectoryError': <class 'IsADirectoryError'>, 'NotADirectoryError': <class 'NotADirectoryError'>, 'InterruptedError': <class 'InterruptedError'>, 'PermissionError': <class 'PermissionError'>, 'ProcessLookupError': <class 'ProcessLookupError'>, 'TimeoutError': <class 'TimeoutError'>, 'open': <built-in function open>, 'quit': Use quit() or Ctrl-D (i.e. EOF) to exit, 'exit': Use exit() or Ctrl-D (i.e. EOF) to exit, 'copyright': Copyright (c) 2001-2018 Python Software Foundation.
+All Rights Reserved.
+
+Copyright (c) 2000 BeOpen.com.
+All Rights Reserved.
+
+Copyright (c) 1995-2001 Corporation for National Research Initiatives.
+All Rights Reserved.
+
+Copyright (c) 1991-1995 Stichting Mathematisch Centrum, Amsterdam.
+All Rights Reserved., 'credits':     Thanks to CWI, CNRI, BeOpen.com, Zope Corporation and a cast of thousands
+    for supporting Python development.  See www.python.org for more information., 'license': See http://www.python.org/3.6/license.html, 'help': Type help() for interactive help, or help(object) for help about object.}
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            collector: <Module 'test/test_sns_policy.py'>
+            name: @py_builtins
+            obj: <module 'builtins' (built-in)>
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            collector: <Module 'test/test_sns_policy.py'>
+            name: @pytest_ar
+            obj: <module '_pytest.assertion.rewrite' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/site-packages/_pytest/assertion/rewrite.py'>
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            collector: <Module 'test/test_sns_policy.py'>
+            name: os
+            obj: <module 'os' from '/Users/rubelwi/virtualenvs/new_python3/bin/../lib/python3.6/os.py'>
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            collector: <Module 'test/test_sns_policy.py'>
+            name: unittest
+            obj: <module 'unittest' from '/usr/local/Cellar/python/3.6.5/Frameworks/Python.framework/Versions/3.6/lib/python3.6/unittest/__init__.py'>
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            collector: <Module 'test/test_sns_policy.py'>
+            name: copy
+            obj: <module 'copy' from '/Users/rubelwi/virtualenvs/new_python3/lib/python3.6/copy.py'>
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            collector: <Module 'test/test_sns_policy.py'>
+            name: MagicMock
+            obj: <class 'mock.mock.MagicMock'>
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            collector: <Module 'test/test_sns_policy.py'>
+            name: patch
+            obj: <function patch at 0x10dce4488>
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            collector: <Module 'test/test_sns_policy.py'>
+            name: class_to_test
+            obj: <class 'cfn_nagger.ValidateUtility.ValidateUtility'>
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            collector: <Module 'test/test_sns_policy.py'>
+            name: TestSnsPolicy
+            obj: <class 'test.test_sns_policy.TestSnsPolicy'>
+        finish pytest_pycollect_makeitem --> <UnitTestCase 'TestSnsPolicy'> [hook]
+        pytest_pycollect_makeitem [hook]
+            collector: <Module 'test/test_sns_policy.py'>
+            name: __repr__
+            obj: <slot wrapper '__repr__' of 'module' objects>
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            collector: <Module 'test/test_sns_policy.py'>
+            name: __getattribute__
+            obj: <slot wrapper '__getattribute__' of 'module' objects>
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            collector: <Module 'test/test_sns_policy.py'>
+            name: __setattr__
+            obj: <slot wrapper '__setattr__' of 'module' objects>
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            collector: <Module 'test/test_sns_policy.py'>
+            name: __delattr__
+            obj: <slot wrapper '__delattr__' of 'module' objects>
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            collector: <Module 'test/test_sns_policy.py'>
+            name: __init__
+            obj: <slot wrapper '__init__' of 'module' objects>
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            collector: <Module 'test/test_sns_policy.py'>
+            name: __new__
+            obj: <built-in method __new__ of type object at 0x10b2ee370>
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            collector: <Module 'test/test_sns_policy.py'>
+            name: __dir__
+            obj: <method '__dir__' of 'module' objects>
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            collector: <Module 'test/test_sns_policy.py'>
+            name: __dict__
+            obj: <member '__dict__' of 'module' objects>
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            collector: <Module 'test/test_sns_policy.py'>
+            name: __hash__
+            obj: <slot wrapper '__hash__' of 'object' objects>
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            collector: <Module 'test/test_sns_policy.py'>
+            name: __str__
+            obj: <slot wrapper '__str__' of 'object' objects>
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            collector: <Module 'test/test_sns_policy.py'>
+            name: __lt__
+            obj: <slot wrapper '__lt__' of 'object' objects>
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            collector: <Module 'test/test_sns_policy.py'>
+            name: __le__
+            obj: <slot wrapper '__le__' of 'object' objects>
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            collector: <Module 'test/test_sns_policy.py'>
+            name: __eq__
+            obj: <slot wrapper '__eq__' of 'object' objects>
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            collector: <Module 'test/test_sns_policy.py'>
+            name: __ne__
+            obj: <slot wrapper '__ne__' of 'object' objects>
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            collector: <Module 'test/test_sns_policy.py'>
+            name: __gt__
+            obj: <slot wrapper '__gt__' of 'object' objects>
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            collector: <Module 'test/test_sns_policy.py'>
+            name: __ge__
+            obj: <slot wrapper '__ge__' of 'object' objects>
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            collector: <Module 'test/test_sns_policy.py'>
+            name: __reduce_ex__
+            obj: <method '__reduce_ex__' of 'object' objects>
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            collector: <Module 'test/test_sns_policy.py'>
+            name: __reduce__
+            obj: <method '__reduce__' of 'object' objects>
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            collector: <Module 'test/test_sns_policy.py'>
+            name: __subclasshook__
+            obj: <method '__subclasshook__' of 'object' objects>
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            collector: <Module 'test/test_sns_policy.py'>
+            name: __init_subclass__
+            obj: <method '__init_subclass__' of 'object' objects>
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            collector: <Module 'test/test_sns_policy.py'>
+            name: __format__
+            obj: <method '__format__' of 'object' objects>
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            collector: <Module 'test/test_sns_policy.py'>
+            name: __sizeof__
+            obj: <method '__sizeof__' of 'object' objects>
+        finish pytest_pycollect_makeitem --> None [hook]
+        pytest_pycollect_makeitem [hook]
+            collector: <Module 'test/test_sns_policy.py'>
+            name: __class__
+            obj: <attribute '__class__' of 'object' objects>
+        finish pytest_pycollect_makeitem --> None [hook]
+      finish pytest_make_collect_report --> <CollectReport 'test/test_sns_policy.py' lenresult=1 outcome='passed'> [hook]
+    genitems <UnitTestCase 'TestSnsPolicy'> [collection]
+      pytest_collectstart [hook]
+          collector: <UnitTestCase 'TestSnsPolicy'>
+      finish pytest_collectstart --> [] [hook]
+      pytest_make_collect_report [hook]
+          collector: <UnitTestCase 'TestSnsPolicy'>
+      finish pytest_make_collect_report --> <CollectReport 'test/test_sns_policy.py::TestSnsPolicy' lenresult=1 outcome='passed'> [hook]
+    genitems <TestCaseFunction 'test_sns_policy'> [collection]
+      pytest_itemcollected [hook]
+          item: <TestCaseFunction 'test_sns_policy'>
+      finish pytest_itemcollected --> [] [hook]
+      pytest_collectreport [hook]
+          report: <CollectReport 'test/test_sns_policy.py::TestSnsPolicy' lenresult=1 outcome='passed'>
+      finish pytest_collectreport --> [] [hook]
+      pytest_collectreport [hook]
+          report: <CollectReport 'test/test_sns_policy.py' lenresult=1 outcome='passed'>
+      finish pytest_collectreport --> [] [hook]
+      pytest_collection_modifyitems [hook]
+          session: <Session 'cfn_nagger'>
+          config: <_pytest.config.Config object at 0x10c3c89e8>
+          items: [<TestCaseFunction 'test_sns_policy'>]
+      finish pytest_collection_modifyitems --> [] [hook]
+      pytest_collection_finish [hook]
+          session: <Session 'cfn_nagger'>
+        pytest_report_collectionfinish [hook]
+            config: <_pytest.config.Config object at 0x10c3c89e8>
+            startdir: /Users/rubelwi/projects/github/cfn_nagger/test
+            items: [<TestCaseFunction 'test_sns_policy'>]
+        finish pytest_report_collectionfinish --> [] [hook]
+      finish pytest_collection_finish --> [] [hook]
+    finish pytest_collection --> [<TestCaseFunction 'test_sns_policy'>] [hook]
+    pytest_runtestloop [hook]
+        session: <Session 'cfn_nagger'>
+      pytest_runtest_protocol [hook]
+          item: <TestCaseFunction 'test_sns_policy'>
+          nextitem: None
+        pytest_runtest_logstart [hook]
+            nodeid: test/test_sns_policy.py::TestSnsPolicy::test_sns_policy
+            location: ('test/test_sns_policy.py', 9, 'TestSnsPolicy.test_sns_policy')
+        find_module called for: py._io.capture [assertion]
+        finish pytest_runtest_logstart --> [] [hook]
+        pytest_runtest_setup [hook]
+            item: <TestCaseFunction 'test_sns_policy'>
+        finish pytest_runtest_setup --> [] [hook]
+        pytest_runtest_makereport [hook]
+            item: <TestCaseFunction 'test_sns_policy'>
+            call: <CallInfo when='setup' result: []>
+        finish pytest_runtest_makereport --> <TestReport 'test/test_sns_policy.py::TestSnsPolicy::test_sns_policy' when='setup' outcome='passed'> [hook]
+        pytest_runtest_logreport [hook]
+            report: <TestReport 'test/test_sns_policy.py::TestSnsPolicy::test_sns_policy' when='setup' outcome='passed'>
+          pytest_report_teststatus [hook]
+              report: <TestReport 'test/test_sns_policy.py::TestSnsPolicy::test_sns_policy' when='setup' outcome='passed'>
+          finish pytest_report_teststatus --> ('', '', '') [hook]
+        finish pytest_runtest_logreport --> [] [hook]
+        pytest_runtest_call [hook]
+            item: <TestCaseFunction 'test_sns_policy'>
+        find_module called for: cfn_nagger.custom_rules.RDSInstanceMasterUsernameRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.IamRoleNotPrincipalOnTrustPolicyRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.IamManagedPolicyNotResourceRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.ElasticLoadBalancerAccessLoggingRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.SecurityGroupIngressPortRangeRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.PolicyOnUserRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.IamPolicyWildcardActionRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.SecurityGroupIngressOpenToWorldRule [assertion]
+        find_module called for: cfn_nagger.IpAddr [assertion]
+        find_module called for: cfn_nagger.custom_rules.SecurityGroupEgressPortRangeRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.IamPolicyWildcardResourceRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.SqsQueuePolicyNotActionRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.RDSInstanceMasterUserPasswordRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.SqsQueuePolicyWildcardPrincipalRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.S3BucketPolicyNotPrincipalRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.IamPolicyNotResourceRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.IamManagedPolicyWildcardActionRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.SecurityGroupMissingEgressRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.CloudFrontDistributionAccessLoggingRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.S3BucketPolicyWildcardPrincipalRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.S3BucketPublicReadAclRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.UserHasInlinePolicyRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.SecurityGroupIngressCidrNon32Rule [assertion]
+        find_module called for: cfn_nagger.custom_rules.IamRoleNotResourceOnPermissionsPolicyRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.IamRoleWildcardActionOnPermissionsPolicyRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.SnsTopicPolicyNotPrincipalRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.S3BucketPublicReadWriteAclRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.SecurityGroupEgressOpenToWorldRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.IamManagedPolicyWildcardResourceRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.SqsQueuePolicyNotPrincipalRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.ManagedPolicyOnUserRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.IamPolicyNotActionRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.WafWebAclDefaultActionRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.IamRoleNotActionOnPermissionsPolicyRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.IamRoleWildcardActionOnTrustPolicyRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.SnsTopicPolicyWildcardPrincipalRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.S3BucketPolicyWildcardActionRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.CloudFormationAuthenticationRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.SqsQueuePolicyWildcardActionRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.LambdaPermissionWildcardPrincipalRule [assertion]
+        find_module called for: cfn_model.model.LambdaPrincipal [assertion]
+        find_module called for: cfn_nagger.custom_rules.LambdaPermissionInvokeFunctionActionRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.EbsVolumeHasSseRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.UserMissingGroupRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.IamManagedPolicyNotActionRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.IamRoleNotActionOnTrustPolicyRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.RDSInstancePubliclyAccessibleRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.S3BucketPolicyNotActionRule [assertion]
+        find_module called for: cfn_nagger.custom_rules.SnsTopicPolicyNotActionRule [assertion]
+        finish pytest_runtest_call --> [] [hook]
+        pytest_runtest_makereport [hook]
+            item: <TestCaseFunction 'test_sns_policy'>
+            call: <CallInfo when='call' result: []>
+        find_module called for: py._io.saferepr [assertion]
+        find_module called for: repr [assertion]
+        finish pytest_runtest_makereport --> <TestReport 'test/test_sns_policy.py::TestSnsPolicy::test_sns_policy' when='call' outcome='failed'> [hook]
+        pytest_runtest_logreport [hook]
+            report: <TestReport 'test/test_sns_policy.py::TestSnsPolicy::test_sns_policy' when='call' outcome='failed'>
+          pytest_report_teststatus [hook]
+              report: <TestReport 'test/test_sns_policy.py::TestSnsPolicy::test_sns_policy' when='call' outcome='failed'>
+          finish pytest_report_teststatus --> ('failed', 'F', 'FAILED') [hook]
+        finish pytest_runtest_logreport --> [] [hook]
+        pytest_exception_interact [hook]
+            node: <TestCaseFunction 'test_sns_policy'>
+            call: <CallInfo when='call' exception: Lists differ: [{'id[137 chars]ysnspolicy0', 'mysnspolicy1', 'mysnspolicy2', 'mysnspolicy3']}] != [{'id[137 chars]ysnspolicy2', 'mysnspolicy3']}]
+
+First differing element 0:
+{'id'[135 chars]mysnspolicy0', 'mysnspolicy1', 'mysnspolicy2', 'mysnspolicy3']}
+{'id'[135 chars]mysnspolicy2', 'mysnspolicy3']}
+
+  [{'id': 'F18',
+-   'logical_resource_ids': ['mysnspolicy0',
+?                                        ^
+
++   'logical_resource_ids': ['mysnspolicy2', 'mysnspolicy3'],
+?                                        ^  +++++++++++++++++
+
+-                            'mysnspolicy1',
+-                            'mysnspolicy2',
+-                            'mysnspolicy3'],
+    'message': 'SNS topic policy should not allow * principal',
+    'type': 'VIOLATION::FAILING_VIOLATION'}]>
+            report: <TestReport 'test/test_sns_policy.py::TestSnsPolicy::test_sns_policy' when='call' outcome='failed'>
+        finish pytest_exception_interact --> [] [hook]
+        pytest_runtest_teardown [hook]
+            item: <TestCaseFunction 'test_sns_policy'>
+            nextitem: None
+        finish pytest_runtest_teardown --> [] [hook]
+        pytest_runtest_makereport [hook]
+            item: <TestCaseFunction 'test_sns_policy'>
+            call: <CallInfo when='teardown' result: []>
+        finish pytest_runtest_makereport --> <TestReport 'test/test_sns_policy.py::TestSnsPolicy::test_sns_policy' when='teardown' outcome='passed'> [hook]
+        pytest_runtest_logreport [hook]
+            report: <TestReport 'test/test_sns_policy.py::TestSnsPolicy::test_sns_policy' when='teardown' outcome='passed'>
+          pytest_report_teststatus [hook]
+              report: <TestReport 'test/test_sns_policy.py::TestSnsPolicy::test_sns_policy' when='teardown' outcome='passed'>
+          finish pytest_report_teststatus --> ('', '', '') [hook]
+        finish pytest_runtest_logreport --> [] [hook]
+        pytest_runtest_logfinish [hook]
+            nodeid: test/test_sns_policy.py::TestSnsPolicy::test_sns_policy
+            location: ('test/test_sns_policy.py', 9, 'TestSnsPolicy.test_sns_policy')
+        finish pytest_runtest_logfinish --> [] [hook]
+      finish pytest_runtest_protocol --> True [hook]
+    finish pytest_runtestloop --> True [hook]
+    pytest_sessionfinish [hook]
+        session: <Session 'cfn_nagger'>
+        exitstatus: 1
+    cache-write cache/nodeids: ['test/test_sns_policy.py::TestSnsPolicy::test_sns_policy'] [cache]
+      pytest_terminal_summary [hook]
+          terminalreporter: <_pytest.terminal.TerminalReporter object at 0x10d724b00>
+          exitstatus: 1
+      finish pytest_terminal_summary --> [] [hook]
+    finish pytest_sessionfinish --> [] [hook]
+    pytest_unconfigure [hook]
+        config: <_pytest.config.Config object at 0x10c3c89e8>
+    finish pytest_unconfigure --> [] [hook]
+  finish [config:tmpdir]

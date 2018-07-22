@@ -1,0 +1,19 @@
+---
+type: map
+mapping:
+  Type:
+    type: str
+    required: yes
+    pattern: AWS::EC2::Instance
+  Properties:
+    type: map
+    required: yes
+    mapping:
+      ImageId:
+        type: any
+        required: yes
+
+      =:
+        type: any
+  =:
+    type: any
