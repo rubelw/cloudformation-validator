@@ -15,7 +15,7 @@ cfn_validator is a open source, collaboratively funded project. If you run
 a business and are using cfn_validator in a revenue-generating product, it would
 make business sense to sponsor its development: it ensures the project that
 your product relies on stays healthy and actively maintained. Individual users
-are also welcome to make a recurring pledge or a one time donation if cfn-nagger
+are also welcome to make a recurring pledge or a one time donation if cfn-validator
 has helped you in your work or personal projects.
 
 Every single sign-up makes a significant impact towards making cfn_validator possible.
@@ -35,7 +35,7 @@ cfn_validator is on PyPI so all you need is:
 
 .. code-block:: console
 
-    $ pip install cfn-nagger
+    $ pip install cfn-validator
 
 Testing
 -------
@@ -59,7 +59,7 @@ Listing Rules
 
 .. code-block:: console
 
-    $ cfn-nagger dump_rules
+    $ cfn-validator dump_rules
     ##################################
     ########## WARNINGS ##############
     ##################################
@@ -74,8 +74,8 @@ Getting help
 
 .. code-block:: console
 
-    $ cfn-nagger validate --help
-    Usage: cfn-nagger validate [OPTIONS]
+    $ cfn-validator validate --help
+    Usage: cfn-validator validate [OPTIONS]
 
       primary function for validating a template :param template_path: :param
       template_file: :param debug: :param rules_directory: :param profile_path:
@@ -108,7 +108,7 @@ Validate a file
 
 .. code-block:: console
 
-    $cfn-nagger validate -f cloudfront_distribution_without_logging.json
+    $cfn-validator validate -f cloudfront_distribution_without_logging.json
 
     Evaluating: cloudfront_distribution_without_logging.json
     [
@@ -132,11 +132,11 @@ Validate all files in a path
 
 .. code-block:: console
 
-    $cfn-nagger validate -f /projects
+    $cfn-validator validate -f /projects
     ...
 
 
-Programmatically call cfn-nagger to analyze a file
+Programmatically call cfn-validator to analyze a file
 
 .. code-block:: console
 
@@ -252,7 +252,7 @@ Source
 ---------
 
 I am just getting started on this, so any suggestions would be welcome.
-<https://github.com/rubelw/cfn-nagger>
+<https://github.com/rubelw/cfn-validator>
 
 
 Copyright
