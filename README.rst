@@ -252,8 +252,7 @@ Source
 ---------
 
 I am just getting started on this, so any suggestions would be welcome.
-<https://github.com/rubelw/cfn-validator>
-
+<https://github.com/rubelw/cloudformation-validator>
 
 Copyright
 ---------
