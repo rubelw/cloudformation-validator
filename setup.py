@@ -18,7 +18,7 @@ setup(
     name='cloudformation_validator',
     version=VERSION,
     description=DESCRIPTION,
-    url='https://github.com/rubelw/cfn-nagger',
+    url='https://github.com/rubelw/cloudformation-validator',
     author='Will Rubel',
     author_email='willrubel@gmail.com',
     long_description=LONG_DESCRIPTION,
