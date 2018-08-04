@@ -51,10 +51,10 @@ class ValidateUtility:
     _template = None
 
     def __init__(self, config_block):
-        '''
+        """
         Initialize ValidateUtility
         :param config_block: 
-        '''
+        """
         self.input_path = None
         self.template_file = None
         self.debug = False
@@ -99,10 +99,10 @@ class ValidateUtility:
 
 
     def validate(self):
-        '''
+        """
         Validate a directory or file
         :return: rendered results
-        '''
+        """
 
         if self.debug:
             print('ValidateUtility - validate'+lineno())
@@ -135,13 +135,13 @@ class ValidateUtility:
 
 
     def audit_aggregate_across_files_and_render_results(self,input_path=None, parameter_values_path=None, template_pattern=None):
-        '''
+        """
         Aggregate across files and render results
         :param input_path: 
         :param parameter_values_path: 
         :param template_pattern: 
         :return: 
-        '''
+        """
         if self.debug:
             print('ValidateUtility - audit_aggregate_across_files_and_render_results'+lineno())
 
@@ -153,13 +153,13 @@ class ValidateUtility:
         return aggregate_results
 
     def audit_aggregate_across_files(self,input_path=None, parameter_values_path=None, template_pattern=None):
-        '''
+        """
         Given a file or directory path, return aggregate results
         :param input_path: 
         :param parameter_values_path: 
         :param template_pattern: 
         :return: 
-        '''
+        """
         if self.debug:
             print('ValidateUtility - audit_aggregate_across_files'+lineno())
             print('input_path: '+str(input_path)+lineno())
@@ -266,12 +266,12 @@ class ValidateUtility:
         return aggregate_results
 
     def audit(self, cloudformation_string, parameter_values_string=None):
-        '''
+        """
         Audit files
         :param cloudformation_string: 
         :param parameter_values_string: 
         :return: 
-        '''
+        """
         if self.debug:
             print('ValidateUtility - audit'+lineno())
 
@@ -384,11 +384,11 @@ class ValidateUtility:
             return violations
 
     def filter_violations_by_profile(self, violations):
-        '''
+        """
         Filter the violation by profile
         :param violations: 
         :return: filtered violations
-        '''
+        """
         profile = None
 
         new_violations = []
@@ -444,11 +444,11 @@ class ValidateUtility:
 
 
     def _get_schemas(self, type):
-        '''
+        """
         Get the schemas
         :param type: 
         :return: 
-        '''
+        """
         if self.debug:
             print('ValidateUtility - _get_schemas'+lineno())
 
@@ -464,12 +464,12 @@ class ValidateUtility:
             return results
 
     def _check_structure(self, conf_structure, my_conf):
-        '''
+        """
         Check structure
         :param conf_structure: 
         :param my_conf: 
         :return: 
-        '''
+        """
         if self.debug:
             print('ValidateUtility - check structure'+lineno())
             print('type: '+str(type(conf_structure))+lineno())
@@ -498,11 +498,11 @@ class ValidateUtility:
         return True
 
     def _fix_JSON(self, json_message=None):
-        '''
+        """
         Fix JSON
         :param json_message: 
         :return: 
-        '''
+        """
         
         result = None
         
@@ -519,12 +519,12 @@ class ValidateUtility:
         return result
 
     def render_results(self, aggregate_results, output_format):
-        '''
+        """
         Render results
         :param aggregate_results: 
         :param output_format: 
         :return: rendered results
-        '''
+        """
 
         if self.debug:
             print('ValidateUtility - render_results'+lineno())
@@ -535,11 +535,11 @@ class ValidateUtility:
 
 
     def results_renderer(self, output_format='txt'):
-        '''
+        """
         Sets the format for the rendered results
         :param output_format: 
         :return: 
-        '''
+        """
 
         if self.debug:
             print('ValidateUtility - results_renderer'+lineno())
@@ -555,11 +555,11 @@ class ValidateUtility:
 
 
     def count_warnings(self, violations):
-        '''
+        """
         Counts the number of warnings
         :param violations: 
         :return: warning count
-        '''
+        """
         if self.debug:
             print('count warnings'+lineno())
 
@@ -581,11 +581,11 @@ class ValidateUtility:
         return count
 
     def count_failures(self, violations):
-        '''
+        """
         Count the number of failures
         :param violations: 
         :return: returns the number of failures
-        '''
+        """
         if self.debug:
             print('count failures'+lineno())
 

@@ -11,11 +11,11 @@ class IpAddr:
 
     @staticmethod
     def ip4_open(ingress, debug=False):
-        '''
+        """
         Whether ip4 is open to the world
         :param debug:
         :return: boolean
-        '''
+        """
         if debug:
             print('ip4_open'+lineno())
             print("\ningress: "+str(ingress)+lineno())
@@ -23,19 +23,18 @@ class IpAddr:
             if inspect.isclass(ingress):
                 print(str(vars(ingress)))
 
-
         if type(ingress)== type(dict()):
             if debug:
-              print("\ningress is a dict"+lineno())
+                print("\ningress is a dict"+lineno())
             if ingress['CidrIp'] == '0.0.0.0/0':
-              return True
+                return True
 
         elif type(ingress) == type(list()):
             if debug:
                 print("ingress is a list"+lineno())
             for item in ingress:
                 if item == 'CidrIp' and item['CidrIp'] == '0.0.0.0/0':
-                  return True
+                    return True
 
         elif hasattr(ingress, 'cfn_model'):
             if debug:
@@ -48,22 +47,22 @@ class IpAddr:
                 if type(ingress.cfn_model.cfn_model) == type(dict()):
 
                     if ingress.cfn_model.cfn_model['CidrIp'] == '0.0.0.0/0':
-                      return True
+                        return True
 
                 elif type(ingress.cfn_model.cfn_model) == type(list()):
                     for item in ingress.cfn_model.cfn_model:
                         if item == 'CidrIp' and item['CidrIp'] == '0.0.0.0/0':
-                          return True
+                            return True
 
             elif hasattr(ingress, 'cidrIp'):
                 if debug:
-                  print("\ningress had cidrIp attribute"+lineno())
+                    print("\ningress had cidrIp attribute"+lineno())
                 if type(ingress.cidrIp) == type(str()) and str(ingress.cidrIp) == '0.0.0.0/0':
-                  return True
+                    return True
 
                 if sys.version_info[0] < 3:
                     if type(ingress.cidrIp) == type(unicode()) and str(ingress.cidrIp) == '0.0.0.0/0':
-                      return True
+                        return True
 
             else:
                 if debug:
@@ -77,20 +76,20 @@ class IpAddr:
                         if 'CidrIp' in ingress.cfn_model['Properties']:
                             if type(ingress.cfn_model['Properties']['CidrIp']) == type(str()) and str(
                                   ingress.cfn_model['Properties']['CidrIp']) == '0.0.0.0/0':
-                              return True
+                                return True
 
                             if sys.version_info[0] < 3:
                                 if type(ingress.cfn_model['Properties']['CidrIp']) == type(unicode()) and str(
                                       ingress.cfn_model['Properties']['CidrIp']) == '0.0.0.0/0':
-                                  return True
+                                    return True
 
                 elif type(ingress.cfn_model)== type(list()):
                     if debug:
-                      print("\ningress is a list"+lineno())
+                        print("\ningress is a list"+lineno())
 
                     for item in ingress.cfn_model:
                         if debug:
-                          print(str(item)+lineno())
+                            print(str(item)+lineno())
 
                 else:
                     if debug:
@@ -112,29 +111,29 @@ class IpAddr:
 
                     elif type(ingress) == type(dict()):
                         if debug:
-                          print('is a dict'+lineno())
+                            print('is a dict'+lineno())
 
                         if ingress['CidrIp'] == '0.0.0.0/0':
-                          return True
+                            return True
 
                     elif type(ingress) == type(list()):
 
                         if debug:
-                          print('is a list'+lineno())
+                            print('is a list'+lineno())
 
                         for item in ingress:
-                          if item == 'CidrIp' and item['CidrIp'] == '0.0.0.0/0':
-                            return True
+                            if item == 'CidrIp' and item['CidrIp'] == '0.0.0.0/0':
+                                return True
 
         return False
 
     @staticmethod
     def ip6_open(ingress, debug=False):
-        '''
+        """
         if ipv6 is open to world
         :param debug:
         :return: boolean
-        '''
+        """
         if debug:
             print('ip6_open'+lineno())
             print('ingress: '+str(ingress)+lineno())
@@ -161,33 +160,33 @@ class IpAddr:
                 if type(ingress.cfn_model.cfn_model) == type(dict()):
 
                     if ingress.cfn_model.cfn_model['CidrIp'] == '::/0':
-                      return True
+                        return True
 
                 elif type(ingress.cfn_model.cfn_model) == type(list()):
 
                     for item in ingress.cfn_model.cfn_model:
-                      if item == 'CidrIp' and item['CidrIp'] == '::/0':
-                        return True
+                        if item == 'CidrIp' and item['CidrIp'] == '::/0':
+                            return True
         else:
             if debug:
                 print('var:' + str(vars(ingress)) + lineno())
 
             if hasattr(ingress,'cidrIp'):
                 if type(ingress.cidrIp) == type(str()) and str(ingress.cidrIp) == '::/0':
-                  return True
+                    return True
 
                 if sys.version_info[0] < 3:
                     if type(ingress.cidrIp) == type(unicode()) and str(ingress.cidrIp) == '::/0':
-                      return True
+                        return True
 
             elif hasattr(ingress,'cidrIpv6'):
 
                 if type(ingress.cidrIpv6) == type(str()) and str(ingress.cidrIpv6) == '::/0':
-                  return True
+                    return True
 
                 if sys.version_info[0] < 3:
                     if type(ingress.cidrIpv6) == type(unicode()) and str(ingress.cidrIpv6) == '::/0':
-                      return True
+                        return True
 
             elif hasattr(ingress, 'cfn_model'):
 
@@ -204,15 +203,14 @@ class IpAddr:
 
     @staticmethod
     def ip4_cidr_range(ingress, debug=False):
-        '''
+        """
         IP4 is not /32
         :param debug:
         :return: boolean
-        '''
+        """
         if debug:
-          print('ip4_cidr_range '+str(ingress)+lineno())
-          print('type: '+str(type(ingress))+lineno())
-          #print('vars: '+str(vars(ingress))+lineno())
+            print('ip4_cidr_range '+str(ingress)+lineno())
+            print('type: '+str(type(ingress))+lineno())
 
         suffix = "/32";
 
@@ -257,7 +255,7 @@ class IpAddr:
                         if 'Ref' in item['CidrIp']:
                             return True
 
-                        elif item ['CidrIp'].endswith(suffix):
+                        elif item['CidrIp'].endswith(suffix):
                             if debug:
                                 print('ip ends with /32' + lineno())
                             return True
@@ -575,7 +573,7 @@ class IpAddr:
                                 elif item2 == 'Ref':
                                     return True
 
-                                elif item[items2].endswith(suffix):
+                                elif item[item2].endswith(suffix):
                                     if debug:
                                         print('ip ends with /32' + lineno())
                                     return True
@@ -687,11 +685,11 @@ class IpAddr:
 
     @staticmethod
     def ip6_cidr_range(ingress, debug=False):
-        '''
+        """
         If ipv6 is not /128
         :param debug:
         :return: boolean
-        '''
+        """
         if debug:
               print('ip6_cidr_range ' + str(ingress) + lineno())
               print('type: ' + str(type(ingress)) + lineno())
@@ -888,12 +886,10 @@ class IpAddr:
                     print('not sure what this is')
                     print('need to fix')
                     sys.exit(1)
-
             else:
-
                 if debug:
-                  print('ip is: ' + str(ingress.cidrIpv6) + lineno())
-                  print('type: ' + str(type(ingress.cidrIpv6)) + lineno())
+                    print('ip is: ' + str(ingress.cidrIpv6) + lineno())
+                    print('type: ' + str(type(ingress.cidrIpv6)) + lineno())
 
                 if type(ingress.cidrIpv6) == type(list()):
 
@@ -915,7 +911,7 @@ class IpAddr:
                                 elif item2 == 'Ref':
                                     return True
 
-                                elif item[items2].endswith(suffix):
+                                elif item[item2].endswith(suffix):
                                     if debug:
                                         print('ip ends with /32' + lineno())
                                     return True

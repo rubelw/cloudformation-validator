@@ -45,12 +45,14 @@ def lineno():
 
 
 class CfnParser:
-
+    """
+    Cloudformation parser
+    """
     def __init__(self, debug=False):
-        '''
+        """
         Initialize
         :param debug: 
-        '''
+        """
         self.debug = debug
 
         if self.debug:
@@ -167,12 +169,12 @@ class CfnParser:
 
 
     def apply_parameter_values(self, cfn_model, parameter_values_json):
-        '''
+        """
         ???
         :param cfn_model: 
         :param parameter_values_json: 
         :return: 
-        '''
+        """
         if self.debug:
             print('CfnParser - apply_parameter_values'+lineno())
             print('parameter_values_json: '+str(parameter_values_json)+lineno())
@@ -183,11 +185,11 @@ class CfnParser:
         return cfn_model
 
     def post_process_resource_model_elements(self, cfn_model):
-        '''
+        """
         Post process the resource model elements
         :param cfn_model: 
         :return: 
-        '''
+        """
         if self.debug:
             print("\n\n#######################################################")
             print('CfnParser - post_process_resource_model_elements'+lineno())
@@ -230,14 +232,14 @@ class CfnParser:
 
 
     def transform_hash_into_model_elements(self, cfn_hash, cfn_model):
-        '''
+        """
         We are iterating the the resources in the cloudformation template
         and trying to create objects out of each resource, and then putting
         the objects in to the model object
         :param cfn_hash: 
         :param cfn_model: 
         :return: 
-        '''
+        """
         if self.debug:
             print('CfnParser - transform_hash_into_model_elements'+lineno())
 
@@ -274,12 +276,12 @@ class CfnParser:
         return cfn_model
 
     def transform_hash_into_parameters(self, cfn_hash, cfn_model):
-        '''
+        """
         Transform hash into parameters
         :param cfn_hash: 
         :param cfn_model: 
         :return: 
-        '''
+        """
 
         if self.debug:
             print('CfnParser - transform_hash_into_parameters'+lineno())
@@ -306,11 +308,11 @@ class CfnParser:
 
 
     def pre_validate_model(self, cloudformation_yml):
-        '''
+        """
         Prevalidate the cloudformation template
         :param cloudformation_yml: 
         :return: 
-        '''
+        """
 
         if self.debug:
             print("\n\n######################################")
@@ -348,11 +350,11 @@ class CfnParser:
 
 
     def validate_references(self, cfn_hash):
-        '''
+        """
         Validate references in the cloudformation template
         :param cfn_hash: 
         :return: 
-        '''
+        """
         if self.debug:
             print("\n\n###########################################")
             print('CfnParser - validate_references'+lineno())
@@ -367,12 +369,12 @@ class CfnParser:
             raise ParserError("Unresolved logical resource ids: "+str(unresolved_refs))
 
     def assign_fields_based_upon_properties(self, resource_object, resource):
-        '''
+        """
         Assign fields in the object based on properties in the resource
         :param resource_object: 
         :param resource: 
         :return: 
-        '''
+        """
 
         if self.debug:
             print("\n\n#######################################################")
@@ -417,15 +419,15 @@ class CfnParser:
             if hasattr(resource_object, 'policies'):
                 print(resource_object.policies)
 
-            if hasattr(resource_object,'policy_objects'):
+            if hasattr(resource_object, 'policy_objects'):
                 print(resource_object.policy_objects)
-            if hasattr(resource_object,'group_names'):
+            if hasattr(resource_object, 'group_names'):
                 print(resource_object.group_names)
-            if hasattr(resource_object,'groups'):
+            if hasattr(resource_object, 'groups'):
                 print(resource_object.groups)
-            if hasattr(resource_object,'resource_type'):
+            if hasattr(resource_object, 'resource_type'):
                 print(resource_object.resource_type)
-            if hasattr(resource_object,'policy_document'):
+            if hasattr(resource_object, 'policy_document'):
                 print(resource_object.policy_document)
             print(vars(resource_object))
             print("##################################################\n")
@@ -433,11 +435,11 @@ class CfnParser:
         return resource_object
 
     def map_property_name_to_attribute(self, string):
-        '''
+        """
         Mapp properties to attributes
         :param string: 
         :return: 
-        '''
+        """
 
         if self.debug:
             print('property name: '+str(string)+lineno())
@@ -460,12 +462,12 @@ class CfnParser:
 
 
     def class_from_type_name(self, type_name, cfn_model):
-        '''
+        """
         Create class from type name
         :param type_name: 
         :param cfn_model: 
         :return: 
-        '''
+        """
 
         if self.debug:
             print('CfnParser - class_from_type_name'+lineno())
@@ -476,12 +478,12 @@ class CfnParser:
         return resource_class
 
     def generate_resource_class_from_type(self, type_name, cfn_model):
-        '''
+        """
         Generate resource class from type
         :param type_name: 
         :param cfn_model: 
         :return: 
-        '''
+        """
 
         if self.debug:
             print('generate_resource_class_from_type'+lineno())
@@ -548,11 +550,11 @@ class CfnParser:
 
 
     def initial_upper(self, string):
-        '''
+        """
         First character to upper case
         :param string: 
         :return: 
-        '''
+        """
         if self.debug:
             print('CfnParser - initial_upper'+lineno())
 

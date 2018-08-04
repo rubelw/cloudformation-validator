@@ -15,12 +15,12 @@ class TemplateDiscovery:
 
 
     def __init__(self, input_json_path=str(os.path.dirname(__file__)+'/test_templates/json'),template_pattern='json', debug=False):
-        '''
+        """
         Initialize TemplateDiscovery
         :param input_json_path: 
         :param template_pattern: 
         :param debug: 
-        '''
+        """
         self.input_json_path = input_json_path
         self.template_pattern = template_pattern
         self.templates = []
@@ -30,10 +30,10 @@ class TemplateDiscovery:
             print('TemplateDiscovery - __init__'+lineno())
 
     def discover_templates(self):
-        '''
+        """
         Discover templates
         :return: 
-        '''
+        """
         if self.debug:
             print("\n\n#######################################")
             print('discover templates'+lineno())
@@ -58,10 +58,10 @@ class TemplateDiscovery:
         return template_filenames
 
     def render_path(self):
-        '''
+        """
         Render the path
         :return: 
-        '''
+        """
         if self.debug:
             print('render_path'+lineno())
         # FIXME
@@ -72,10 +72,10 @@ class TemplateDiscovery:
 
 
     def find_templates_in_directory(self):
-        '''
+        """
         Find templates in directory
         :return: 
-        '''
+        """
         if self.debug:
             print('find_template_in_directory'+lineno())
         # FIXME

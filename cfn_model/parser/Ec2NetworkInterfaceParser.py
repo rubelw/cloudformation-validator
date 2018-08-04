@@ -8,7 +8,9 @@ def lineno():
 
 
 class Ec2NetworkInterfaceParser:
-
+    """
+    Ec2 network interface parser
+    """
     @staticmethod
     def parse(cfn_model, resource, debug=False):
         print('Ec2NetworkInterfaceParser - parse'+lineno())

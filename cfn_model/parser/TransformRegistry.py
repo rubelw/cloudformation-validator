@@ -10,12 +10,14 @@ def lineno():
 
 
 class TransformRegistry:
-
+    """
+    Transform registry parser
+    """
     def __init__(self, debug=False):
-        '''
+        """
         Initialize
         :param debug: 
-        '''
+        """
         #self.registry= {'AWS::Serverless-2016-10-31' = > CfnModel::Transforms::Serverless}
         self.registry = Serverless.Serverless(debug=debug)
         self.debug = debug

@@ -12,36 +12,36 @@ def lineno():
 class IamRoleWildcardActionOnPermissionsPolicyRule(BaseRule):
   
   def __init__(self, cfn_model=None, debug=None):
-    '''
+    """
     Initialize
     :param cfn_model: 
-    '''
+    """
     BaseRule.__init__(self, cfn_model=cfn_model,debug=debug)
       
   def rule_text(self):
-    '''
+    """
     Get rule text
     :return: 
-    '''
+    """
     if self.debug:
       print('rule_text'+lineno())
     return 'IAM role should not allow * action on its permissions policy'
 
 
   def rule_type(self):
-    '''
+    """
     Get rule type
     :return: 
-    '''
+    """
     self.type= 'VIOLATION::FAILING_VIOLATION'
     return 'VIOLATION::FAILING_VIOLATION'
 
 
   def rule_id(self):
-    '''
+    """
     Get rule id
     :return: 
-    '''
+    """
     if self.debug:
       print('rule_id'+lineno())
     self.id ='F3'
@@ -49,10 +49,10 @@ class IamRoleWildcardActionOnPermissionsPolicyRule(BaseRule):
 
 
   def audit_impl(self):
-    '''
+    """
     Audit
     :return: violations 
-    '''
+    """
     if self.debug:
       print("\n\n###############################################")
       print('IamRoleWildcardActionOnPermissionsPolicyRule - audit_impl'+lineno())

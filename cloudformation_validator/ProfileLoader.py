@@ -16,11 +16,11 @@ class ProfileLoader:
 
 
     def __init__(self,rules_registry,debug=False):
-        '''
+        """
         Initialize the ProfileLoader
         :param rules_registry:
         :param debug:
-        '''
+        """
         self.debug = debug
         self.rules_registry = rules_registry
 
@@ -28,11 +28,11 @@ class ProfileLoader:
             print('ProfileLoader - init'+lineno())
 
     def load(self, profile_definition):
-        '''
+        """
         Load rules from a profile definition
         :param profile_definition:
         :return:
-        '''
+        """
         if self.debug:
             print('load'+lineno())
             print('vars: '+str(vars(profile_definition))+lineno())
@@ -61,11 +61,11 @@ class ProfileLoader:
 
 
     def rule_line_match(self, rule_id):
-        '''
+        """
         Parses a line, returns first matching line or false if no match
         :param rule_id:
         :return:
-        '''
+        """
         if self.debug:
             print('rule_line_match'+lineno())
             print('rule_id: '+str(rule_id)+lineno())
@@ -87,10 +87,10 @@ class ProfileLoader:
 
 
     def rules_ids(self):
-        '''
+        """
         Returns ids of rules in registry
         :return:
-        '''
+        """
         if self.debug:
             print('rules_ids'+lineno())
 
@@ -103,11 +103,11 @@ class ProfileLoader:
 
 
     def check_valid_rule_id(self, rule_id):
-        '''
+        """
         Returns true if rule_id is valid (present in rules registry), else raise an error
         :param rule_id:
         :return:
-        '''
+        """
         if self.debug:
             print('check_valid_rule_id'+lineno())
             print('rule_id: '+str(rule_id)+lineno())

@@ -14,36 +14,36 @@ def lineno():
 class IamManagedPolicyWildcardActionRule(BaseRule):
   
   def __init__(self, cfn_model=None, debug=None):
-    '''
+    """
     Initialize IamManagedPolicyWildcardActionRule
     :param cfn_model:
-    '''
+    """
     BaseRule.__init__(self, cfn_model, debug=debug)
 
   def rule_text(self):
-    '''
+    """
     Return rule text
     :return:
-    '''
+    """
     if self.debug:
         print('rule_text'+lineno())
     return 'IAM managed policy should not allow * action'
   
 
   def rule_type(self):
-    '''
+    """
     Return rule type
     :return:
-    '''
+    """
     self.type= 'VIOLATION::FAILING_VIOLATION'
     return 'VIOLATION::FAILING_VIOLATION'
   
 
   def rule_id(self):
-    '''
+    """
     Return rule id
     :return:
-    '''
+    """
     if self.debug:
         print('rule_id'+lineno())
     self.id ='F5'
@@ -51,10 +51,10 @@ class IamManagedPolicyWildcardActionRule(BaseRule):
   
 
   def audit_impl(self):
-    '''
+    """
     Audit
     :return: violations
-    '''
+    """
     if self.debug:
         print('IamManagedPolicyWildcardActionRule - audit_impl'+lineno())
     

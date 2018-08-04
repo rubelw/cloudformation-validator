@@ -14,35 +14,35 @@ class S3BucketPolicyWildcardActionRule(BaseRule):
 
 
   def __init__(self, cfn_model=None, debug=None):
-    '''
+    """
     Initialize
     :param cfn_model: 
-    '''
+    """
     BaseRule.__init__(self, cfn_model, debug=debug)
 
   def rule_text(self):
-    '''
+    """
     Get rule text
     :return: 
-    '''
+    """
     if self.debug:
       print('rule_text'+lineno())
     return 'S3 Bucket policy should not allow * action'
 
 
   def rule_type(self):
-    '''
+    """
     Get rule type
     :return: 
-    '''
+    """
     self.type= 'VIOLATION::FAILING_VIOLATION'
     return 'VIOLATION::FAILING_VIOLATION'
 
   def rule_id(self):
-    '''
+    """
     Get rule id
     :return: 
-    '''
+    """
     if self.debug:
       print('rule_id'+lineno())
     self.id ='F15'
@@ -50,10 +50,10 @@ class S3BucketPolicyWildcardActionRule(BaseRule):
 
 
   def audit_impl(self):
-    '''
+    """
     Audit
     :return: violations 
-    '''
+    """
     if self.debug:
       print('S3BucketPolicyWildcardActionRule - audit_impl'+lineno())
     logical_resource_ids = []

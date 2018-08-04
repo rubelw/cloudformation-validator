@@ -12,20 +12,20 @@ def lineno():
     return str(' -  SchemaGenerator- line number: '+str(inspect.currentframe().f_back.f_lineno))
 
 
-##
-# This generator is a bit of hacking to trick kwalify into validating yaml for a cfn template.
-#
-# because cfn uses open-ended key names for the resources.... a static schema can't be used
-# with kwalify.  so first we make sure there is a basic structure of resources with Type values
-# then we generate the schema from the document for the keys and cross-reference with schema
-# files per resource type
 class SchemaGenerator:
-
+    """
+    # This generator is a bit of hacking to trick kwalify into validating yaml for a cfn template.
+    #
+    # because cfn uses open-ended key names for the resources.... a static schema can't be used
+    # with kwalify.  so first we make sure there is a basic structure of resources with Type values
+    # then we generate the schema from the document for the keys and cross-reference with schema
+    # files per resource type
+    """
     def __init__(self, debug=False):
-        '''
+        """
         Initialize
         :param debug:
-        '''
+        """
 
         self.debug= debug
 
@@ -33,11 +33,11 @@ class SchemaGenerator:
             print(' __init__' + lineno())
 
     def generate(self, cloudformation_yml):
-        '''
+        """
         Generate schema
         :param cloudformation_yml:
         :return:
-        '''
+        """
 
         # make sure structure of Resources is decent and that every record has a Type at least
         validator = ResourceTypeValidator(debug=self.debug)
@@ -76,11 +76,11 @@ class SchemaGenerator:
     # except that Types are Strings.... anything else is up to a rule
     # to wade through all the optional crap (like looking for NoEcho)
     def generate_schema_for_parameter_keys(self, cloudformation_hash):
-          '''
+          """
           Generate schema for parameter keys
           :param cloudformation_hash:
           :return:
-          '''
+          """
           if self.debug:
             print('generate_schema_for_parameter_keys '+lineno())
             print('cloudformation_hash '+str(cloudformation_hash)+lineno())
@@ -110,11 +110,11 @@ class SchemaGenerator:
 
 
     def generate_schema_for_resource_keys(self, cloudformation_hash):
-        '''
+        """
         Generate schema for resource keys
         :param cloudformation_hash:
         :return:
-        '''
+        """
 
         resources_schema = {
           '=' : { 'type' : 'any'}
@@ -137,11 +137,11 @@ class SchemaGenerator:
 
 
     def schema_file(self, file):
-         '''
+         """
          ???
          :param file:
          :return:
-         '''
+         """
          if self.debug:
             print('schema_file '+lineno())
 
@@ -163,11 +163,11 @@ class SchemaGenerator:
 
 
     def schema_for_type(self, type):
-         '''
+         """
          ???
          :param type:
          :return:
-         '''
+         """
          if self.debug:
             print('schema_for_type:'+lineno())
             print('type: '+str(type)+lineno())

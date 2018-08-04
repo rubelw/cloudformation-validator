@@ -12,10 +12,10 @@ class Profile:
     rules_registry = None
 
     def __init__(self, debug=False):
-        '''
+        """
         Initialize profile
         :param debug:
-        '''
+        """
         self.debug = debug
         self.rule_ids = []
 
@@ -25,19 +25,19 @@ class Profile:
 
     # Add a Rule to a profile
     def add_rule(self, rule_id):
-        '''
+        """
         Add rule to profile
         :param rule_id:
         :return:
-        '''
+        """
         self.rule_ids.append(rule_id)
 
     def execute_rule(self, rule_id):
-        '''
+        """
         Whether to execute the rule id
         :param rule_id:
         :return: boolean
-        '''
+        """
         if self.debug:
             print('rule_id: '+str(rule_id)+lineno())
             print('rule id list in profile: '+str(self.rule_ids)+lineno())

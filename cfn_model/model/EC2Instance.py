@@ -4,12 +4,14 @@ from cfn_model.model.ModelElement import ModelElement
 
 
 class EC2Instance(ModelElement):
-
+    """
+    Ecs instance model
+    """
     def __init__(self, cfn_model):
-        '''
+        """
         Initialize
         :param cfn_model: 
-        '''
+        """
         # attr_accessor :security_groups
         ModelElement.__init__(self, cfn_model)
 

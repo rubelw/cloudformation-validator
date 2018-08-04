@@ -11,15 +11,18 @@ def lineno():
 
 
 class IamRoleParser:
-
+    """
+    IAM Role Parser
+    """
+    
     @staticmethod
     def parse(cfn_model, resource, debug=False):
-        '''
+        """
         Parse iam role
         :param resource: 
         :param debug: 
         :return: 
-        '''
+        """
         if debug:
             print('IAMRoleParser - parse'+lineno())
             print('resource: '+str(resource)+lineno())

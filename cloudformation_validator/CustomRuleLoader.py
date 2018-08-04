@@ -6,30 +6,25 @@ import importlib
 import inspect
 from cloudformation_validator.RuleRegistry import RuleRegistry
 
-
-
 def lineno():
     """Returns the current line number in our program."""
     return str(' - CustomRuleLoader - line number: '+str(inspect.currentframe().f_back.f_lineno))
-
 
 def dump(obj):
   for attr in dir(obj):
     print("obj.%s = %r" % (attr, getattr(obj, attr)))
 
-
 class CustomRuleLoader:
 
-
     def __init__(self, debug=False, rule_directory=None, extra_rule_directory=None, allow_suppression=True, print_suppression=False, isolate_custom_rule_exceptions=False,additional_rules_directory=None):
-        '''
+        """
         Initialize CustomRuleLoader
         :param debug: 
         :param rule_directory: 
         :param allow_suppression: 
         :param print_suppression: 
         :param isolate_custom_rule_exceptions: 
-        '''
+        """
         self.debug = debug
         self.rule_directory = rule_directory
         self.extra_rule_directory = extra_rule_directory
@@ -37,19 +32,17 @@ class CustomRuleLoader:
         self.allow_suppression= allow_suppression
         self.print_suppression = print_suppression
         self.isolate_custom_rule_exceptions = isolate_custom_rule_exceptions
-
-
         self.validate_extra_rule_directory = self.rule_directory
 
         if self.debug:
             print('CustomRuleLoader init'+lineno())
 
     def rule_definitions(self):
-        '''
+        """
         Loads all the rule definitions from the rules directory in to the rules registry object and
         returns the rules registry object
         :return: rules registry
-        '''
+        """
         if self.debug:
             print('CustomRuleLoader - rule definitions'+str(lineno()))
 
@@ -79,20 +72,19 @@ class CustomRuleLoader:
                     print('type: '+str(type)+lineno())
                     print('message: '+str(message)+lineno())
 
-                rule_registry.definition(id,type,message)
+                rule_registry.definition(id, type, message)
 
         if self.debug:
             print('rules registry rules are now: '+str(rule_registry.rules)+lineno())
 
         return rule_registry
 
-
     def execute_custom_rules(self, cfn_model):
-        '''
+        """
         Execute any custom rules, which are in addition to the regular rules
         :param cfn_model:
         :return:
-        '''
+        """
         if self.debug:
             print('CustomRuleLoader - execute_custom_rules'+str(lineno()))
             print('cfn_model: '+str(cfn_model)+str(lineno()))
@@ -113,13 +105,12 @@ class CustomRuleLoader:
 
         return violations
 
-
     def rule_registry_from_rule_class(self, rule_class, directory):
-        '''
+        """
         Gets the rule id, type and text for a specific rule
         :param rule_class: The rule name
         :return: rule_id, rule_type, rule_text
-        '''
+        """
         if self.debug:
             print('CustomRuleLoader - rule_registry_from_rule_class'+str(lineno()))
             print('rule_class: '+str(rule_class)+lineno())
@@ -153,17 +144,15 @@ class CustomRuleLoader:
 
         return rule.rule_id(), rule.rule_type(), rule.rule_text()
 
-
     def filter_rule_classes(self, cfn_model, violations):
-        '''
+        """
         Filter rules
         :param cfn_model: 
         :param violations: 
         :return: violations
-        '''
+        """
         if self.debug:
             print('CustomRuleLoader - filter_rule_classes'+str(lineno()))
-
 
         # Get an array of all the rule classes
         rule_classes = self.discover_rule_classes(self.rule_directory)
@@ -180,7 +169,6 @@ class CustomRuleLoader:
                 # Ignore the base rule
                 if file == 'BaseRule':
                     continue
-
 
                 if rule_class == 'rules_directory':
 
@@ -221,7 +209,7 @@ class CustomRuleLoader:
                     print("################################################\n")
 
                 # Sets the cfn_model in the rule class
-                instance = MyClass(cfn_model,debug=self.debug)
+                instance = MyClass(cfn_model, debug=self.debug)
 
                 if self.debug:
                     print(str(instance.rule_id())+lineno())
@@ -242,8 +230,6 @@ class CustomRuleLoader:
                 instance.cfn_model = copy.copy(filtered_cfn_model)
 
                 if self.debug:
-                    #for attr in dir(instance):
-                    #    print("obj.%s = %r" % (attr, getattr(instance, attr))+lineno())
                     print("\n\n#####################################################")
                     print('Auditing rule id: '+str(instance.rule_id())+lineno())
                     print('rule text: '+str(instance.rule_text())+lineno())
@@ -264,22 +250,16 @@ class CustomRuleLoader:
                         print(str(audit_result.message)+lineno())
 
                     # Adds audit results to violation
-                    violations.append((audit_result))
-
-                #rescue Exception = > exception
-                #raise exception unless @ isolate_custom_rule_exceptions
-                #STDERR.puts exception
+                    violations.append(audit_result)
 
         return violations
 
-
-
     def rules_to_suppress(self, resource):
-        '''
+        """
         Rules to suppress
         :param resource: 
         :return: 
-        '''
+        """
         if self.debug:
             print('CustomRuleLoader - rules_to_suppress'+str(lineno()))
             print('resource: '+str(resource)+lineno())
@@ -297,12 +277,12 @@ class CustomRuleLoader:
             return None
 
 
-    def validate_cfn_nag_metadata(self,cfn_model):
-        '''
+    def validate_cfn_nag_metadata(self, cfn_model):
+        """
         Validate the metadata
         :param cfn_model: 
         :return: 
-        '''
+        """
         if self.debug:
             print('CustomRuleLoader - validate_cfn_nag_metadata'+str(lineno()))
             print('cfn_model: '+str(cfn_model)+lineno())
@@ -324,37 +304,37 @@ class CustomRuleLoader:
 
 
     def suppress_resource(self, rules_to_suppress, rule_id, logical_resource_id):
-        '''
+        """
         Supress certain resources
         :param rules_to_suppress: 
         :param rule_id: 
         :param logical_resource_id: 
         :return: 
-        '''
+        """
         if self.debug:
             print('CustomRuleLoader - suppress_resource'+str(lineno()))
 
         sys.exit(1)
         #FIXME
         found_suppression_ruile = self.rules_to_suppress()
-        #found_suppression_rule = rules_to_suppress.find do |rule_to_suppress|
-        #  next if rule_to_suppress['id'].nil?
-        #  rule_to_suppress['id'] == rule_id
-        #end
-        #if found_suppression_rule && @print_suppression
-        #  STDERR.puts "Suppressing #{rule_id} on #{logical_resource_id} for reason: #{found_suppression_rule['reason']}"
-        #end
-        #!found_suppression_rule.nil?
+        # found_suppression_rule = rules_to_suppress.find do |rule_to_suppress|
+        #   next if rule_to_suppress['id'].nil?
+        #   rule_to_suppress['id'] == rule_id
+        # end
+        # if found_suppression_rule && @print_suppression
+        #   STDERR.puts "Suppressing #{rule_id} on #{logical_resource_id} for reason: #{found_suppression_rule['reason']}"
+        # end
+        # !found_suppression_rule.nil?
 
 
     def cfn_model_with_suppressed_resources_removed(self, cfn_model, rule_id, allow_suppression):
-        '''
+        """
         CFN model with suppressed resources removed
         :param cfn_model: 
         :param rule_id: 
         :param allow_suppression: 
         :return: 
-        '''
+        """
         if self.debug:
             print('CustomRuleLoader - cfn_model_with_suppressed_resources_removed'+str(lineno()))
 
@@ -390,13 +370,12 @@ class CustomRuleLoader:
 
             return cfn_model
 
-
     def validate_extra_rule_directory(self, rule_directory):
-        '''
+        """
         Validate the extra rules directory
         :param rule_directory: 
         :return: 
-        '''
+        """
         if self.debug:
             print('CustomRuleLoader - validate_extra_rule_directory'+str(lineno()))
             print('rule_directory: '+str(rule_directory)+lineno())
@@ -406,17 +385,14 @@ class CustomRuleLoader:
         else:
             return os.path.isdir(rule_directory)
 
-
-    # Get all the rules files
     def discover_rule_filenames(self):
-        '''
+        """
         Discover the rule filenames
-        :return: 
-        '''
+        :return: A dictionary with the rules
+        """
         if self.debug:
             print('CustomRuleLoader - discover_rule_filename'+str(lineno()))
 
-        #rule_filenames = []
         rule_filenames = {
             'rules_directory':{},
             'extra_rules_directory':{}
@@ -431,15 +407,9 @@ class CustomRuleLoader:
             if self.debug:
                 print('temp file: '+str(temp_file)+lineno())
 
-
             if not temp_file.startswith('__'):
-            #if temp_file != '__init__.py' and temp_file != '__pycache__':
-
                 if temp_file.endswith('.py'):
-                    #rule_filenames.append(str(temp_file).replace('.py',''))
                     rule_filenames['rules_directory'][str(temp_file).replace('.py','')] = str(self.rule_directory)
-                #elif temp_file.endswith('.pyc'):
-                #    rule_filenames.append(str(temp_file).replace('.pyc',''))
 
         if self.additional_rules_directory:
             temp_rule_filenames = os.listdir(self.additional_rules_directory)
@@ -452,13 +422,8 @@ class CustomRuleLoader:
                     print('temp file: ' + str(temp_file) + lineno())
 
                 if not temp_file.startswith('__'):
-                    # if temp_file != '__init__.py' and temp_file != '__pycache__':
-
                     if temp_file.endswith('.py'):
-                        # rule_filenames.append(str(temp_file).replace('.py',''))
                         rule_filenames['rules_directory'][str(temp_file).replace('.py', '')] = str(self.additional_rules_directory)
-                    # elif temp_file.endswith('.pyc'):
-                    #    rule_filenames.append(str(temp_file).replace('.pyc',''))
 
         if self.extra_rule_directory:
             if self.debug:
@@ -470,15 +435,7 @@ class CustomRuleLoader:
 
             for temp_file in temp_rule_filenames:
                 if not temp_file.startswith('__'):
-                #if temp_file != '__init__.py' and temp_file != '__pycache__':
-                    #if temp_file.endswith('.pyc'):
 
-                    #    new_filename = temp_file.replace('.pyc','')
-
-                    #    if self.debug:
-                    #        print('new filename: '+str(new_filename)+lineno())
-
-                    #    rule_filenames.append(str(new_filename))
                     if temp_file.endswith('.py'):
 
                         new_filename = temp_file.replace('.py','')
@@ -486,7 +443,6 @@ class CustomRuleLoader:
                         if self.debug:
                             print('new filename: '+str(new_filename)+lineno())
 
-                        #rule_filenames.append(str(temp_file).replace('.py', ''))
                         rule_filenames['extra_rules_directory'][str(temp_file).replace('.py', '')] = str(self.extra_rule_directory)
 
         if self.debug:
@@ -494,14 +450,12 @@ class CustomRuleLoader:
 
         return rule_filenames
 
-
-    # Get a listing of all the rule file names and import all the rule classes
     def discover_rule_classes(self, rule_directory):
-        '''
+        """
         Discover the rule classes
         :param rule_directory: 
         :return: 
-        '''
+        """
         if self.debug:
             print('CustomRuleLoader - discover_rule_classes'+str(lineno()))
             print('rule_directory: '+str(rule_directory))
@@ -539,7 +493,3 @@ class CustomRuleLoader:
             print('rule filenames: '+str(rule_filenames)+lineno())
 
         return rule_filenames
-
-
-
-

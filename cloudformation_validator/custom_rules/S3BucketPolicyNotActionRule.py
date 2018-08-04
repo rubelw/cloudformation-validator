@@ -13,36 +13,36 @@ def lineno():
 class S3BucketPolicyNotActionRule(BaseRule):
   
   def __init__(self, cfn_model=None, debug=None):
-    '''
+    """
     Initialize
     :param cfn_model: 
-    '''
+    """
     BaseRule.__init__(self, cfn_model, debug=debug)
       
   def rule_text(self):
-    '''
+    """
     Get rule text
     :return: 
-    '''
+    """
     if self.debug:
       print('rule_text'+lineno())
     return 'S3 Bucket policy should not allow Allow+NotAction'
 
 
   def rule_type(self):
-    '''
+    """
     Get rule type
     :return: 
-    '''
+    """
     self.type= 'VIOLATION::WARNING'
     return 'VIOLATION::WARNING'
 
 
   def rule_id(self):
-    '''
+    """
     Get rule id
     :return: 
-    '''
+    """
     if self.debug:
       print('rule_id'+lineno())
     self.id ='W20'
@@ -50,10 +50,10 @@ class S3BucketPolicyNotActionRule(BaseRule):
 
 
   def audit_impl(self):
-    '''
+    """
     Audit
     :return: violations 
-    '''
+    """
     if self.debug:
       print('S3BucketPolicyNotActionRule - audit_impl'+lineno())
 

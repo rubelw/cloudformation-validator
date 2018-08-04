@@ -13,36 +13,36 @@ def lineno():
 class IamManagedPolicyWildcardResourceRule(BaseRule):
 
   def __init__(self, cfn_model=None, debug=None):
-    '''
+    """
     Initialize IamManagedPolicyWildcardResourceRule
     :param cfn_model: 
-    '''
+    """
     BaseRule.__init__(self, cfn_model, debug=debug)
 
   def rule_text(self):
-    '''
+    """
     Return rule text
     :return: 
-    '''
+    """
     if self.debug:
         print('rule_text'+lineno())
     return 'IAM managed policy should not allow * resource'
 
 
   def rule_type(self):
-    '''
+    """
     Return rule type
     :return: 
-    '''
+    """
     self.type= 'VIOLATION::WARNING'
     return 'VIOLATION::WARNING'
 
 
   def rule_id(self):
-    '''
+    """
     Return rule id
     :return: 
-    '''
+    """
     if self.debug:
         print('rule_id'+lineno())
     self.id ='W13'
@@ -50,10 +50,10 @@ class IamManagedPolicyWildcardResourceRule(BaseRule):
 
 
   def audit_impl(self):
-    '''
+    """
     Audit
     :return:  violations 
-    '''
+    """
     if self.debug:
         print('IamMangedPolicyWildcardResourceRule - audit_impl'+lineno())
 

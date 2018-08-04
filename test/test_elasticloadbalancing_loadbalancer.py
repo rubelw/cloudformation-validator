@@ -29,7 +29,9 @@ def pretty(value, htchar='\t', lfchar='\n', indent=0):
         return repr(value)
 
 class TestLoadBalancer(unittest.TestCase):
-
+    """
+    Test load balancer
+    """
     def test_two_loadbalancers_without_access_logging_enabled(self):
 
       expected_result = {

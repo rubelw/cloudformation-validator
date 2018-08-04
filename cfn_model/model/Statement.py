@@ -10,12 +10,14 @@ def lineno():
 
 
 class Statement:
-
+    """
+    Statement model
+    """
     def __init__(self, debug=False):
-        '''
+        """
         Initialize
         :param debug: 
-        '''
+        """
         self.debug=debug
 
         if self.debug:
@@ -38,10 +40,10 @@ class Statement:
             print('init')
 
     def wildcard_actions(self):
-        '''
+        """
         wildcard actions
         :return: 
-        '''
+        """
         if self.debug:
             print('wildcard_actions'+lineno())
 
@@ -74,10 +76,10 @@ class Statement:
         return actions
 
     def wildcard_principal(self):
-        '''
+        """
         Get wildcard principals
         :return: 
-        '''
+        """
         if self.debug:
             print('wildcard_principal'+lineno())
 
@@ -85,10 +87,10 @@ class Statement:
         return principal.wildcard(self.principal)
 
     def wildcard_resources(self):
-        '''
+        """
         Get wildcard resources
         :return: 
-        '''
+        """
         if self.debug:
             print('wildcard_resources'+lineno())
 

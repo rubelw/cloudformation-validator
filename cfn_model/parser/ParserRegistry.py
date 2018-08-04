@@ -20,12 +20,14 @@ def lineno():
 
 
 class ParserRegistry(object):
-
+    """
+    Parser registry
+    """
     def __init__(self, debug=False):
-        '''
+        """
         Initialize
         :param debug: 
-        '''
+        """
         self.debug = debug
 
         if self.debug:

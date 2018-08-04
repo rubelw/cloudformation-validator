@@ -15,35 +15,35 @@ class IamPolicyWildcardActionRule(BaseRule):
 
 
   def __init__(self, cfn_model=None, debug=None):
-    '''
+    """
     Initialize IamPolicyWildcardActionRule
     :param cfn_model: 
-    '''
+    """
     BaseRule.__init__(self, cfn_model,debug=debug)
 
   def rule_text(self):
-    '''
+    """
     Return rule text
     :return: 
-    '''
+    """
     if self.debug:
         print('rule_text'+lineno())
     return 'IAM policy should not allow * action'
 
 
   def rule_type(self):
-    '''
+    """
     Return rule type
     :return: 
-    '''
+    """
     self.type= 'VIOLATION::WARNING'
     return 'VIOLATION::WARNING'
 
   def rule_id(self):
-    '''
+    """
     REturn rule id
     :return: 
-    '''
+    """
     if self.debug:
         print('rule_id'+lineno())
     self.id ='F4'
@@ -51,10 +51,10 @@ class IamPolicyWildcardActionRule(BaseRule):
 
 
   def audit_impl(self):
-    '''
+    """
     Audit
     :return: violations 
-    '''
+    """
     if self.debug:
         print('IamPolicyWildcardActionRule - audit_impl'+lineno())
 

@@ -11,15 +11,18 @@ def lineno():
 
 
 class IamUserParser:
+    """
+    IAM User Parser
+    """
 
     @staticmethod
     def parse(cfn_model, resource, debug=False):
-        '''
+        """
         Parse iam user
         :param resource: 
         :param debug: 
         :return: 
-        '''
+        """
 
         if debug:
             print('parse'+lineno())
@@ -57,12 +60,12 @@ class IamUserParser:
 
 
     def user_to_group_addition_has_username(addition_user_names, user_to_find, debug=False):
-        '''
+        """
         ???
         :param user_to_find: 
         :param debug: 
         :return: 
-        '''
+        """
         if debug:
             print('user_to_group_addition_has_username'+lineno())
             print('user names: '+str(addition_user_names)+lineno())

@@ -29,7 +29,9 @@ def pretty(value, htchar='\t', lfchar='\n', indent=0):
         return repr(value)
 
 class TestEc2Volume(unittest.TestCase):
-
+    """
+    Test ec2 volume
+    """
     def test_ec2_volumen_with_encryption(self):
 
       expected_result ={

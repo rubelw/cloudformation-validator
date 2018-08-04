@@ -13,15 +13,18 @@ def lineno():
 
 
 class IamGroupParser:
-
+    """
+    IAM group parser
+    """
+    
     @staticmethod
     def parse(cfn_model, resource, debug=False):
-        '''
+        """
         Parse iam group
         :param resource: 
         :param debug: 
         :return: 
-        '''
+        """
         if debug:
             print('IAMGroupParser - parse'+lineno())
             print('resource: '+str(resource)+lineno())

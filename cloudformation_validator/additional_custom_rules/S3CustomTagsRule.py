@@ -15,36 +15,38 @@ def lineno():
 
 
 class S3CustomTagsRule(BaseRule):
-
+    """
+    S3 custom tags rule
+    """
     def __init__(self, cfn_model=None, debug=None):
-        '''
+        """
         Initialize Ec2HasTagsRule
         :param cfn_model:
-        '''
+        """
         BaseRule.__init__(self, cfn_model, debug=debug)
 
     def rule_text(self):
-        '''
+        """
         Returns rule text
         :return:
-        '''
+        """
         if self.debug:
             print('rule_text' + lineno())
         return 'S3 bucket does not have the required tags'
 
     def rule_type(self):
-        '''
+        """
         Returns rule type
         :return:
-        '''
+        """
         self.type = 'VIOLATION::FAILING_VIOLATION'
         return 'VIOLATION::FAILING_VIOLATION'
 
     def rule_id(self):
-        '''
+        """
         Returns rule id
         :return:
-        '''
+        """
         if self.debug:
             print('rule_id' + lineno())
         self.id = 'F87'
@@ -72,10 +74,10 @@ class S3CustomTagsRule(BaseRule):
         return ret_value
 
     def audit_impl(self):
-        '''
+        """
         Audit
         :return: violations
-        '''
+        """
         if self.debug:
             print('S3HasTagsRule - audit_impl' + lineno())
 

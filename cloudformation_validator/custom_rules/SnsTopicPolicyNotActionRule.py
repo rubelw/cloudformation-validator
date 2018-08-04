@@ -12,72 +12,72 @@ def lineno():
 
 class SnsTopicPolicyNotActionRule(BaseRule):
 
-  def __init__(self, cfn_model=None, debug=None):
-    '''
-    Initialize
-    :param cfn_model: 
-    '''
-    BaseRule.__init__(self, cfn_model, debug=debug)
-      
-  def rule_text(self):
-    '''
-    Get rule text
-    :return: 
-    '''
-    if self.debug:
-        print('rule_text'+lineno())
-    return 'SNS Topic policy should not allow Allow+NotAction'
+    def __init__(self, cfn_model=None, debug=None):
+        """
+        Initialize
+        :param cfn_model:
+        """
+        BaseRule.__init__(self, cfn_model, debug=debug)
+
+    def rule_text(self):
+        """
+        Get rule text
+        :return:
+        """
+        if self.debug:
+            print('rule_text'+lineno())
+        return 'SNS Topic policy should not allow Allow+NotAction'
 
 
-  def rule_type(self):
-    '''
-    Get rule type
-    :return: 
-    '''
-    self.type= 'VIOLATION::WARNING'
-    return 'VIOLATION::WARNING'
+    def rule_type(self):
+        """
+        Get rule type
+        :return:
+        """
+        self.type= 'VIOLATION::WARNING'
+        return 'VIOLATION::WARNING'
 
 
-  def rule_id(self):
-    '''
-    Get rule id
-    :return: 
-    '''
-    if self.debug:
-        print('rule_id'+lineno())
-    self.id ='W19'
-    return 'W19'
+    def rule_id(self):
+        """
+        Get rule id
+        :return:
+        """
+        if self.debug:
+            print('rule_id'+lineno())
+        self.id ='W19'
+        return 'W19'
 
 
-  def audit_impl(self):
-    '''
-    Audit
-    :return: violations 
-    '''
-    if self.debug:
-        print('SnsTopicPolicyNotActionRule - audit_impl'+lineno())
-    
-    violating_policies = []
+    def audit_impl(self):
+        """
+        Audit
+        :return: violations
+        """
+        if self.debug:
+            print('SnsTopicPolicyNotActionRule - audit_impl'+lineno())
 
-    resources = self.cfn_model.resources_by_type('AWS::SNS::TopicPolicy')
+        violating_policies = []
 
-    if len(resources)>0:
-      for resource in resources:
-          if self.debug:
-              print('resource: '+str(resource)+lineno())
-              print('vars: '+str(vars(resource))+lineno())
+        resources = self.cfn_model.resources_by_type('AWS::SNS::TopicPolicy')
 
-          if hasattr(resource,'policy_document'):
+        if len(resources)>0:
+              for resource in resources:
+                  if self.debug:
+                      print('resource: '+str(resource)+lineno())
+                      print('vars: '+str(vars(resource))+lineno())
 
-              if resource.policy_document:
-                if self.debug:
-                    print('policy_document: '+str(resource.policy_document))
-                if resource.policy_document.allows_not_action():
+                  if hasattr(resource,'policy_document'):
 
-                    violating_policies.append(str(resource.logical_resource_id))
+                      if resource.policy_document:
+                            if self.debug:
+                                print('policy_document: '+str(resource.policy_document))
+                            if resource.policy_document.allows_not_action():
 
-    else:
-      if self.debug:
-        print('no violating_policies' + lineno())
+                                violating_policies.append(str(resource.logical_resource_id))
 
-    return violating_policies
+        else:
+            if self.debug:
+                print('no violating_policies' + lineno())
+
+        return violating_policies

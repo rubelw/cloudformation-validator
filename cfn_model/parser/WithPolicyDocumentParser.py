@@ -12,15 +12,17 @@ def lineno():
 
 
 class WithPolicyDocumentParser:
-
+    """
+    With policy document parser
+    """
     @staticmethod
     def parse(cfn_model, resource, debug=False):
-        '''
+        """
         Parse with policy document parser
         :param resource:
         :param debug:
         :return:
-        '''
+        """
         if debug:
             print('parse'+lineno())
             print('resource: '+str(resource))

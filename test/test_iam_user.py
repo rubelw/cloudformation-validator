@@ -29,7 +29,9 @@ def pretty(value, htchar='\t', lfchar='\n', indent=0):
         return repr(value)
 
 class TestIamUser(unittest.TestCase):
-
+    """
+    Test iam user
+    """
     def test_iam_user_has_no_group_membership(self):
 
       expected_result = {

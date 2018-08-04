@@ -1,24 +1,24 @@
 from __future__ import absolute_import, division, print_function
 import inspect
 import sys
-from collections import OrderedDict
 
 
 def lineno():
     """Returns the current line number in our program."""
     return str(' - RulesView - line number: '+str(inspect.currentframe().f_back.f_lineno))
 
-
-
 class  RulesView:
+    """
+    Rules view
+    """
 
     @staticmethod
     def emit(rule_registry, profile, debug=None):
-        '''
+        """
         Emits something
         :param profile: 
         :return: 
-        '''
+        """
         if debug:
             print('rule_registry: '+str(rule_registry)+lineno())
             print('profile: '+str(profile)+lineno())
@@ -29,11 +29,11 @@ class  RulesView:
 
     @staticmethod
     def emit_warnings(warnings, profile, debug=None):
-        '''
+        """
         Emits warnings
         :param profile: 
         :return: 
-        '''
+        """
         if debug:
             print('emit_warnings '+lineno())
             print('warnings: '+str(warnings)+lineno())
@@ -74,11 +74,11 @@ class  RulesView:
 
     @staticmethod
     def emit_failings(failings, profile, debug=None):
-        '''
+        """
         Emits failings
         :param profile: 
         :return: 
-        '''
+        """
 
         if debug:
             print('emit_failings ' + lineno())

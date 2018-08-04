@@ -11,12 +11,15 @@ def lineno():
 
 
 class PolicyDocumentParser:
+    """
+    Policy document parser
+    """
 
     def __init__(self, debug=False):
-        '''
+        """
         Initialize
         :param debug: 
-        '''
+        """
         self.debug = debug
 
         if self.debug:
@@ -94,11 +97,11 @@ class PolicyDocumentParser:
 
 
     def parse_statement(self, raw_statement):
-        '''
+        """
         Parse statement
         :param vraw_statement: 
         :return: 
-        '''
+        """
         if self.debug:
             print('parse_statement'+lineno())
             print('raw_statement: '+str(raw_statement)+lineno())
@@ -152,11 +155,11 @@ class PolicyDocumentParser:
         return statement
 
     def streamline_array(self, one_or_more):
-        '''
+        """
         ???
         :param one_or_more: 
         :return: 
-        '''
+        """
 
         if one_or_more:
             if self.debug:

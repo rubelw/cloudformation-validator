@@ -11,14 +11,16 @@ def lineno():
 
 
 class ParserError(Error):
-
+    """
+    Parser error
+    """
     def __init__(self,message, validation_errors=None, debug=False):
-        '''
+        """
         Initialize
         :param message: 
         :param validation_errors: 
         :param debug: 
-        '''
+        """
         self.debug = debug
         self.message = message
         self.errors = validation_errors
@@ -26,10 +28,10 @@ class ParserError(Error):
             print('ParserError - init'+lineno())
 
     def to_hash(self):
-        '''
+        """
         Convert to hash
         :return: 
-        '''
+        """
         if self.debug:
             print('to_hash '+lineno())
         hash = {}
@@ -37,10 +39,10 @@ class ParserError(Error):
         return hash
 
     def to_string(self):
-        '''
+        """
         Convert to string
         :return: 
-        '''
+        """
         if self.debug:
             print('to_string'+lineno())
         print()

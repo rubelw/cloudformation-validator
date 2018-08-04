@@ -13,78 +13,78 @@ def lineno():
 
 
 class EbsVolumeHasSseRule(BaseRule):
-  
-  def __init__(self, cfn_model=None, debug=None):
-    '''
-    Initialize EbsVolumeHasSseRule
-    :param cfn_model: 
-    '''
-    BaseRule.__init__(self, cfn_model, debug=debug)
 
-  def rule_text(self):
-    '''
-    Returns rule text
-    :return: 
-    '''
-    if self.debug:
-      print('rule_text'+lineno())
-    return 'EBS volume should have server-side encryption enabled'
+    def __init__(self, cfn_model=None, debug=None):
+        """
+        Initialize EbsVolumeHasSseRule
+        :param cfn_model:
+        """
+        BaseRule.__init__(self, cfn_model, debug=debug)
 
-  def rule_type(self):
-    '''
-    Returns rule type
-    :return: 
-    '''
-    self.type= 'VIOLATION::FAILING_VIOLATION'
-    return 'VIOLATION::FAILING_VIOLATION'
-
-  def rule_id(self):
-    '''
-    Returns rule id
-    :return: 
-    '''
-    if self.debug:
-      print('rule_id'+lineno())
-    self.id ='F1'
-    return 'F1'
-  
-
-  def audit_impl(self):
-    '''
-    Audit
-    :return: violations 
-    '''
-    if self.debug:
-      print('EbsVolumeHasSseRule - audit_impl'+lineno())
-
-    violating_volumes = []
-
-    resources = self.cfn_model.resources_by_type('AWS::EC2::Volume')
-
-    if len(resources) > 0:
-
-      for resource in resources:
+    def rule_text(self):
+        """
+        Returns rule text
+        :return:
+        """
         if self.debug:
-          print('resource: ' + str(resource)+lineno())
-          print('vars: '+str(vars(resource)))
+          print('rule_text'+lineno())
+        return 'EBS volume should have server-side encryption enabled'
 
-        if hasattr(resource, 'encrypted'):
-          if self.debug:
-            print('has encrypted attribute'+lineno())
-          if resource.encrypted == 'true' or resource.encrypted == 'True':
-            if self.debug:
-              print('it is true')
-          else:
-            if self.debug:
-              print('not true')
-            violating_volumes.append(str(resource.logical_resource_id))
+    def rule_type(self):
+        """
+        Returns rule type
+        :return:
+        """
+        self.type= 'VIOLATION::FAILING_VIOLATION'
+        return 'VIOLATION::FAILING_VIOLATION'
+
+    def rule_id(self):
+        """
+        Returns rule id
+        :return:
+        """
+        if self.debug:
+            print('rule_id'+lineno())
+        self.id ='F1'
+        return 'F1'
+
+
+    def audit_impl(self):
+        """
+        Audit
+        :return: violations
+        """
+        if self.debug:
+            print('EbsVolumeHasSseRule - audit_impl'+lineno())
+
+        violating_volumes = []
+
+        resources = self.cfn_model.resources_by_type('AWS::EC2::Volume')
+
+        if len(resources) > 0:
+
+            for resource in resources:
+                if self.debug:
+                    print('resource: ' + str(resource)+lineno())
+                    print('vars: '+str(vars(resource)))
+
+                if hasattr(resource, 'encrypted'):
+                    if self.debug:
+                        print('has encrypted attribute'+lineno())
+                    if resource.encrypted == 'true' or resource.encrypted == 'True':
+                        if self.debug:
+                            print('it is true')
+                    else:
+                        if self.debug:
+                            print('not true')
+                        violating_volumes.append(str(resource.logical_resource_id))
+                else:
+                    if self.debug:
+                        print('does not have encrypted property')
+                    violating_volumes.append(str(resource.logical_resource_id))
+
         else:
-          if self.debug:
-            print('does not have encrypted property')
-          violating_volumes.append(str(resource.logical_resource_id))
+            if self.debug:
+                print('no violating_volumes'+lineno())
 
-    else:
-      if self.debug:
-        print('no violating_volumes'+lineno())
-
-    return violating_volumes
+        return violating_volumes

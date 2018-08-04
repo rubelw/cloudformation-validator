@@ -3,13 +3,15 @@ from cfn_model.model.ModelElement import ModelElement
 
 
 class EC2SecurityGroupIngress(ModelElement):
-
-    def __init__(self, cfn_model,debug=False):
-        '''
+    """
+    Ec2 security group ingress model
+    """
+    def __init__(self, cfn_model, debug=False):
+        """
         Initialize
         :param cfn_model: 
         :param debug: 
-        '''
+        """
         self.debug = debug
 
         if self.debug:

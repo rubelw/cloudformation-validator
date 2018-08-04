@@ -9,11 +9,13 @@ def lineno():
 
 
 class SimpleStdoutResults:
-
+    """
+    Simple standard out results
+    """
     def __init__(self):
-        '''
+        """
         Initialize SimpleStdoutResults
-        '''
+        """
         print('SimpleStdoutResults - init'+lineno())
 
     def message_violations(self, violations):
@@ -22,23 +24,23 @@ class SimpleStdoutResults:
         sys.exit(1)
 
     def render(self, results):
-        '''
+        """
         Render results
         :param results:
         :return:
-        '''
+        """
         #FIXME
         sys.exit(1)
         return('render'+lineno())
 
     def message(self, message_type,  message, logical_resource_ids=None):
-        '''
+        """
         Does something with message
         :param message_type:
         :param message:
         :param logical_resource_ids:
         :return:
-        '''
+        """
         print('message'+lineno())
         #FIXME
         sys.exit(1)

@@ -2,12 +2,14 @@ from __future__ import absolute_import, division, print_function
 import sys
 
 class Parameter:
-
+    """
+    Parameter model
+    """
     def __init__(self, debug=False):
-        '''
+        """
         Initialize
         :param debug:
-        '''
+        """
         #   attr_accessor :id, :type
         # attr_accessor :synthesized_value
         self.id = None
@@ -18,12 +20,11 @@ class Parameter:
         if self.debug:
             print('Parameter - init')
 
-
     def is_no_echo(self):
-        '''
+        """
         ???
         :return:
-        '''
+        """
         if self.debug:
             print('is_no_echo')
         # FIXME
@@ -32,10 +33,10 @@ class Parameter:
 
 
     def to_string(self):
-        '''
+        """
         ???
         :return:
-        '''
+        """
         if self.debug:
             print('to_s')
         # FIXME
@@ -46,12 +47,12 @@ class Parameter:
         #}
 
     def method_missing(self, method_name, *args):
-        '''
+        """
         ???
         :param method_name:
         :param args:
         :return:
-        '''
+        """
         if self.debug:
             print('method_missing')
         # FIXME
@@ -63,10 +64,10 @@ class Parameter:
 
 
     def emit_instance_vars(self):
-        '''
+        """
         ???
         :return:
-        '''
+        """
         if self.debug:
             print('emit_instance_varts')
 

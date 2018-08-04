@@ -13,72 +13,71 @@ def lineno():
 
 # Rule class to ensure a CF distribution has logging
 class CloudFrontDistributionAccessLoggingRule(BaseRule):
-  
-  def __init__(self, cfn_model=None, debug=None):
-    '''
-    Initialize CloudFrontDistributionAccessLoggingRule
-    :param cfn_model: 
-    '''
-    BaseRule.__init__(self, cfn_model, debug=debug)
-      
-  def rule_text(self):
-    '''
-    Returns rule text
-    :return: 
-    '''
-    if self.debug:
-      print('rule_text'+lineno())
-    return 'CloudFront Distribution should enable access logging'
-  
 
-  def rule_type(self):
-    '''
-    Returns rule type
-    :return: 
-    '''
-    self.type= 'VIOLATION::WARNING'
-    return 'VIOLATION::WARNING'
+    def __init__(self, cfn_model=None, debug=None):
+        """
+        Initialize CloudFrontDistributionAccessLoggingRule
+        :param cfn_model:
+        """
+        BaseRule.__init__(self, cfn_model, debug=debug)
 
-  def rule_id(self):
-    '''
-    Returns the rule id
-    :return: 
-    '''
-    if self.debug:
-      print('rule_id'+lineno())
-    self.id = 'W10'
-    return 'W10'
+    def rule_text(self):
+        """
+        Returns rule text
+        :return:
+        """
+        if self.debug:
+          print('rule_text'+lineno())
+        return 'CloudFront Distribution should enable access logging'
 
-  def audit_impl(self):
-    '''
-    Audit
-    :return: violations 
-    '''
-    if self.debug:
-      print('CloudFrontDistributionAccessLoggingRule - audit_impl'+lineno())
-    
-    violating_distributions = []
-    resources = self.cfn_model.resources_by_type('AWS::CloudFront::Distribution')
 
-    if len(resources)>0:
-      for resource in resources:
-          if self.debug:
-            print('resource: '+str(resource)+lineno())
+    def rule_type(self):
+        """
+        Returns rule type
+        :return:
+        """
+        self.type= 'VIOLATION::WARNING'
+        return 'VIOLATION::WARNING'
 
-          if hasattr(resource, 'distributionConfig'):
-            if self.debug:
-              print('has distributionConfig ' + lineno())
+    def rule_id(self):
+        """
+        Returns the rule id
+        :return:
+        """
+        if self.debug:
+            print('rule_id'+lineno())
+        self.id = 'W10'
+        return 'W10'
 
-              print(resource.distributionConfig)
-            if 'Logging' not in resource.distributionConfig:
+    def audit_impl(self):
+        """
+        Audit
+        :return: violations
+        """
+        if self.debug:
+            print('CloudFrontDistributionAccessLoggingRule - audit_impl'+lineno())
+
+        violating_distributions = []
+        resources = self.cfn_model.resources_by_type('AWS::CloudFront::Distribution')
+
+        if len(resources)>0:
+            for resource in resources:
                 if self.debug:
-                  print('does not have logging')
+                    print('resource: '+str(resource)+lineno())
 
-                violating_distributions.append(str(resource.logical_resource_id))
+                if hasattr(resource, 'distributionConfig'):
+                    if self.debug:
+                        print('has distributionConfig ' + lineno())
 
-    else:
-      if self.debug:
-        print('no violating_distributions'+lineno())
+                        print(resource.distributionConfig)
+                    if 'Logging' not in resource.distributionConfig:
+                        if self.debug:
+                            print('does not have logging')
 
+                        violating_distributions.append(str(resource.logical_resource_id))
 
-    return violating_distributions
+        else:
+            if self.debug:
+                print('no violating_distributions'+lineno())
+
+        return violating_distributions

@@ -29,7 +29,9 @@ def pretty(value, htchar='\t', lfchar='\n', indent=0):
         return repr(value)
 
 class TestS3Bucket(unittest.TestCase):
-
+    """
+    Test s3 buckets
+    """
     def test_s3_bucket(self):
 
       expected_result = {

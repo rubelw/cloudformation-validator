@@ -15,36 +15,36 @@ class SecurityGroupEgressPortRangeRule(BaseRule):
 
 
   def __init__(self, cfn_model=None, debug=None):
-    '''
+    """
     Initialize
     :param cfn_model: 
-    '''
+    """
     BaseRule.__init__(self, cfn_model, debug=debug)
 
   def rule_text(self):
-    '''
+    """
     Get rule text
     :return: 
-    '''
+    """
     if self.debug:
         print('rule_text'+lineno())
     return 'Security Groups found egress with port range instead of just a single port'
 
 
   def rule_type(self):
-    '''
+    """
     Get rule type
     :return: 
-    '''
+    """
     self.type= 'VIOLATION::WARNING'
     return 'VIOLATION::WARNING'
 
 
   def rule_id(self):
-    '''
+    """
     Get rule id
     :return: 
-    '''
+    """
     if self.debug:
         print('rule_id'+lineno())
     self.id ='W29'
@@ -54,10 +54,10 @@ class SecurityGroupEgressPortRangeRule(BaseRule):
   ##
   # This will behave slightly different than the legacy jq based rule which was targeted against inline ingress only
   def audit_impl(self):
-    '''
+    """
     Audit
     :return: violations 
-    '''
+    """
     if self.debug:
         print('SecurityGroupEgressPortRangeRule - audit_impl'+lineno())
     violating_egresses = []

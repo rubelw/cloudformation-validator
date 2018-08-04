@@ -29,7 +29,9 @@ def pretty(value, htchar='\t', lfchar='\n', indent=0):
         return repr(value)
 
 class TestLambdaPermission(unittest.TestCase):
-
+    """
+    Test lambda permission
+    """
     def test_lambda_permission_with_some_out_of_ord_items(self):
 
       expected_result = {

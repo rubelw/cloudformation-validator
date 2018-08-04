@@ -29,6 +29,9 @@ def pretty(value, htchar='\t', lfchar='\n', indent=0):
         return repr(value)
 
 class TestSecurityGroup(unittest.TestCase):
+    """
+    Test security group
+    """
 
     def test_dangling_egress_rule(self):
         expected_result = {

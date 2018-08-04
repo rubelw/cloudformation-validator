@@ -16,15 +16,18 @@ def lineno():
 
 
 class SecurityGroupParser:
-
+    """
+    Security group parser
+    """
+    
     @staticmethod
     def parse(cfn_model, resource, debug=False):
-        '''
+        """
         Parse security group
         :param resource:
         :param debug:
         :return:
-        '''
+        """
         if debug:
             print('parse'+lineno())
 
@@ -42,12 +45,12 @@ class SecurityGroupParser:
 
     @staticmethod
     def objectify_ingress(cfn_model, security_group, debug=False):
-        '''
+        """
         Objectivy ingress statment
         :param security_group:
         :param debug:
         :return:
-        '''
+        """
         if debug:
             print("\n\n#########################")
             print('objectify_ingress'+lineno())
@@ -145,12 +148,12 @@ class SecurityGroupParser:
 
     @staticmethod
     def objectify_egress(cfn_model, security_group, debug=False):
-        '''
+        """
         Trying to convert a security group egress in to an egress object
         :param security_group:
         :param debug:
         :return:
-        '''
+        """
         if debug:
             print("\n\n###############")
             print('objectify_egress'+lineno())
@@ -270,10 +273,10 @@ class SecurityGroupParser:
 
     @staticmethod
     def initialLower(key_name):
-        '''
+        """
         First character to lower case
         :return:
-        '''
+        """
         first_character = str(key_name)[:1]
         remaining_characters = str(key_name)[1:]
         new_property_name = str(first_character.lower()) + str(remaining_characters)
@@ -282,12 +285,12 @@ class SecurityGroupParser:
 
     @staticmethod
     def wire_ingress_rules_to_security_group(cfn_model, security_group, debug=False):
-        '''
+        """
         Wires a standalone ingress rule to a security group
         :param security_group:
         :param debug:
         :return:
-        '''
+        """
         if debug:
             print("\n\n###############")
             print('wire_ingress_rules_to_security_group'+lineno())
@@ -353,12 +356,12 @@ class SecurityGroupParser:
 
     @staticmethod
     def wire_egress_rules_to_security_group(cfn_model, security_group, debug=False):
-        '''
+        """
         Wire egress rule to a security group
         :param security_group:
         :param debug:
         :return:
-        '''
+        """
         if debug:
             print("\n\n###############")
             print('wire_egress_rules_to_security_group'+lineno())

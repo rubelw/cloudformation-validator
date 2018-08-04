@@ -29,7 +29,9 @@ def pretty(value, htchar='\t', lfchar='\n', indent=0):
         return repr(value)
 
 class TestRdsInstance(unittest.TestCase):
-
+    """
+    Test rds instance
+    """
     def test_rds_instance_with_public_access(self):
 
       expected_result = {
@@ -95,9 +97,6 @@ class TestRdsInstance(unittest.TestCase):
 
       self.assertEqual(expected_result, real_result)
 
-
-
-
     def test_rds_instance_with_default_credentials_and_no_echo_is_true(self):
 
       expected_result = {
@@ -134,8 +133,6 @@ class TestRdsInstance(unittest.TestCase):
           list_of_tuples = [(key, expected_result[key]) for key in order_of_keys]
           expected_result = OrderedDict(list_of_tuples)
 
-
-
       expected_result = pretty(expected_result)
 
       template_name = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))+'/cloudformation_validator/test_templates/json/rds_instance/rds_instance_no_echo_with_default_password.json'
@@ -161,10 +158,6 @@ class TestRdsInstance(unittest.TestCase):
       print('real results: '+str(real_result))
 
       self.assertEqual(expected_result, real_result)
-
-
-
-
 
     def test_rds_instance_with_non_encrypted_credentials(self):
 

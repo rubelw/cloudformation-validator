@@ -8,14 +8,17 @@ def lineno():
     """Returns the current line number in our program."""
     return str(' - PolicyDocument - line number: '+str(inspect.currentframe().f_back.f_lineno))
 
-class PolicyDocument:
 
+class PolicyDocument:
+    """
+    Policy document model
+    """
 
     def __init__(self, debug=False):
-        '''
+        """
         Initialize
         :param debug: 
-        '''
+        """
         self.statements = []
         self.version = None
         self.debug = debug
@@ -24,11 +27,11 @@ class PolicyDocument:
             print('init'+lineno())
 
     def wildcard_allowed_resources(self, debug=False):
-        '''
+        """
         Whether allow wildcard resources
         :param debug: 
         :return: 
-        '''
+        """
         if self.debug or debug:
             print('wilcard_allowed_resources'+lineno())
 
@@ -41,11 +44,11 @@ class PolicyDocument:
 
 
     def wildcard_allowed_actions(self, debug=False):
-        '''
+        """
         Wether wildcard allowed actions
         :param debug: 
         :return: 
-        '''
+        """
         if self.debug or debug:
             print('wildcard_allowed_actions'+lineno())
 
@@ -90,11 +93,11 @@ class PolicyDocument:
 
 
     def wildcard_allowed_principals(self, debug=False):
-        '''
+        """
         Whether wildcard allowed principals
         :param debug: 
         :return: 
-        '''
+        """
         if self.debug or debug:
             print('wildcard_allowed_principals'+lineno())
             print('self: '+str(self)+lineno())
@@ -118,11 +121,11 @@ class PolicyDocument:
 
 
     def allows_not_action(self, debug=False):
-        '''
+        """
         Select any statement object that allow in conjunction with a NotAction
         :param debug: 
         :return: 
-        '''
+        """
         if self.debug or debug:
             print('allows_not_action'+lineno())
 
@@ -141,11 +144,11 @@ class PolicyDocument:
 
 
     def allows_not_resource(self, debug=False):
-        '''
+        """
         Allows not resource
         :param debug: 
         :return: 
-        '''
+        """
         if self.debug or debug:
             print('allows_not_resources'+lineno())
 
@@ -167,11 +170,11 @@ class PolicyDocument:
         return False
 
     def allows_not_principal(self, debug=False):
-      '''
+      """
       Allows not principal
       :param debug: 
       :return: 
-      '''
+      """
       if self.debug or debug:
         print('allows_not_principal'+lineno())
 
@@ -194,10 +197,10 @@ class PolicyDocument:
 
 
     def to_string(self):
-        '''
+        """
         Convert to string
         :return: 
-        '''
+        """
         if self.debug:
             print('to_s'+lineno())
         # FIXME

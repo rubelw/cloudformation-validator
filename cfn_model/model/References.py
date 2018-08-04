@@ -11,15 +11,18 @@ def lineno():
 
 
 class References:
-
+    """
+    References model
+    """
+    
     @staticmethod
     def resolve_value(cfn_model, value, debug=False):
-        '''
+        """
         ???
         :param value:
         :param debug:
         :return:
-        '''
+        """
         if debug:
             print('resolve_value'+lineno())
             print('value: '+str(value)+lineno())
@@ -57,11 +60,11 @@ class References:
 
     @staticmethod
     def is_security_group_id_external(group_id, debug=False):
-        '''
+        """
         Is security group id external
         :param debug:
         :return:
-        '''
+        """
         if debug:
             print('\n#####################################################')
             print('Checking if security group id is external')
@@ -81,11 +84,11 @@ class References:
 
     @staticmethod
     def resolve_security_group_id(group_id, debug=False):
-        '''
+        """
         Resolve security group id
         :param debug:
         :return:
-        '''
+        """
         if debug:
             print("\n\n##########################################")
             print('resolve_security_group id'+lineno())
@@ -149,16 +152,16 @@ class References:
             print('attribute_spec: '+str(attribute_spec)+lineno())
 
         if type(attribute_spec) == type(list()):
-           if attribute_spec[1] == 'GroupId':
-              return attribute_spec[0]
-           else:
-             # this could be a reference to a nested stack output so treat it as external
-             # and presume the ingress is freestanding.
-             return None
+            if attribute_spec[1] == 'GroupId':
+                return attribute_spec[0]
+            else:
+                # this could be a reference to a nested stack output so treat it as external
+                # and presume the ingress is freestanding.
+                return None
         elif type(attribute_spec) == type(str()) or type(attribute_spec) == type(unicode()):
             attributes = attribute_spec.split('.')
 
-            if attribute[1] == 'GroupId':
+            if attributes[1] == 'GroupId':
                 return attributes[0]
             else:
                 # this could be a reference to a nested stack output so treat it as external

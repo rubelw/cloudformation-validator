@@ -32,7 +32,9 @@ def pretty(value, htchar='\t', lfchar='\n', indent=0):
         return repr(value)
 
 class TestCloudDistribution(unittest.TestCase):
-
+    """
+    Test cloudformation distribution
+    """
     def test_cloudformation(self):
 
         expected_result = {
@@ -47,7 +49,6 @@ class TestCloudDistribution(unittest.TestCase):
                 ]
             }]
         }
-
 
         if sys.version_info[0] < 3:
 
@@ -72,7 +73,7 @@ class TestCloudDistribution(unittest.TestCase):
 
         expected_result =pretty(expected_result)
         template_name = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))+'/cloudformation_validator/test_templates/json/cloudfront_distribution/cloudfront_distribution_without_logging.json'
-        debug = True
+        debug = False
 
         config_dict = {}
         config_dict['template_file'] = template_name
@@ -88,7 +89,6 @@ class TestCloudDistribution(unittest.TestCase):
         validator = class_to_test(config_dict)
 
         real_results =  validator.validate()
-
 
         self.maxDiff = None
         self.assertEqual(expected_result, real_results)

@@ -17,11 +17,11 @@ class RuleDumper:
 
 
     def __init__(self, profile_definition=None, rule_directory=None, debug=False):
-        '''
+        """
         Initialize RuleDumper
         :param profile_definition: 
         :param rule_directory: 
-        '''
+        """
         self.debug = debug
         self.rule_directory = rule_directory
         self.profile_definition = profile_definition
@@ -30,10 +30,10 @@ class RuleDumper:
             print('RuleDumper - init'+lineno())
 
     def dump_rules(self):
-        '''
+        """
         Dump rules
         :return: 
-        '''
+        """
 
         custom_rule_loader = CustomRuleLoader(debug=self.debug)
 

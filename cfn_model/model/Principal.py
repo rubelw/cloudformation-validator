@@ -9,23 +9,25 @@ def lineno():
 
 
 class Principal:
-
+    """
+    Principal model
+    """
     def __init__(self, debug=False):
-        '''
+        """
         Initialize
         :param debug: 
-        '''
+        """
         self.debug = debug
 
         if self.debug:
             print('__init__'+lineno())
 
     def wildcard(self, principal):
-        '''
+        """
         Whether principal has a wildcard
         :param principal: 
         :return: 
-        '''
+        """
         if self.debug:
             print('wildcard'+lineno())
 
@@ -77,11 +79,11 @@ class Principal:
             return False
 
     def has_asterisk(self, string):
-        '''
+        """
         Whether string has asterisk
         :param string: 
         :return: 
-        '''
+        """
         if self.debug:
             print('has asterisk'+lineno())
 

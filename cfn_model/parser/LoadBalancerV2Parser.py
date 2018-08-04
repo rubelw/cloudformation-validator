@@ -9,15 +9,17 @@ def lineno():
 
 
 class LoadBalancerV2Parser:
-
+    """
+    Load balancer v2 parser
+    """
     @staticmethod
     def parse(cfn_model, resource, debug=False):
-        '''
+        """
         Parse load balancer v2
         :param resource: 
         :param debug: 
         :return: 
-        '''
+        """
 
         if self.debug:
             print('parse'+lineno())

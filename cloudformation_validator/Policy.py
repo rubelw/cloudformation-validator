@@ -14,14 +14,14 @@ def lineno():
 class Policy(RoleDefinition):
 
     def __init__(self, id, type, message, logical_resource_ids=None, debug=False):
-        '''
+        """
         Initialize Violation
         :param id: 
         :param type: 
         :param message: 
         :param logical_resource_ids: 
         :param debug: 
-        '''
+        """
         RoleDefinition.__init__(self, id, type, message)
         self.attr_reader = None
         self.message = message
@@ -35,10 +35,10 @@ class Policy(RoleDefinition):
 
 
     def to_string(self):
-        '''
+        """
         Returns violation as a string
         :return: 
-        '''
+        """
         if self.debug:
             print('to string'+lineno())
         #FIXME
@@ -47,10 +47,10 @@ class Policy(RoleDefinition):
 
 
     def to_hash(self):
-        '''
+        """
         Converts violation to hash
         :return: 
-        '''
+        """
         if self.debug:
             print('to hash'+lineno())
             print('logical id type: '+str(type(self.logical_resource_ids))+lineno())

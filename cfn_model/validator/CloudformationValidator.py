@@ -11,14 +11,15 @@ def lineno():
     return str(' -  CloudformationValidator- line number: '+str(inspect.currentframe().f_back.f_lineno))
 
 
-
 class CloudformationValidator:
-
+    """
+    Cloudformation validator
+    """
     def __init__(self, debug=False):
-        '''
+        """
         Initialize
         :param debug:
-        '''
+        """
 
         self.debug = debug
 
@@ -26,11 +27,11 @@ class CloudformationValidator:
             print('CloudformationValidator - __init__'+lineno())
 
     def validate(self, cloudformation_string):
-        '''
+        """
         Validating the schema for a cloudformation segment
         :param cloudformation_string:
         :return:
-        '''
+        """
         if self.debug:
             print("\n\n##################################################")
             print('CloudformationValidator - validate - validating following string'+lineno())
@@ -57,12 +58,12 @@ class CloudformationValidator:
         return c.errors
 
     def check(self, conf_schema, conf):
-        '''
+        """
         ???
         :param conf_schema:
         :param conf:
         :return:
-        '''
+        """
 
         try:
             conf_schema.validate(conf)

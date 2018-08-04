@@ -14,109 +14,108 @@ def lineno():
 
 class SecurityGroupIngressPortRangeRule(BaseRule):
 
-  def __init__(self, cfn_model=None, debug=None):
-    '''
-    Initialize
-    :param cfn_model: 
-    '''
-    BaseRule.__init__(self, cfn_model, debug=debug)
+    def __init__(self, cfn_model=None, debug=None):
+        """
+        Initialize
+        :param cfn_model:
+        """
+        BaseRule.__init__(self, cfn_model, debug=debug)
 
-  def rule_text(self):
-    '''
-    Get rule text
-    :return: 
-    '''
-    if self.debug:
-        print('rule_text'+lineno())
-    return 'Security Groups found ingress with port range instead of just a single port'
-
-
-  def rule_type(self):
-    '''
-    Get rule type
-    :return: 
-    '''
-    self.type= 'VIOLATION::WARNING'
-    return 'VIOLATION::WARNING'
-
-
-  def rule_id(self):
-    '''
-    Get rule id
-    :return: 
-    '''
-    if self.debug:
-        print('rule_id'+lineno())
-    self.id ='W27'
-    return 'W27'
-
-
-  ##
-  # This will behave slightly different than the legacy jq based rule which was targeted against inline ingress only
-  def audit_impl(self):
-    '''
-    Audit
-    :return: violations 
-    '''
-    if self.debug:
-        print('SecurityGroupIngressPortRangeRule - audit_impl'+lineno())
-
-    violating_ingresses = []
-
-    for groups in self.cfn_model.security_groups():
-
+    def rule_text(self):
+        """
+        Get rule text
+        :return:
+        """
         if self.debug:
-            print('group: '+str(groups)+lineno())
+            print('rule_text'+lineno())
+        return 'Security Groups found ingress with port range instead of just a single port'
 
-        if type(groups)==type(dict()):
-            if str(groups['FromPort']) != str(groups['ToPort']):
-                violating_ingresses.append(groups.logical_resource_id)
 
-        else:
+    def rule_type(self):
+        """
+        Get rule type
+        :return:
+        """
+        self.type= 'VIOLATION::WARNING'
+        return 'VIOLATION::WARNING'
+
+
+    def rule_id(self):
+        """
+        Get rule id
+        :return:
+        """
+        if self.debug:
+            print('rule_id'+lineno())
+        self.id ='W27'
+        return 'W27'
+
+
+
+    def audit_impl(self):
+        """
+        Audit
+        :return: violations
+        """
+        if self.debug:
+            print('SecurityGroupIngressPortRangeRule - audit_impl'+lineno())
+
+        violating_ingresses = []
+
+        for groups in self.cfn_model.security_groups():
+
             if self.debug:
-                print('ingress is not a dict: '+lineno())
+                print('group: '+str(groups)+lineno())
 
-            for ingress in groups.ingresses:
-              if self.debug:
-                print('## ingresses: '+str(ingress)+lineno())
-
-              if type(ingress)==type(dict()):
-
-                if str(ingress['FromPort']) != str(ingress['ToPort']):
+            if type(groups)==type(dict()):
+                if str(groups['FromPort']) != str(groups['ToPort']):
                     violating_ingresses.append(groups.logical_resource_id)
 
-              elif type(ingress) == type(list()):
+            else:
+                if self.debug:
+                    print('ingress is not a dict: '+lineno())
 
-                  for item in ingress:
+                for ingress in groups.ingresses:
+                    if self.debug:
+                        print('## ingresses: '+str(ingress)+lineno())
 
-                      if type(item) == type(dict()):
+                    if type(ingress)==type(dict()):
 
-                          if str(item['FromPort']) != str(item['ToPort']):
-                              violating_ingresses.append(str(groups.logical_resource_id))
+                        if str(ingress['FromPort']) != str(ingress['ToPort']):
+                            violating_ingresses.append(groups.logical_resource_id)
 
-                      elif item.fromPort != item.toPort:
-                            violating_ingresses.append(str(item.logical_resource_id))
+                    elif type(ingress) == type(list()):
 
-              elif ingress.fromPort != ingress.toPort:
-                violating_ingresses.append(str(ingress.logical_resource_id))
+                        for item in ingress:
 
-    violating_standalone_ingresses = self.cfn_model.standalone_ingress()
-    if self.debug:
-        print('violating standalone ingresses: '+str(violating_standalone_ingresses)+lineno())
+                            if type(item) == type(dict()):
 
-    for groups in violating_standalone_ingresses:
+                                if str(item['FromPort']) != str(item['ToPort']):
+                                    violating_ingresses.append(str(groups.logical_resource_id))
+
+                            elif item.fromPort != item.toPort:
+                                violating_ingresses.append(str(item.logical_resource_id))
+
+                    elif ingress.fromPort != ingress.toPort:
+                        violating_ingresses.append(str(ingress.logical_resource_id))
+
+        violating_standalone_ingresses = self.cfn_model.standalone_ingress()
         if self.debug:
-            print('group: '+str(groups)+lineno())
-            print('vars: '+str(vars(groups))+lineno())
+            print('violating standalone ingresses: '+str(violating_standalone_ingresses)+lineno())
 
-        if hasattr(groups,'cfn_model'):
-            if 'Properties' in groups.cfn_model:
-                if 'ToPort' in groups.cfn_model['Properties'] and 'FromPort' in groups.cfn_model['Properties']:
+        for groups in violating_standalone_ingresses:
+            if self.debug:
+                print('group: '+str(groups)+lineno())
+                print('vars: '+str(vars(groups))+lineno())
 
-                    if str(groups.cfn_model['Properties']['ToPort']) != str(groups.cfn_model['Properties']['FromPort']):
-                        violating_ingresses.append(str(groups.logical_resource_id))
+            if hasattr(groups,'cfn_model'):
+                if 'Properties' in groups.cfn_model:
+                    if 'ToPort' in groups.cfn_model['Properties'] and 'FromPort' in groups.cfn_model['Properties']:
 
-    if self.debug:
-        print('violations: '+str(list(set(violating_ingresses))))
+                        if str(groups.cfn_model['Properties']['ToPort']) != str(groups.cfn_model['Properties']['FromPort']):
+                            violating_ingresses.append(str(groups.logical_resource_id))
 
-    return violating_ingresses
+        if self.debug:
+            print('violations: '+str(list(set(violating_ingresses))))
+
+        return violating_ingresses

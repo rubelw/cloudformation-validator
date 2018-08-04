@@ -3,19 +3,21 @@ import inspect
 import sys
 
 
-
 def lineno():
     """Returns the current line number in our program."""
     return str(' - ModelElement - line number: '+str(inspect.currentframe().f_back.f_lineno))
 
-class ModelElement():
 
+class ModelElement():
+    """
+    Model element
+    """
     def __init__(self, cfn_model, debug=False):
-        '''
+        """
         Initialize
         :param cfn_model:
         :param debug:
-        '''
+        """
         # attr_accessor :logical_resource_id, :resource_type, :metadata
         self.logical_resource_id = None
         self.resource_type = None
@@ -26,13 +28,12 @@ class ModelElement():
         if self.debug:
             print('ModelElement - init'+lineno())
 
-
     def another_element(self, another_model_element):
-        '''
+        """
         ???
         :param another_model_element:
         :return:
-        '''
+        """
         if self.debug:
             print('another element'+lineno())
         # FIXME
@@ -48,12 +49,12 @@ class ModelElement():
         #!found_unequal_instance_var
 
     def method_missing(self, method_name, *args):
-        '''
+        """
         ???
         :param method_name:
         :param args:
         :return:
-        '''
+        """
         if self.debug:
             print('method_missing'+lineno())
         # FIXME
@@ -67,10 +68,10 @@ class ModelElement():
         #end
 
     def instance_variables_without_at_sign(self):
-        '''
+        """
         Instance variables without an at sign
         :return:
-        '''
+        """
         if self.debug:
             print('instance_variables_without_at_sign'+lineno())
         # FIXME
@@ -78,11 +79,11 @@ class ModelElement():
         #self.instance_variables.map { |instance_variable| strip(instance_variable) }
 
     def strip(self, sym):
-        '''
+        """
         ???
         :param sym:
         :return:
-        '''
+        """
         if self.debug:
             print('strip'+lineno())
 
@@ -91,10 +92,10 @@ class ModelElement():
         #sym.to_s.gsub( / @ /, '').to_sym
 
     def emit_instance_vars(self):
-        '''
+        """
         ???
         :return:
-        '''
+        """
         if self.debug:
             print('emit_instance_vars'+lineno())
 

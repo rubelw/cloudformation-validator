@@ -10,27 +10,28 @@ def lineno():
     return str(' - JsonResults - line number: '+str(inspect.currentframe().f_back.f_lineno))
 
 class JsonResults:
-
+    """
+    Json results
+    """
     def __init__(self, debug=False, suppress_errors=False):
-        '''
+        """
         Initialize JsonResults
         :param debug:
-        '''
+        """
         self.debug = debug
         self.suppress_errors = suppress_errors
         if self.debug:
             print('JsonResults - init'+lineno())
 
-
     def pretty(self, value, htchar='\t', lfchar='\n', indent=0):
-        '''
+        """
         Prints pretty json
         :param value:
         :param htchar:
         :param lfchar:
         :param indent:
         :return: pretty json
-        '''
+        """
 
         if self.debug:
             print('### type: '+str(type(value))+lineno())
@@ -76,18 +77,16 @@ class JsonResults:
 
 
     def render(self, results):
-        '''
+        """
         Renders results
         :param results:
         :return:
-        '''
+        """
         if self.debug:
             print('render:'+lineno())
 
             print('results: '+str(results)+lineno())
             print('type: '+str(type(results))+lineno())
-
-
 
         if type(results)==type(list()):
 
@@ -117,7 +116,6 @@ class JsonResults:
 
                     if 'failure_count' in r['file_results']:
                         r['file_results'].pop('failure_count', None)
-
 
                     if 'violations' in r['file_results']:
 
@@ -160,13 +158,10 @@ class JsonResults:
             list_of_tuples = [(key, hash[0][key]) for key in order_of_keys]
             hash= OrderedDict(list_of_tuples)
 
-
         else:
-
             order_of_keys = ["failure_count", "filename", "file_results"]
             list_of_tuples = [(key, results[key]) for key in order_of_keys]
             new_results = OrderedDict(list_of_tuples)
-
 
             hash=[]
             for result in new_results:

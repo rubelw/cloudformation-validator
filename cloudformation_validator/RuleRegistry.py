@@ -14,10 +14,10 @@ def lineno():
 class RuleRegistry:
 
     def __init__(self,debug=False):
-        '''
+        """
         Initialize RulesRegistry
         :param debug: 
-        '''
+        """
         self.debug = debug
         self.rules = []
 
@@ -26,13 +26,13 @@ class RuleRegistry:
 
 
     def definition(self, id, type, message):
-        '''
+        """
         Add a rule definition to the registry
         :param id: 
         :param type: 
         :param message: 
         :return: 
-        '''
+        """
         if self.debug:
             print('definition '+lineno())
 
@@ -57,11 +57,11 @@ class RuleRegistry:
 
 
     def by_id(self, id):
-          '''
+          """
           Find rule definition by id
           :param id:
           :return:
-          '''
+          """
           if self.debug:
             print('by_id'+lineno())
 
@@ -84,11 +84,11 @@ class RuleRegistry:
           return found_it
 
     def warnings(self):
-          '''
+          """
           Get rule warnings
           :param self:
           :return:
-          '''
+          """
 
           rules = []
 
@@ -108,11 +108,11 @@ class RuleRegistry:
           #sys.exit(1)
 
     def failings(self):
-          '''
+          """
           Get failing rules
           :param self: 
           :return: 
-          '''
+          """
 
           rules = []
 
@@ -132,12 +132,12 @@ class RuleRegistry:
           #sys.exit(1)
 
     def add_rule(self, violation_def):
-          '''
+          """
           Add rule definition
           :param self: 
           :param violation_def: 
           :return: 
-          '''
+          """
           if self.debug:
             print('add_rule'+lineno())
             print('violation_def: '+str(violation_def)+lineno())

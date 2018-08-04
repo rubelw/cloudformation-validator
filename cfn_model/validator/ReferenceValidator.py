@@ -14,13 +14,15 @@ def lineno():
 
 
 class ReferenceValidator:
-
+    """
+    Reference validator
+    """
 
     def __init__(self, debug=False):
-        '''
+        """
         Initialize
         :param debug:
-        '''
+        """
 
         self.debug=debug
 
@@ -31,11 +33,11 @@ class ReferenceValidator:
             print("################################################\n\n")
 
     def unresolved_references(self, cloudformation_hash):
-        '''
+        """
         Iterate over the cloudformation template
         :param cloudformation_hash:
         :return:
-        '''
+        """
         if self.debug:
             print("\n\n#################################################")
             print('ReferenceValidator - finding unresolved_references'+lineno())
@@ -87,12 +89,12 @@ class ReferenceValidator:
 
 
     def all_references(self, cloudformation_hash):
-        '''
+        """
         Iterate over all resources in the cloudformation template
 
         :param cloudformation_hash:
         :return:
-        '''
+        """
         if self.debug:
             print("\n\n#############################################")
             print('ReferenceValidator - all_references'+lineno())
@@ -130,11 +132,11 @@ class ReferenceValidator:
         return result
 
     def all_ref(self, properties_hash):
-        '''
+        """
         Iterate over all properites in a resource and get all reference
         :param properties_hash:
         :return:
-        '''
+        """
         if self.debug:
             print("\n\n##############################################")
             print('ReferenceValidator - all_ref'+lineno())
@@ -189,11 +191,11 @@ class ReferenceValidator:
         return list(set(refs))
 
     def all_get_att(self, properties_hash):
-        '''
+        """
         Iterate of all properties in hash
         :param properties_hash:
         :return:
-        '''
+        """
         if self.debug:
             print('ReferenceValidator - all_get_att'+lineno())
             print('properties_hash: '+str(properties_hash)+lineno())
@@ -243,11 +245,11 @@ class ReferenceValidator:
         return refs
 
     def pseudo_reference(self, ref):
-        '''
+        """
         Test whether the reference is a pseudo reference to AWS
         :param ref:
         :return:
-        '''
+        """
         if self.debug:
             print('ReferenceValidator - pseudo_reference')
             print('ref: '+str(ref))

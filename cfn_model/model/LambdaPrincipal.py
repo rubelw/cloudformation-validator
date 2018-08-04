@@ -3,13 +3,16 @@ from builtins import (str)
 import sys
 
 class LambdaPrincipal:
-
+    """
+    Lambda principal model
+    """
+    
     @staticmethod
     def wildcard(context):
-        '''
+        """
         If contains wildcard
         :return: 
-        '''
+        """
         if type(context) == type(str()):
             if '*' in context:
                 return True

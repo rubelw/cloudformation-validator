@@ -1,13 +1,16 @@
 from __future__ import absolute_import, division, print_function
 from cfn_model import ModelElement
 
-class EC2NetworkInterface(ModelElement):
 
+class EC2NetworkInterface(ModelElement):
+    """
+    Ec2 network interface model lement
+    """
     def __init__(self, cfn_model):
-        '''
+        """
         Initialize
         :param cfn_model: 
-        '''
+        """
         ModelElement.__init__(self, cfn_model)
 
         self.groupSet= []

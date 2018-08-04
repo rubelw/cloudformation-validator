@@ -9,17 +9,18 @@ def lineno():
     return str(' -  Ec2InstanceParser- line number: '+str(inspect.currentframe().f_back.f_lineno))
 
 
-
 class Ec2InstanceParser:
-
+    """
+    Ec2 instance parser
+    """
     @staticmethod
     def parse(cfn_model, resource, debug=False):
-        '''
+        """
         Parse ec2 instances resources
         :param resource: 
         :param debug: 
         :return: 
-        '''
+        """
 
         if debug:
             print('Ec2InstancePaRSER - parse'+lineno())
