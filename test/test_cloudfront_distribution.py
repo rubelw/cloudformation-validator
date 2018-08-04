@@ -72,7 +72,7 @@ class TestCloudDistribution(unittest.TestCase):
 
         expected_result =pretty(expected_result)
         template_name = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))+'/cloudformation_validator/test_templates/json/cloudfront_distribution/cloudfront_distribution_without_logging.json'
-        debug = False
+        debug = True
 
         config_dict = {}
         config_dict['template_file'] = template_name

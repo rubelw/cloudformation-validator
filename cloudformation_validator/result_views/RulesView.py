@@ -20,8 +20,9 @@ class  RulesView:
         :return: 
         '''
         if debug:
-            print('rule_registry: '+str(rule_registry))
-            print('profile: '+str(profile))
+            print('rule_registry: '+str(rule_registry)+lineno())
+            print('profile: '+str(profile)+lineno())
+
 
         RulesView.emit_warnings(warnings=rule_registry.warnings(),profile=profile, debug=debug)
         RulesView.emit_failings(failings=rule_registry.failings(),profile=profile, debug=debug)
@@ -43,9 +44,14 @@ class  RulesView:
         for rule in warnings:
             data = rule.to_hash()
 
+
+            if debug:
+                print('data: '+str(data)+lineno())
+
             warnings_data[data['id']]=data
 
         keylist = list(warnings_data.keys())
+
         keylist.sort()
 
         print("##################################")
@@ -76,11 +82,15 @@ class  RulesView:
 
         if debug:
             print('emit_failings ' + lineno())
+            print('failings: '+str(failings)+lineno())
 
 
         failings_data={}
         for rule in failings:
             data = rule.to_hash()
+
+            if debug:
+                print('data: '+str(data)+lineno())
 
             failings_data[data['id']]=data
 

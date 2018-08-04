@@ -26,6 +26,10 @@ class RuleDefinition:
 
         if self.debug:
             print('RuleDefinition - init'+lineno())
+            print('id: '+str(id)+lineno())
+            print('type: '+str(type)+lineno())
+            print('message: '+str(message)+lineno())
+            print('debug: '+str(debug)+lineno())
 
     def to_string(self):
         '''
@@ -45,6 +49,7 @@ class RuleDefinition:
         '''
         if self.debug:
             print('to_hash'+lineno())
+            print('id: '+str(self.id)+lineno())
 
         data = {
             'id': str(self.id),

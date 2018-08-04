@@ -39,12 +39,14 @@ cloudformation_validator is on PyPI so all you need is:
 
     $ pip install cfn-validator
 
+
 Testing
 -------
 
 Just run:
 
 .. code-block:: console
+
     $ pip install virtualenv
     $ which python
     $ virtualenv ~/virtualenvs/my_project -p /home/example_username/opt/python-3.6.2/bin/python3
@@ -54,10 +56,12 @@ Just run:
     $ python setup.py install --force
     $ python setup.py test
 
+
 Or you can use tox to run the tests under all supported Python versions. Make
 sure the required python versions are installed and run:
 
 .. code-block:: console
+
     $ pip install virtualenv
     $ which python
     $ virtualenv ~/virtualenvs/my_project -p /home/example_username/opt/python-3.6.2/bin/python3
@@ -67,6 +71,7 @@ sure the required python versions are installed and run:
     $ python setup.py install --force
     $ pip install tox  # first time only
     $ tox
+
 
 Listing Rules
 ---------------
@@ -80,6 +85,7 @@ Listing Rules
     {'id': 'F4', 'type': 'VIOLATION::WARNING', 'message': 'IAM policy should not allow * action'}
     {'id': 'W1', 'type': 'VIOLATION::WARNING', 'message': 'Specifying credentials in the template itself is probably not the safest thing'}
     ...
+
 
 Example
 ---------
@@ -237,6 +243,258 @@ Writing your own rules
                   violating_rules.append(resource.logical_resource_id)
 
       return violating_rules
+
+
+Example of writing a rule which requires custom tags for EC2 instances
+----------------------------------------------------------------------
+
+* Create a directory to store your custom rule
+* Create the custom rule
+
+.. code-block:: console
+
+    mkdir ~/custom_validator_rules
+
+
+.. code-block:: console
+
+    from __future__ import absolute_import, division, print_function
+    import inspect
+    import sys
+    from builtins import (str)
+    from cloudformation_validator.custom_rules.BaseRule import BaseRule
+    from collections import Iterable
+    from six import StringIO, string_types
+    from builtins import (str)
+
+    class Ec2CustomTagsRule(BaseRule):
+
+      def __init__(self, cfn_model=None, debug=None):
+        '''
+        Initialize Ec2HasTagsRule
+        :param cfn_model:
+        '''
+        BaseRule.__init__(self, cfn_model, debug=debug)
+
+      def rule_text(self):
+        '''
+        Returns rule text
+        :return:
+        '''
+        if self.debug:
+          print('rule_text')
+        return 'EC2 instance does not have the required tags'
+
+      def rule_type(self):
+        '''
+        Returns rule type
+        :return:
+        '''
+        self.type= 'VIOLATION::FAILING_VIOLATION'
+        return 'VIOLATION::FAILING_VIOLATION'
+
+      def rule_id(self):
+        '''
+        Returns rule id
+        :return:
+        '''
+        if self.debug:
+          print('rule_id')
+        self.id ='F86'
+        return 'F86'
+
+      def tags_to_dict(self, aws_tags):
+            """ Convert a list of AWS tags into a python dict """
+            return {str(tag['Key']): str(tag['Value']) for tag in self.ensure_list(aws_tags)}
+
+      def ensure_list(self, value):
+            """
+            Coerces a variable into a list; strings will be converted to a singleton list,
+            and `None` or an empty string will be converted to an empty list.
+            Args:
+                value: a list, or string to be converted into a list.
+
+            Returns:
+                :py:class:`list`
+            """
+            ret_value = value
+            if not value:
+                ret_value = []
+            elif not isinstance(value, Iterable) or isinstance(value, string_types):
+                ret_value = [value]
+            return ret_value
+
+
+      def audit_impl(self):
+        '''
+        Audit
+        :return: violations
+        '''
+        if self.debug:
+          print('Ec2HasTagsRule - audit_impl')
+
+        violating_volumes = []
+
+        resources = self.cfn_model.resources_by_type('AWS::EC2::Instance')
+
+        if len(resources) > 0:
+
+          for resource in resources:
+            if self.debug:
+              print('resource: ' + str(resource))
+              print('vars: '+str(vars(resource)))
+
+            if hasattr(resource, 'tags'):
+              tags_dict = self.tags_to_dict(resource.cfn_model['Properties']['Tags'])
+              required_tags = ('Name', 'ResourceOwner','DeployedBy','Project')
+              if not set(required_tags).issubset(tags_dict):
+                violating_volumes.append(str(resource.logical_resource_id))
+            else:
+              if self.debug:
+                print('does not tags property')
+              violating_volumes.append(str(resource.logical_resource_id))
+
+        else:
+          if self.debug:
+            print('no violating_volumes')
+
+        return violating_volumes
+
+
+* Test the rule by creating a cloudformation template without the necessary tags and testing
+
+.. code-block:: console
+
+    {
+      "Parameters": {
+        "subnetId": {
+          "Type": "String",
+          "Default": "subnet-4fd01116"
+        }
+      },
+
+      "Resources": {
+        "EC2I4LBA1": {
+          "Type": "AWS::EC2::Instance",
+          "Properties": {
+            "ImageId": "ami-6df1e514",
+            "InstanceType": "t2.micro",
+            "SubnetId": {
+              "Ref": "subnetId"
+            }
+          },
+          "Metadata": {
+            "AWS::CloudFormation::Authentication": {
+              "testBasic" : {
+                "type" : "basic",
+                "username" : "biff",
+                "password" : "badpassword",
+                "uris" : [ "http://www.example.com/test" ]
+              }
+            }
+          }
+        }
+      }
+    }
+
+
+* Run the test
+
+
+.. code-block:: console
+
+    cfn-validator validate --template-file=/tmp/template.json --rules-directory=/home/user/custom_validator_rules
+
+
+* You should receive the following violations
+
+.. code-block:: console
+
+    {
+        'failure_count': '1',
+        'filename': '/tmp/template.json',
+        'file_results': [
+            {
+                'id': 'F86',
+                'type': 'VIOLATION::FAILING_VIOLATION',
+                'message': 'EC2 instance does not have the required tags',
+                'logical_resource_ids': [
+                    'EC2I4LBA1'
+                ]
+            },
+            {
+                'id': 'W1',
+                'type': 'VIOLATION::WARNING',
+                'message': 'Specifying credentials in the template itself is probably not the safest thing',
+                'logical_resource_ids': [
+                    'EC2I4LBA1'
+                ]
+            }
+        ]
+    }
+
+
+* No add tags property to the cloudformation template and run again
+
+.. code-block:: console
+
+    {
+      "Parameters": {
+        "subnetId": {
+          "Type": "String",
+          "Default": "subnet-4fd01116"
+        }
+      },
+
+      "Resources": {
+        "EC2I4LBA1": {
+          "Type": "AWS::EC2::Instance",
+          "Properties": {
+            "ImageId": "ami-6df1e514",
+            "InstanceType": "t2.micro",
+            "SubnetId": {
+              "Ref": "subnetId"
+            },
+            "Tags" : [
+              {"Key" : "Name", "Value":"value"},
+              {"Key":"ResourceOwner","Value":"resourceowner"},
+              {"Key":"DeployedBy","Value":"deployedby"},
+              {"Key":"Project","Value":"project"}
+            ]
+          },
+          "Metadata": {
+            "AWS::CloudFormation::Authentication": {
+              "testBasic" : {
+                "type" : "basic",
+                "username" : "biff",
+                "password" : "badpassword",
+                "uris" : [ "http://www.example.com/test" ]
+              }
+            }
+          }
+        }
+      }
+    }
+
+
+* You should receive the following violations
+
+.. code-block:: console
+
+    {
+        'failure_count': '0',
+        'filename': '/tmp/template.json',
+        'file_results': [
+            {
+                'id': 'W1',
+                'type': 'VIOLATION::WARNING',
+                'message': 'Specifying credentials in the template itself is probably not the safest thing',
+                'logical_resource_ids': [
+                    'EC2I4LBA1'
+                ]
+            }
+        ]
+    }
 
 Unit Testing
 ------------------------

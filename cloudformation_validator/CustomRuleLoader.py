@@ -53,28 +53,31 @@ class CustomRuleLoader:
 
         rule_registry= RuleRegistry(self.debug)
 
+
         classes = self.discover_rule_classes(self.rule_directory)
 
         if self.debug:
-            print('number of rules: '+str(len(classes))+lineno())
+            print('number of rule types: '+str(len(classes))+lineno())
 
         # Iterate through the rules directory and get the class for each of the rules
         for rule_class in classes:
             if self.debug:
                 print(str(rule_class)+lineno())
 
-            # Skip the base rule from which all rules are derived
-            if str(rule_class)== "BaseRule":
-                continue
+            for file in classes[rule_class]:
 
-            id, type,message = self.rule_registry_from_rule_class(rule_class)
+                # Skip the base rule from which all rules are derived
+                if str(file)== "BaseRule":
+                    continue
 
-            if self.debug:
-                print('id: '+str(id)+lineno())
-                print('type: '+str(type)+lineno())
-                print('message: '+str(message)+lineno())
+                id, type,message = self.rule_registry_from_rule_class(file, classes[rule_class][file])
 
-            rule_registry.definition(id,type,message)
+                if self.debug:
+                    print('id: '+str(id)+lineno())
+                    print('type: '+str(type)+lineno())
+                    print('message: '+str(message)+lineno())
+
+                rule_registry.definition(id,type,message)
 
         if self.debug:
             print('rules registry rules are now: '+str(rule_registry.rules)+lineno())
@@ -109,7 +112,7 @@ class CustomRuleLoader:
         return violations
 
 
-    def rule_registry_from_rule_class(self, rule_class):
+    def rule_registry_from_rule_class(self, rule_class, directory):
         '''
         Gets the rule id, type and text for a specific rule
         :param rule_class: The rule name
@@ -118,8 +121,14 @@ class CustomRuleLoader:
         if self.debug:
             print('CustomRuleLoader - rule_registry_from_rule_class'+str(lineno()))
             print('rule_class: '+str(rule_class)+lineno())
+            print('rule directory: '+str(directory))
 
-        my_module = importlib.import_module("cloudformation_validator.custom_rules." + str(rule_class))
+        if 'site-packages' in str(directory):
+            my_module = importlib.import_module("cloudformation_validator.custom_rules." + str(rule_class))
+        elif 'cloudformation_validator' in str(directory):
+            my_module = importlib.import_module("cloudformation_validator.custom_rules." + str(rule_class))
+        else:
+            my_module = importlib.import_module(str(rule_class))
 
         MyClass = getattr(my_module, str(rule_class))
 
@@ -153,33 +162,54 @@ class CustomRuleLoader:
         # Get an array of all the rule classes
         rule_classes = self.discover_rule_classes(self.rule_directory)
 
+
         # Iterate over each of the rule classes
         for rule_class in rule_classes:
 
-            # Ignore the base rule
-            if rule_class != 'BaseRule':
+            for file in rule_classes[rule_class]:
 
                 if self.debug:
-                    print("\n\n##########################")
-                    print('Rule is not BaseRule'+lineno())
-                    print('CustomRuleLoader - filter_rule_classes - rule_class '+str(rule_class)+str(lineno()))
-                    print("##########################\n\n")
+                    print('file: '+str(file)+lineno())
 
-                # Import the rule class
-                my_module = importlib.import_module("cloudformation_validator.custom_rules."+str(rule_class))
+                # Ignore the base rule
+                if file == 'BaseRule':
+                    continue
 
 
-                MyClass = getattr(my_module, str(rule_class))
+                if rule_class == 'rules_directory':
+
+                    if self.debug:
+                        print("\n\n##########################")
+                        print('Rule is not BaseRule'+lineno())
+                        print('CustomRuleLoader - filter_rule_classes - rule_class '+str(file)+str(lineno()))
+                        print("##########################\n\n")
+
+                    # Import the rule class
+                    my_module = importlib.import_module("cloudformation_validator.custom_rules."+str(file))
+
+                elif rule_class == 'extra_rules_directory':
+
+                    if self.debug:
+                        print("\n\n##########################")
+                        print('Rule is not BaseRule' + lineno())
+                        print('CustomRuleLoader - filter_rule_classes - rule_class ' + str(file) + str(lineno()))
+                        print("##########################\n\n")
+
+                    # Import the rule class
+                    my_module = importlib.import_module(str(file))
+
+
+                MyClass = getattr(my_module, str(file))
 
                 if self.debug:
                     print('debug is currently: '+str(self.debug)+lineno())
 
-                #setattr(MyClass,'debug',self.debug)
 
                 if self.debug:
                     print("\n\n#############################################")
-                    print('Created new '+str(rule_class)+' class'+lineno())
-                    print('rule class: '+str(rule_class)+lineno())
+                    print('Created new '+str(file)+' class'+lineno())
+                    print('rule class: '+str(file)+lineno())
+                    print('my class: '+str(type(MyClass))+lineno())
                     print("################################################\n")
 
                 # Sets the cfn_model in the rule class
@@ -378,7 +408,11 @@ class CustomRuleLoader:
         if self.debug:
             print('CustomRuleLoader - discover_rule_filename'+str(lineno()))
 
-        rule_filenames = []
+        #rule_filenames = []
+        rule_filenames = {
+            'rules_directory':{},
+            'extra_rules_directory':{}
+        }
 
         temp_rule_filenames = os.listdir(self.rule_directory)
         if self.debug:
@@ -389,12 +423,16 @@ class CustomRuleLoader:
             #if temp_file != '__init__.py' and temp_file != '__pycache__':
 
                 if temp_file.endswith('.py'):
-                    rule_filenames.append(str(temp_file).replace('.py',''))
+                    #rule_filenames.append(str(temp_file).replace('.py',''))
+                    rule_filenames['rules_directory'][str(temp_file).replace('.py','')] = str(self.rule_directory)
                 #elif temp_file.endswith('.pyc'):
                 #    rule_filenames.append(str(temp_file).replace('.pyc',''))
 
 
         if self.extra_rule_directory:
+            if self.debug:
+                print('there is an extra rule directory '+lineno())
+
             temp_rule_filenames = os.listdir(self.extra_rule_directory)
             if self.debug:
                 print('rules directory: ' + str(self.extra_rule_directory) + lineno())
@@ -417,7 +455,8 @@ class CustomRuleLoader:
                         if self.debug:
                             print('new filename: '+str(new_filename)+lineno())
 
-                        rule_filenames.append(str(temp_file).replace('.py', ''))
+                        #rule_filenames.append(str(temp_file).replace('.py', ''))
+                        rule_filenames['extra_rules_directory'][str(temp_file).replace('.py', '')] = str(self.extra_rule_directory)
 
         if self.debug:
             print('rule filenames: '+str(rule_filenames)+lineno())
@@ -434,20 +473,36 @@ class CustomRuleLoader:
         '''
         if self.debug:
             print('CustomRuleLoader - discover_rule_classes'+str(lineno()))
+            print('rule_directory: '+str(rule_directory))
 
         rule_classes = []
 
         rule_filenames = self.discover_rule_filenames()
 
-        for file in rule_filenames:
+        for directories in rule_filenames:
 
             if self.debug:
-                print('file: '+str(file)+lineno())
+                print('directories: '+str(directories)+lineno())
 
-            exec("from cloudformation_validator.custom_rules import "+str(file))
+            if directories == 'rules_directory':
+                for file in rule_filenames['rules_directory']:
+
+                    if self.debug:
+                        print('file: '+str(file)+lineno())
+
+                    exec("from cloudformation_validator.custom_rules import "+str(file))
+
+            if directories == 'extra_rules_directory':
+                import sys
+
+                for file in rule_filenames['extra_rules_directory']:
+
+                    sys.path.insert(0, rule_filenames['extra_rules_directory'][file])
+                    exec("import "+str(file))
 
         if self.debug:
             print('rule filenames: '+str(rule_filenames)+lineno())
+
         return rule_filenames
 
 
