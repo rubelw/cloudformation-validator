@@ -1,0 +1,6 @@
+
+[secure]
+certifi
+
+[socks]
+PySocks!=1.5.7,<2.0,>=1.5.6

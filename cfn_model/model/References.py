@@ -1,3 +1,4 @@
+from __future__ import absolute_import, division, print_function
 import inspect
 import sys
 from builtins import (str)
@@ -11,7 +12,7 @@ def lineno():
 
 class References:
 
-
+    @staticmethod
     def resolve_value(cfn_model, value, debug=False):
         '''
         ???
@@ -54,7 +55,7 @@ class References:
         else:
           return value
 
-
+    @staticmethod
     def is_security_group_id_external(group_id, debug=False):
         '''
         Is security group id external
@@ -78,6 +79,7 @@ class References:
 
         return False
 
+    @staticmethod
     def resolve_security_group_id(group_id, debug=False):
         '''
         Resolve security group id
@@ -135,7 +137,7 @@ class References:
         else:
             return None
 
-
+    @staticmethod
     def logical_resource_id_from_get_att(attribute_spec, debug=False):
         """
         ???

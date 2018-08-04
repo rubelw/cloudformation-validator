@@ -2,6 +2,7 @@
 The command line interface to cfn_nagger.
 
 """
+from __future__ import absolute_import, division, print_function
 import sys
 import click
 import inspect

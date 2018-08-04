@@ -1,3 +1,4 @@
+from __future__ import absolute_import, division, print_function
 import inspect
 import sys
 import os
@@ -62,7 +63,7 @@ class RuleDumper:
                 sys.exit(1)
 
 
-        rules_view = RulesView.emit(rule_registry, profile,debug=self.debug)
+        rules_view = RulesView.emit(rule_registry=rule_registry, profile=profile, debug=self.debug)
 
         if self.debug:
             print('rules_view: '+str(rules_view))

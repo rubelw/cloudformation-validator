@@ -1,4 +1,4 @@
-
+from __future__ import absolute_import, division, print_function
 import sys
 import inspect
 import traceback
@@ -331,6 +331,7 @@ class CfnParser:
                 tb = sys.exc_info()[-1]
                 if self.debug:
                     print('tb: '+str(tb)+lineno())
+                    print('to hash: '+str(e.to_hash())+lineno())
                 stk = traceback.extract_tb(tb, 1)
                 if self.debug:
                     print('stk: '+str(stk)+lineno())
@@ -342,7 +343,7 @@ class CfnParser:
             #    if self.debug:
             #        print('would stop but not stopping'+lineno())
             #    print('ParserError'+str(e)+lineno())
-                raise
+                raise ParserError('Basic CloudFormation syntax error', errors,debug=self.debug)
             #    #sys.exit(exc)
 
 

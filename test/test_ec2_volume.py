@@ -82,6 +82,10 @@ class TestEc2Volume(unittest.TestCase):
 
       real_result =  validator.validate()
       self.maxDiff = None
+
+      print('expected results: ' + str(expected_result))
+      print('real results: ' + str(real_result))
+
       self.assertEqual(expected_result, real_result)
 
 
@@ -117,8 +121,8 @@ class TestEc2Volume(unittest.TestCase):
                       'type': 'VIOLATION::FAILING_VIOLATION',
                       'message': 'EBS volume should have server-side encryption enabled',
                       'logical_resource_ids': [
-                          'NewVolume2',
-                          'NewVolume1'
+                          'NewVolume1',
+                          'NewVolume2'
                       ]
                   }
               ]
@@ -132,8 +136,18 @@ class TestEc2Volume(unittest.TestCase):
                   order_of_keys = ["id", "type", "message", "logical_resource_ids"]
                   list_of_tuples = [(key, info[key]) for key in order_of_keys]
                   new_results = OrderedDict(list_of_tuples)
+
+                  for key, value in new_results.items():
+                      print('key: '+str(key)+' value: '+str(value))
+
+                      if key == 'logical_resource_ids' and type(value) == list():
+                          new_results[key]=value.sort()
+
+
                   new_file_results.append(new_results)
               print('new file results: ' + str(new_file_results))
+
+
               expected_result['file_results'] = new_file_results
 
           order_of_keys = ["failure_count", "filename", "file_results"]
@@ -162,6 +176,9 @@ class TestEc2Volume(unittest.TestCase):
 
       real_result =  validator.validate()
       self.maxDiff = None
+
+      print('expected results: ' + str(expected_result))
+      print('real results: ' + str(real_result))
       self.assertEqual(expected_result, real_result)
 
 

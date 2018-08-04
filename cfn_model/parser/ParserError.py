@@ -1,5 +1,7 @@
+from __future__ import absolute_import, division, print_function
 import inspect
 from cfn_model.parser.Error import Error
+from builtins import (str)
 
 
 
@@ -28,6 +30,8 @@ class ParserError(Error):
         Convert to hash
         :return: 
         '''
+        if self.debug:
+            print('to_hash '+lineno())
         hash = {}
         hash[self.message] = self.errors
         return hash

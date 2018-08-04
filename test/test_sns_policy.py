@@ -91,6 +91,10 @@ class TestSnsPolicy(unittest.TestCase):
 
       real_result =  validator.validate()
       self.maxDiff = None
+
+      print('expected results: ' + str(expected_result))
+      print('real results: ' + str(real_result))
+
       self.assertEqual(expected_result, real_result)
 
 

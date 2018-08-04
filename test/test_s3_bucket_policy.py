@@ -37,19 +37,19 @@ class TestS3BucketPolicy(unittest.TestCase):
                 'filename': '/json/s3_bucket_policy/s3_bucket_with_wildcards.json',
                 'file_results': [
                     {
-                        'id': 'F16',
-                        'type': 'VIOLATION::FAILING_VIOLATION',
-                        'message': 'S3 Bucket policy should not allow * principal',
-                        'logical_resource_ids': [
-                            'S3BucketPolicy2'
-                        ]
-                    },
-                    {
                         'id': 'F15',
                         'type': 'VIOLATION::FAILING_VIOLATION',
                         'message': 'S3 Bucket policy should not allow * action',
                         'logical_resource_ids': [
                             'S3BucketPolicy',
+                            'S3BucketPolicy2'
+                        ]
+                    },
+                    {
+                        'id': 'F16',
+                        'type': 'VIOLATION::FAILING_VIOLATION',
+                        'message': 'S3 Bucket policy should not allow * principal',
+                        'logical_resource_ids': [
                             'S3BucketPolicy2'
                         ]
                     }
@@ -67,6 +67,14 @@ class TestS3BucketPolicy(unittest.TestCase):
                   order_of_keys = ["id", "type", "message", "logical_resource_ids"]
                   list_of_tuples = [(key, info[key]) for key in order_of_keys]
                   new_results = OrderedDict(list_of_tuples)
+
+                  for key, value in new_results.items():
+                      print('key: '+str(key)+' value: '+str(value))
+
+                      if key == 'logical_resource_ids' and type(value) == list():
+                          new_results[key]=value.sort()
+
+
                   new_file_results.append(new_results)
               print('new file results: ' + str(new_file_results))
               expected_result['file_results'] = new_file_results
@@ -80,7 +88,7 @@ class TestS3BucketPolicy(unittest.TestCase):
       expected_result = pretty(expected_result)
 
       template_name = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))+'/cloudformation_validator/test_templates/json/s3_bucket_policy/s3_bucket_with_wildcards.json'
-      debug = False
+      debug = True
 
       config_dict = {}
       config_dict['template_file'] = template_name
@@ -97,6 +105,10 @@ class TestS3BucketPolicy(unittest.TestCase):
 
       real_result =  validator.validate()
       self.maxDiff = None
+
+      print('expected results: '+str(expected_result))
+      print('real results: '+str(real_result))
+
       self.assertEqual(expected_result, real_result)
 
 

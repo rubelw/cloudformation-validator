@@ -37,19 +37,19 @@ class TestS3Bucket(unittest.TestCase):
                 'filename': '/json/s3_bucket/buckets_with_insecure_acl.json',
                 'file_results': [
                     {
-                        'id': 'W31',
-                        'type': 'VIOLATION::WARNING',
-                        'message': 'S3 Bucket likely should not have a public read acl',
-                        'logical_resource_ids': [
-                            'S3BucketRead'
-                        ]
-                    },
-                    {
                         'id': 'F14',
                         'type': 'VIOLATION::FAILING_VIOLATION',
                         'message': 'S3 Bucket should not have a public read-write acl',
                         'logical_resource_ids': [
                             'S3BucketReadWrite'
+                        ]
+                    },
+                    {
+                        'id': 'W31',
+                        'type': 'VIOLATION::WARNING',
+                        'message': 'S3 Bucket likely should not have a public read acl',
+                        'logical_resource_ids': [
+                            'S3BucketRead'
                         ]
                     }
                 ]
@@ -96,6 +96,10 @@ class TestS3Bucket(unittest.TestCase):
 
       real_result =  validator.validate()
       self.maxDiff = None
+
+      print('expected results: '+str(expected_result))
+      print('real results: '+str(real_result))
+
       self.assertEqual(expected_result, real_result)
 
 

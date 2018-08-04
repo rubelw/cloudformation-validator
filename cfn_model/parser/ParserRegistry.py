@@ -1,3 +1,4 @@
+from __future__ import absolute_import, division, print_function
 import inspect
 from cfn_model.parser.SecurityGroupParser import SecurityGroupParser
 from cfn_model.parser.Ec2NetworkInterfaceParser import Ec2NetworkInterfaceParser

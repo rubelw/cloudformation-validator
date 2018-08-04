@@ -1,4 +1,4 @@
-
+from __future__ import absolute_import, division, print_function
 import logging
 import json
 import sys
@@ -280,6 +280,9 @@ class ValidateUtility:
         except Exception as e:
             if self.debug:
                 print('exception: '+str(e)+lineno())
+                print('type: '+str(type(e))+lineno())
+                if hasattr(e, 'to_hash'):
+                    print('to_hash: '+str(e.to_hash())+lineno())
             cfn_model = None
             tb = sys.exc_info()[-1]
             if self.debug:
@@ -293,7 +296,10 @@ class ValidateUtility:
                 print('The failing function was', fname, lineno())
                 print('error:'+str(e)+lineno())
 
-            schema_validation_errors=e
+            if hasattr(e, 'to_hash'):
+                schema_validation_errors=e.to_hash()
+            else:
+                schema_validation_errors=e
         if self.debug:
             if cfn_model:
                 print('cfn_model: '+str(dir(cfn_model))+lineno())

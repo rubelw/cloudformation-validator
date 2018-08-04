@@ -37,11 +37,11 @@ class TestLambdaPermission(unittest.TestCase):
                 'filename': '/json/lambda_permission/lambda_with_wildcard_principal_and_non_invoke_function_permission.json',
                 'file_results': [
                     {
-                        'id': 'W11',
-                        'type': 'VIOLATION::WARNING',
-                        'message': 'IAM role should not allow * resource on its permissions policy',
+                        'id': 'F13',
+                        'type': 'VIOLATION::FAILING_VIOLATION',
+                        'message': 'Lambda permission principal should not be wildcard',
                         'logical_resource_ids': [
-                            'LambdaExecutionRole'
+                            'lambdaPermission'
                         ]
                     },
                     {
@@ -53,11 +53,11 @@ class TestLambdaPermission(unittest.TestCase):
                         ]
                     },
                     {
-                        'id': 'F13',
-                        'type': 'VIOLATION::FAILING_VIOLATION',
-                        'message': 'Lambda permission principal should not be wildcard',
+                        'id': 'W11',
+                        'type': 'VIOLATION::WARNING',
+                        'message': 'IAM role should not allow * resource on its permissions policy',
                         'logical_resource_ids': [
-                            'lambdaPermission'
+                            'LambdaExecutionRole'
                         ]
                     }
                 ]
@@ -105,5 +105,10 @@ class TestLambdaPermission(unittest.TestCase):
 
       real_result =  validator.validate()
       self.maxDiff = None
+
+
+      print('expected results: '+str(expected_result))
+      print('real results: '+str(real_result))
+
       self.assertEqual(expected_result, real_result)
 

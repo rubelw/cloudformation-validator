@@ -1,3 +1,4 @@
+from __future__ import absolute_import, division, print_function
 import inspect
 import sys
 from builtins import (str)
@@ -74,7 +75,7 @@ class LambdaPermissionWildcardPrincipalRule(BaseRule):
               print(resource.principal)
             if LambdaPrincipal.wildcard(resource.principal):
               violating_lambdas.append(str(resource.logical_resource_id))
-                  
+
     else:
       if self.debug:
         print('no violating_lambda' + lineno())

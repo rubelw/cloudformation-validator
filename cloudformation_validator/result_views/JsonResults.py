@@ -1,4 +1,4 @@
-
+from __future__ import absolute_import, division, print_function
 import inspect
 import re
 import sys
@@ -20,6 +20,7 @@ class JsonResults:
         self.suppress_errors = suppress_errors
         if self.debug:
             print('JsonResults - init'+lineno())
+
 
     def pretty(self, value, htchar='\t', lfchar='\n', indent=0):
         '''
@@ -48,11 +49,18 @@ class JsonResults:
         elif type(value) == type(list()):
             if (self.debug):
                 print('is list')
+
             items = [
                 nlch + self.pretty(item, htchar, lfchar, indent + 1)
                 for item in value
             ]
+            print('items: '+str(items))
+            print('items type: '+str(type(items)))
+            if items:
+                items = sorted(items)
+            [str(item) for item in items]
             return '[%s]' % (','.join(items) + lfchar + htchar * indent)
+
         elif type(value) is tuple:
             if (self.debug):
                 print('is tuple')
@@ -64,7 +72,7 @@ class JsonResults:
         else:
             if (self.debug):
                 print('is other')
-            return repr(value)
+            return repr(str(value))
 
 
     def render(self, results):

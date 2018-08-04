@@ -1,6 +1,7 @@
-
+from __future__ import absolute_import, division, print_function
 import inspect
 import sys
+from builtins import (str)
 
 
 def lineno():
@@ -70,12 +71,18 @@ class PolicyDocument:
                         if '*' in action:
                             return True
 
+                    if sys.version_info[0] < 3 and type(action) == type(unicode()):
+                            if '*' in str(action):
+                                return True
+
                     elif type(action)== type(list()):
                         for action2 in action:
                             if self.debug or debug:
                                 print('action: '+str(action2)+lineno())
 
                             if "*" in action2:
+                                if self.debug or debug:
+                                    print('* in action')
                                 return True
 
         return False

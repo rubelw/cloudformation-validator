@@ -91,6 +91,10 @@ class TestEc2Instance(unittest.TestCase):
 
       real_result =  validator.validate()
       self.maxDiff = None
+
+      print('expected results: '+str(expected_result))
+      print('real results: '+str(real_result))
+
       self.assertEqual(expected_result, real_result)
 
 
@@ -101,17 +105,17 @@ class TestEc2Instance(unittest.TestCase):
             'filename': '/json/ec2_instance/cfn_insensitive_authentication.json',
             'file_results': [
                 {
-                    'id': 'W11',
-                    'type': 'VIOLATION::WARNING',
-                    'message': 'IAM role should not allow * resource on its permissions policy',
+                    'id': 'F3',
+                    'type': 'VIOLATION::FAILING_VIOLATION',
+                    'message': 'IAM role should not allow * action on its permissions policy',
                     'logical_resource_ids': [
                         'RootRole'
                     ]
                 },
                 {
-                    'id': 'F3',
-                    'type': 'VIOLATION::FAILING_VIOLATION',
-                    'message': 'IAM role should not allow * action on its permissions policy',
+                    'id': 'W11',
+                    'type': 'VIOLATION::WARNING',
+                    'message': 'IAM role should not allow * resource on its permissions policy',
                     'logical_resource_ids': [
                         'RootRole'
                     ]
@@ -158,6 +162,11 @@ class TestEc2Instance(unittest.TestCase):
       config_dict['isolate_custom_rule_exceptions'] = None
       validator = class_to_test(config_dict)
 
+
       real_result =  validator.validate()
       self.maxDiff = None
+
+      print('expected results: '+str(expected_result))
+      print('real results: '+str(real_result))
+
       self.assertEqual(expected_result, real_result)

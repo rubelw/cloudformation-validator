@@ -1,3 +1,4 @@
+from __future__ import absolute_import, division, print_function
 import inspect
 import sys
 from builtins import (str)
@@ -82,7 +83,6 @@ class IamRoleWildcardActionOnPermissionsPolicyRule(BaseRule):
                   print('has wildcard allowed actions')
 
                 violating_roles.append(str(resource.logical_resource_id))
-
     else:
       if self.debug:
         print('no violating_roles' + lineno())

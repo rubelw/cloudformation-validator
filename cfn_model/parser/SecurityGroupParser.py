@@ -1,3 +1,4 @@
+from __future__ import absolute_import, division, print_function
 import copy
 import sys
 import inspect
@@ -6,6 +7,7 @@ import sys
 from cfn_model.model.EC2SecurityGroupIngress import EC2SecurityGroupIngress
 from cfn_model.model.EC2SecurityGroupEgress import EC2SecurityGroupEgress
 from cfn_model.model.References import References
+from builtins import (str)
 
 
 def lineno():
@@ -38,6 +40,7 @@ class SecurityGroupParser:
 
         return security_group
 
+    @staticmethod
     def objectify_ingress(cfn_model, security_group, debug=False):
         '''
         Objectivy ingress statment
@@ -140,7 +143,7 @@ class SecurityGroupParser:
                         print(str('type: ')+str(type(security_group.cfn_model['Properties']['SecurityGroupIngress'])+lineno()))
                         sys.exit(1)
 
-
+    @staticmethod
     def objectify_egress(cfn_model, security_group, debug=False):
         '''
         Trying to convert a security group egress in to an egress object
@@ -265,7 +268,7 @@ class SecurityGroupParser:
 
         return security_group
 
-
+    @staticmethod
     def initialLower(key_name):
         '''
         First character to lower case
@@ -277,7 +280,7 @@ class SecurityGroupParser:
 
         return new_property_name
 
-
+    @staticmethod
     def wire_ingress_rules_to_security_group(cfn_model, security_group, debug=False):
         '''
         Wires a standalone ingress rule to a security group
@@ -348,7 +351,7 @@ class SecurityGroupParser:
 
         return security_group
 
-
+    @staticmethod
     def wire_egress_rules_to_security_group(cfn_model, security_group, debug=False):
         '''
         Wire egress rule to a security group

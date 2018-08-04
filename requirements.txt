@@ -4,3 +4,5 @@ click>=6.7
 twine>=1.9.1
 bumpversion>=0.5
 pymongo>=3.4.0
+future
+pytest>=3.4.2

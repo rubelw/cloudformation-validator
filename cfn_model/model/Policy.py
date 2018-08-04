@@ -1,3 +1,4 @@
+from __future__ import absolute_import, division, print_function
 import inspect
 from cfn_model.model.ModelElement import ModelElement
 

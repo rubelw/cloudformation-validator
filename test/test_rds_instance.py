@@ -89,6 +89,10 @@ class TestRdsInstance(unittest.TestCase):
 
       real_result =  validator.validate()
       self.maxDiff = None
+
+      print('expected results: '+str(expected_result))
+      print('real results: '+str(real_result))
+
       self.assertEqual(expected_result, real_result)
 
 
@@ -152,6 +156,10 @@ class TestRdsInstance(unittest.TestCase):
 
       real_result =  validator.validate()
       self.maxDiff = None
+
+      print('expected results: '+str(expected_result))
+      print('real results: '+str(real_result))
+
       self.assertEqual(expected_result, real_result)
 
 
@@ -165,18 +173,18 @@ class TestRdsInstance(unittest.TestCase):
                 'filename': '/json/rds_instance/rds_instances_with_public_credentials.json',
                 'file_results': [
                     {
-                        'id': 'F24',
+                        'id': 'F23',
                         'type': 'VIOLATION::FAILING_VIOLATION',
-                        'message': 'RDS instance master username must be Ref to NoEcho Parameter. Default credentials are not recommended',
+                        'message': 'RDS instance master user password must be Ref to NoEcho Parameter. Default credentials are not recommended',
                         'logical_resource_ids': [
                             'BadDb1',
                             'BadDb2'
                         ]
                     },
                     {
-                        'id': 'F23',
+                        'id': 'F24',
                         'type': 'VIOLATION::FAILING_VIOLATION',
-                        'message': 'RDS instance master user password must be Ref to NoEcho Parameter. Default credentials are not recommended',
+                        'message': 'RDS instance master username must be Ref to NoEcho Parameter. Default credentials are not recommended',
                         'logical_resource_ids': [
                             'BadDb1',
                             'BadDb2'
@@ -227,6 +235,10 @@ class TestRdsInstance(unittest.TestCase):
 
       real_result =  validator.validate()
       self.maxDiff = None
+
+      print('expected results: '+str(expected_result))
+      print('real results: '+str(real_result))
+
       self.assertEqual(expected_result, real_result)
 
 

@@ -1,4 +1,6 @@
+from __future__ import absolute_import, division, print_function
 import inspect
+import sys
 from cfn_model.model.Principal import Principal
 
 
@@ -50,9 +52,15 @@ class Statement:
                 print('action: '+str(action)+lineno())
                 print('type: '+str(type(action))+lineno())
 
-            if type(action)== type(str()) or type(action) == type(unicode()):
+            if type(action)== type(str()):
                 if '*' in action:
                     actions.append(action)
+
+            if sys.version_info[0] < 3:
+
+                if type(action) == type(unicode()):
+                    if '*' in action:
+                        actions.append(action)
 
             elif type(action)==type(list()):
                 for item in action:
@@ -89,10 +97,16 @@ class Statement:
         for resource in self.resources:
             if self.debug:
                 print('resource: '+str(resource)+lineno())
+                print('type: '+str(type(resource))+lineno())
 
-            if type(resource)== type(str()) or type(resources) == type(unicode()):
+            if type(resource)== type(str()):
                 if '*' in resource:
                     resources.append(resource)
+
+            if sys.version_info[0] < 3:
+                if type(resource) == type(unicode()):
+                    if '*' in resource:
+                        resources.append(resource)
 
             if type(resource)== type(dict()):
                 if self.debug:
@@ -107,9 +121,14 @@ class Statement:
                             if self.debug:
                                 print('more items: '+str(more_items)+lineno())
 
-                            if type(more_items) == type(str()) or type(more_items) == type(unicode()):
+                            if type(more_items) == type(str()):
                                 if '*' in more_items:
                                     resources.append(more_items)
+
+                            if sys.version_info[0] < 3:
+                                if type(more_items) == type(unicode()):
+                                    if '*' in more_items:
+                                        resources.append(more_items)
 
                             elif type(more_items) == type(list()):
                                 if self.debug:
@@ -118,9 +137,14 @@ class Statement:
                                     if self.debug:
                                         print('many more items: '+str(many_more_items)+lineno())
 
-                                    if type(many_more_items)== type(str()) or type(many_more_items) == type(unicode()):
+                                    if type(many_more_items)== type(str()):
                                         if '*' in many_more_items:
                                             resources.append(many_more_items)
+
+                                    if sys.version_info[0] < 3:
+                                        if type(many_more_items) == type(unicode()):
+                                            if '*' in many_more_items:
+                                                resources.append(many_more_items)
 
             if type(resource) == type(list()):
                 for item in resource:

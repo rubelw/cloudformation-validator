@@ -1,4 +1,4 @@
-
+from __future__ import absolute_import, division, print_function
 import sys
 import inspect
 from pykwalify.core import Core
@@ -50,7 +50,7 @@ class CloudformationValidator:
 
         if len(c.errors)>0:
             if self.debug:
-                print('errors: '+str(c.errors))
+                print('errors: '+str(c.errors)+lineno())
             #raise ParserError.new('Basic CloudFormation syntax error', errors)
 
         # Return any validation error

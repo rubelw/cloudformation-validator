@@ -1,3 +1,4 @@
+from __future__ import absolute_import, division, print_function
 import inspect
 import sys
 from cfn_model.parser.PolicyDocumentParser import PolicyDocumentParser

@@ -32,19 +32,32 @@ class TestSecurityGroup(unittest.TestCase):
 
     def test_dangling_egress_rule(self):
         expected_result = {
-                'failure_count': 1,
+                'failure_count': '1',
                 'filename': '/json/security_group/dangling_egress_rule.json',
                 'file_results': [
                     {
                         'id': 'FATAL',
                         'type': 'VIOLATION::FAILING_VIOLATION',
-                        'message': "Unresolved logical resource ids: ['test']",
-                        'logical_resource_ids': None
+                        'message': '{"Unresolved logical resource ids: [\'test\']": None}',
+                        'logical_resource_ids': 'None'
                     }
                 ]
             }
 
         if sys.version_info[0] < 3:
+
+            expected_result = {
+                'failure_count': '1',
+                'filename': '/json/security_group/dangling_egress_rule.json',
+                'file_results': [
+                    {
+                        'id': 'FATAL',
+                        'type': 'VIOLATION::FAILING_VIOLATION',
+                        'message': '{"Unresolved logical resource ids: [u\'test\']": None}',
+                        'logical_resource_ids': 'None'
+                    }
+                ]
+            }
 
             new_file_results = []
 
@@ -84,21 +97,25 @@ class TestSecurityGroup(unittest.TestCase):
 
         real_result = validator.validate()
         self.maxDiff = None
+        print('expected results: ' + str(expected_result))
+        print('real results: ' + str(real_result))
+
         self.assertEqual(expected_result, real_result)
 
     def test_security_group_missing_properties(self):
-        expected_result =  {
-                'failure_count': 1,
-                'filename': '/json/security_group/sg_missing_properties.json',
-                'file_results': [
-                    {
-                        'id': 'FATAL',
-                        'type': 'VIOLATION::FAILING_VIOLATION',
-                        'message': "('Basic CloudFormation syntax error', [Cannot find required key 'Properties'. Path: '/Resources/sg'])",
-                        'logical_resource_ids': None
-                    }
-                ]
-            }
+
+        expected_result = {
+            'failure_count': '1',
+            'filename': '/json/security_group/sg_missing_properties.json',
+            'file_results': [
+                {
+                    'id': 'FATAL',
+                    'type': 'VIOLATION::FAILING_VIOLATION',
+                    'message': "{'Basic CloudFormation syntax error': [Cannot find required key 'Properties'. Path: '/Resources/sg']}",
+                    'logical_resource_ids': 'None'
+                }
+            ]
+        }
 
         if sys.version_info[0] < 3:
 
@@ -140,6 +157,9 @@ class TestSecurityGroup(unittest.TestCase):
 
         real_result = validator.validate()
         self.maxDiff = None
+        print('expected results: ' + str(expected_result))
+        print('real results: ' + str(real_result))
+
         self.assertEqual(expected_result, real_result)
 
     def test_security_group_when_egress_is_empty(self):
@@ -198,6 +218,9 @@ class TestSecurityGroup(unittest.TestCase):
 
         real_result = validator.validate()
         self.maxDiff = None
+        print('expected results: ' + str(expected_result))
+        print('real results: ' + str(real_result))
+
         self.assertEqual(expected_result, real_result)
 
     def test_security_group_when_inline_sg_is_open_to_world(self):
@@ -206,12 +229,11 @@ class TestSecurityGroup(unittest.TestCase):
                 'filename': '/json/security_group/two_security_group_two_cidr_ingress.json',
                 'file_results': [
                     {
-                        'id': 'W27',
-                        'type': 'VIOLATION::WARNING',
-                        'message': 'Security Groups found ingress with port range instead of just a single port',
+                        'id': 'F1000',
+                        'type': 'VIOLATION::FAILING_VIOLATION',
+                        'message': 'Missing egress rule means all traffic is allowed outbound.  Make this explicit if it is desired configuration',
                         'logical_resource_ids': [
                             'sg',
-                            'sg2',
                             'sg2'
                         ]
                     },
@@ -224,11 +246,12 @@ class TestSecurityGroup(unittest.TestCase):
                         ]
                     },
                     {
-                        'id': 'F1000',
-                        'type': 'VIOLATION::FAILING_VIOLATION',
-                        'message': 'Missing egress rule means all traffic is allowed outbound.  Make this explicit if it is desired configuration',
+                        'id': 'W27',
+                        'type': 'VIOLATION::WARNING',
+                        'message': 'Security Groups found ingress with port range instead of just a single port',
                         'logical_resource_ids': [
                             'sg',
+                            'sg2',
                             'sg2'
                         ]
                     },
@@ -244,6 +267,7 @@ class TestSecurityGroup(unittest.TestCase):
             }
 
         if sys.version_info[0] < 3:
+
 
             new_file_results = []
 
@@ -283,6 +307,9 @@ class TestSecurityGroup(unittest.TestCase):
 
         real_result = validator.validate()
         self.maxDiff = None
+        print('expected results: ' + str(expected_result))
+        print('real results: ' + str(real_result))
+
         self.assertEqual(expected_result, real_result)
 
     def test_security_group_when_has_multiple_inline_egress_rules(self):
@@ -333,6 +360,9 @@ class TestSecurityGroup(unittest.TestCase):
 
         real_result = validator.validate()
         self.maxDiff = None
+        print('expected results: ' + str(expected_result))
+        print('real results: ' + str(real_result))
+
         self.assertEqual(expected_result, real_result)
 
     def test_two_security_groups_ingress_standalone_with_non32_cidr(self):
@@ -355,6 +385,7 @@ class TestSecurityGroup(unittest.TestCase):
             }
 
         if sys.version_info[0] < 3:
+
 
             new_file_results = []
 
@@ -394,6 +425,9 @@ class TestSecurityGroup(unittest.TestCase):
 
         real_result = validator.validate()
         self.maxDiff = None
+        print('expected results: ' + str(expected_result))
+        print('real results: ' + str(real_result))
+
         self.assertEqual(expected_result, real_result)
 
     def test_two_security_groups_with_non32_cidr(self):
@@ -453,6 +487,9 @@ class TestSecurityGroup(unittest.TestCase):
 
         real_result = validator.validate()
         self.maxDiff = None
+        print('expected results: ' + str(expected_result))
+        print('real results: ' + str(real_result))
+
         self.assertEqual(expected_result, real_result)
 
     def test_multiple_security_groups(self):
@@ -491,12 +528,10 @@ class TestSecurityGroup(unittest.TestCase):
           list_of_tuples = [(key, expected_result[key]) for key in order_of_keys]
           expected_result = OrderedDict(list_of_tuples)
 
-
-
       expected_result = pretty(expected_result)
 
       template_name = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))+'/cloudformation_validator/test_templates/json/security_group/multiple_ingress_security_groups.json'
-      debug = True
+      debug = False
 
       config_dict = {}
       config_dict['template_file'] = template_name
@@ -513,5 +548,9 @@ class TestSecurityGroup(unittest.TestCase):
 
       real_result =  validator.validate()
       self.maxDiff = None
+
+      print('expected results: '+str(expected_result))
+      print('real results: '+str(real_result))
+
       self.assertEqual(expected_result, real_result)
 

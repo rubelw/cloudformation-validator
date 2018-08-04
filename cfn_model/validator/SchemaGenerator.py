@@ -1,8 +1,10 @@
+from __future__ import absolute_import, division, print_function
 import yaml
 import sys
 import os
 from cfn_model.validator.ResourceTypeValidator import ResourceTypeValidator
 import inspect
+from builtins import (str)
 
 
 def lineno():

@@ -1,8 +1,10 @@
+from __future__ import absolute_import, division, print_function
 import re
 import sys
 from builtins import (str)
 from cfn_model.parser import ParserError
 import inspect
+from builtins import (str)
 
 
 

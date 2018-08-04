@@ -1,3 +1,4 @@
+from __future__ import absolute_import, division, print_function
 import inspect
 import sys
 from collections import OrderedDict
@@ -11,17 +12,21 @@ def lineno():
 
 class  RulesView:
 
+    @staticmethod
     def emit(rule_registry, profile, debug=None):
         '''
         Emits something
         :param profile: 
         :return: 
         '''
+        if debug:
+            print('rule_registry: '+str(rule_registry))
+            print('profile: '+str(profile))
 
         RulesView.emit_warnings(warnings=rule_registry.warnings(),profile=profile, debug=debug)
         RulesView.emit_failings(failings=rule_registry.failings(),profile=profile, debug=debug)
 
-
+    @staticmethod
     def emit_warnings(warnings, profile, debug=None):
         '''
         Emits warnings
@@ -61,7 +66,7 @@ class  RulesView:
         #puts
         #"#{warning.id} #{warning.message}"
 
-
+    @staticmethod
     def emit_failings(failings, profile, debug=None):
         '''
         Emits failings

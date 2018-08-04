@@ -1,5 +1,7 @@
+from __future__ import absolute_import, division, print_function
 import inspect
 import sys
+import time
 from builtins import (str)
 from cloudformation_validator.custom_rules.BaseRule import BaseRule
 from cloudformation_validator.IpAddr import IpAddr
@@ -70,6 +72,7 @@ class SecurityGroupIngressOpenToWorldRule(BaseRule):
         for ingress in groups.ingresses:
             if self.debug:
                 print('ingress: '+str(ingress)+lineno())
+                print('type: '+str(type(ingress)))
 
             if type(ingress)== type(dict()):
                 if IpAddr.ip4_open(ingress,debug=self.debug) or IpAddr.ip6_open(ingress,debug=self.debug):
@@ -81,6 +84,7 @@ class SecurityGroupIngressOpenToWorldRule(BaseRule):
                   if self.debug:
                     print('ip4/6 address is open'+lineno())
                   violating_ingresses.append(str(ingress.logical_resource_id))
+
 
     routes= self.cfn_model.standalone_ingress()
 
