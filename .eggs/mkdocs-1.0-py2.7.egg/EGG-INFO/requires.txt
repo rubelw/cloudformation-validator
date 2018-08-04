@@ -1,6 +1,0 @@
-Jinja2>=2.7.1
-Markdown>=2.3.1
-PyYAML>=3.10
-click>=3.3
-livereload>=2.5.1
-tornado>=5.0
