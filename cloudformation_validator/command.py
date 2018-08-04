@@ -35,8 +35,9 @@ def cli():
 @click.option('--parameter-values-path', '-m', help='Path to a JSON file to pull Parameter values from', required=False)
 @click.option('--isolate-custom-rule-exceptions', '-i', help='Isolate custom rule exceptions - just emit the exception without stack trace and keep chugging',is_flag=True)
 @click.option('--version', '-v', help='Print version and exit', required=False, is_flag=True)
+@click.option('--use-optional-rules',help='Use optional rules', required=False, is_flag=True)
 def validate(suppress_errors,template_path,template_file,debug,rules_directory,profile_path,allow_suppression,print_suppression,parameter_values_path,
-             isolate_custom_rule_exceptions,version):
+             isolate_custom_rule_exceptions,version, use_optional_rules):
     '''
     primary function for validating a template
     :param template_path:
@@ -49,6 +50,7 @@ def validate(suppress_errors,template_path,template_file,debug,rules_directory,p
     :param parameter_values_path:
     :param isolate_custom_rule_exceptions:
     :param version:
+    :param use_optional_rules
     :return:
     '''
 
@@ -75,7 +77,8 @@ def validate(suppress_errors,template_path,template_file,debug,rules_directory,p
             allow_suppression,
             print_suppression,
             parameter_values_path,
-            isolate_custom_rule_exceptions
+            isolate_custom_rule_exceptions,
+            use_optional_rules
         )
 
 
@@ -116,7 +119,8 @@ def start_validate(
         allow_suppression,
         print_suppression,
         parameter_values_path,
-        isolate_custom_rule_exceptions):
+        isolate_custom_rule_exceptions,
+        use_optional_rules):
     '''
     Starts the validation
     :param template_path:
@@ -128,6 +132,7 @@ def start_validate(
     :param print_suppression:
     :param parameter_values_path:
     :param isolate_custom_rule_exceptions:
+    :param use_optional_rules
     :return:
     '''
     if debug:
@@ -145,6 +150,7 @@ def start_validate(
     config_dict['print_suppression'] = print_suppression
     config_dict['parameter_values_path'] = parameter_values_path
     config_dict['isolate_custom_rule_exceptions'] = isolate_custom_rule_exceptions
+    config_dict['use_optional_rules'] = use_optional_rules
     validator = ValidateUtility(config_dict)
     if debug:
         print('print have validator')

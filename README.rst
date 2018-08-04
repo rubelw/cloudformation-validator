@@ -215,7 +215,22 @@ I you get some errors and warnings in your out put, you can pass-in the flag to 
         }
     ]
 
+
+Enabling Optional Rules
+-----------------------
+
+I have included an additional_custom_rules directory which can be enabled with the --user-optional-rules flag.
+
+These rules are non-standard security rules - such as the required tags rule described below.
+
+.. code-block:: console
+
+    cfn-validator validate --template-file=/tmp/template.json --use-optional-rules
+
+
 Writing your own rules
+----------------------------------------------------------------------
+
 
     * Utilize the format for existing rules in the /cloudformation_validator/custom_rules directory
     * Places the files in a new directory

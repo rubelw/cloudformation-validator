@@ -21,7 +21,7 @@ def dump(obj):
 class CustomRuleLoader:
 
 
-    def __init__(self, debug=False, rule_directory=None, extra_rule_directory=None, allow_suppression=True, print_suppression=False, isolate_custom_rule_exceptions=False):
+    def __init__(self, debug=False, rule_directory=None, extra_rule_directory=None, allow_suppression=True, print_suppression=False, isolate_custom_rule_exceptions=False,additional_rules_directory=None):
         '''
         Initialize CustomRuleLoader
         :param debug: 
@@ -33,9 +33,11 @@ class CustomRuleLoader:
         self.debug = debug
         self.rule_directory = rule_directory
         self.extra_rule_directory = extra_rule_directory
+        self.additional_rules_directory = additional_rules_directory
         self.allow_suppression= allow_suppression
         self.print_suppression = print_suppression
         self.isolate_custom_rule_exceptions = isolate_custom_rule_exceptions
+
 
         self.validate_extra_rule_directory = self.rule_directory
 
@@ -123,10 +125,13 @@ class CustomRuleLoader:
             print('rule_class: '+str(rule_class)+lineno())
             print('rule directory: '+str(directory))
 
-        if 'site-packages' in str(directory):
+        if 'site-packages' in str(directory) and 'additional' in str(directory):
+            my_module = importlib.import_module("cloudformation_validator.additional_custom_rules." + str(rule_class))
+        elif 'site-packages' in str(directory) and 'custom_rules' in str(directory):
             my_module = importlib.import_module("cloudformation_validator.custom_rules." + str(rule_class))
-
-        elif 'cloudformation_validator' in str(directory):
+        elif 'cloudformation_validator' in str(directory) and 'additional' in str(directory):
+            my_module = importlib.import_module("cloudformation_validator.additional_custom_rules." + str(rule_class))
+        elif 'cloudformation_validator' in str(directory) and 'custom_rules' in str(directory):
             my_module = importlib.import_module("cloudformation_validator.custom_rules." + str(rule_class))
         else:
             my_module = importlib.import_module(str(rule_class))
@@ -186,7 +191,10 @@ class CustomRuleLoader:
                         print("##########################\n\n")
 
                     # Import the rule class
-                    my_module = importlib.import_module("cloudformation_validator.custom_rules."+str(file))
+                    if 'additional' in rule_classes[rule_class][file]:
+                        my_module = importlib.import_module("cloudformation_validator.additional_custom_rules." + str(file))
+                    else:
+                        my_module = importlib.import_module("cloudformation_validator.custom_rules."+str(file))
 
                 elif rule_class == 'extra_rules_directory':
 
@@ -198,7 +206,6 @@ class CustomRuleLoader:
 
                     # Import the rule class
                     my_module = importlib.import_module(str(file))
-
 
                 MyClass = getattr(my_module, str(file))
 
@@ -424,6 +431,7 @@ class CustomRuleLoader:
             if self.debug:
                 print('temp file: '+str(temp_file)+lineno())
 
+
             if not temp_file.startswith('__'):
             #if temp_file != '__init__.py' and temp_file != '__pycache__':
 
@@ -433,6 +441,24 @@ class CustomRuleLoader:
                 #elif temp_file.endswith('.pyc'):
                 #    rule_filenames.append(str(temp_file).replace('.pyc',''))
 
+        if self.additional_rules_directory:
+            temp_rule_filenames = os.listdir(self.additional_rules_directory)
+            if self.debug:
+                print('additional rules directory: ' + str(self.additional_rules_directory) + lineno())
+
+            for temp_file in temp_rule_filenames:
+
+                if self.debug:
+                    print('temp file: ' + str(temp_file) + lineno())
+
+                if not temp_file.startswith('__'):
+                    # if temp_file != '__init__.py' and temp_file != '__pycache__':
+
+                    if temp_file.endswith('.py'):
+                        # rule_filenames.append(str(temp_file).replace('.py',''))
+                        rule_filenames['rules_directory'][str(temp_file).replace('.py', '')] = str(self.additional_rules_directory)
+                    # elif temp_file.endswith('.pyc'):
+                    #    rule_filenames.append(str(temp_file).replace('.pyc',''))
 
         if self.extra_rule_directory:
             if self.debug:
@@ -494,8 +520,12 @@ class CustomRuleLoader:
 
                     if self.debug:
                         print('file: '+str(file)+lineno())
+                        print('directory: '+str(rule_filenames[directories][file]))
 
-                    exec("from cloudformation_validator.custom_rules import "+str(file))
+                    if 'additional' in str(rule_filenames[directories][file]):
+                        exec("from cloudformation_validator.additional_custom_rules import "+str(file))
+                    else:
+                        exec("from cloudformation_validator.custom_rules import "+str(file))
 
             if directories == 'extra_rules_directory':
                 import sys

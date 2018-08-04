@@ -60,6 +60,7 @@ class ValidateUtility:
         self.debug = False
         self.profile_path = None
         self.rules_directory = None
+        self.optional_rules_directory = None
         self.allow_suppression = True
         self.print_suppression = False
         self.isolate_custom_rule_exceptions = False
@@ -68,6 +69,7 @@ class ValidateUtility:
         self.parameter_values_path = None
         self.isolate_custom_rule_exceptions = True
         self.suppress_errors = False
+        self.use_optional_rules = False
 
         if config_block:
             self._config = config_block
@@ -78,11 +80,15 @@ class ValidateUtility:
         for key in self._config:
             self.__dict__[key] = self._config[key]
 
-        self.custom_rule_loader = CustomRuleLoader(isolate_custom_rule_exceptions=self.isolate_custom_rule_exceptions,allow_suppression=self.allow_suppression,print_suppression=self.print_suppression,debug=self.debug)
+        if self.use_optional_rules:
+            self.optional_rules_directory = os.path.dirname(os.path.realpath(__file__))+'/additional_custom_rules'
+
+        self.custom_rule_loader = CustomRuleLoader(isolate_custom_rule_exceptions=self.isolate_custom_rule_exceptions, allow_suppression=self.allow_suppression, print_suppression=self.print_suppression, debug=self.debug, additional_rules_directory = self.optional_rules_directory)
 
         # If we have an extra rules directory
         if self.rules_directory:
             self.custom_rule_loader.extra_rule_directory = self.rules_directory
+
 
         self.custom_rule_loader.rule_directory=str(os.path.dirname(os.path.realpath(__file__))+'/custom_rules')
 
