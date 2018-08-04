@@ -9,7 +9,7 @@ __all__ = [
     'rules_set_registry'
 ]
 __title__ = 'cloudformation_validator'
-__version__ = '0.2.30'
+__version__ = '0.2.31'
 __author__ = 'Will Rubel'
 __author_email__ = 'willrubel@gmail.com'
 

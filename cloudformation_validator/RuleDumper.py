@@ -62,8 +62,8 @@ class RuleDumper:
                 print('Error'+str(e)+lineno())
                 sys.exit(1)
 
-
-        rules_view = RulesView.emit(rule_registry=rule_registry, profile=profile, debug=self.debug)
+        view = RulesView()
+        rules_view = view.emit(rule_registry=rule_registry, profile=profile, debug=self.debug)
 
         if self.debug:
             print('rules_view: '+str(rules_view))

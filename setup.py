@@ -8,13 +8,11 @@ import sys
 DESCRIPTION = ("Lightweight, extensible schema and data validation tool for "
                "Cloudformation Templates.")
 LONG_DESCRIPTION = open('README.rst').read()
-VERSION = '0.2.30'
+VERSION = '0.2.31'
 
 setup_requires = (
     ['pytest-runner'] if any(x in sys.argv for x in ('pytest', 'test', 'ptr', 'future')) else []
 )
-
-
 
 setup(
     name='cloudformation_validator',
@@ -42,7 +40,8 @@ setup(
         "jinja2",
         "dill",
         "pykwalify",
-        "schema"
+        "schema",
+        "future"
     ],
     keywords=['validation', 'schema', 'dictionaries','aws','cloudformation','python','rules','linter'],
     classifiers=[
