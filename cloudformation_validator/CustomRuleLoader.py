@@ -125,6 +125,7 @@ class CustomRuleLoader:
 
         if 'site-packages' in str(directory):
             my_module = importlib.import_module("cloudformation_validator.custom_rules." + str(rule_class))
+
         elif 'cloudformation_validator' in str(directory):
             my_module = importlib.import_module("cloudformation_validator.custom_rules." + str(rule_class))
         else:
@@ -419,6 +420,10 @@ class CustomRuleLoader:
             print('rules directory: '+str(self.rule_directory)+lineno())
 
         for temp_file in temp_rule_filenames:
+
+            if self.debug:
+                print('temp file: '+str(temp_file)+lineno())
+
             if not temp_file.startswith('__'):
             #if temp_file != '__init__.py' and temp_file != '__pycache__':
 

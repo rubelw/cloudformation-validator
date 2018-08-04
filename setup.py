@@ -41,7 +41,8 @@ setup(
         "dill>=0.2.8",
         "pykwalify>=1.6.1",
         "schema>=0.6.8",
-        "future>=0.16.0"
+        "future>=0.16.0",
+        "six>=1.11.0"
     ],
     keywords=['validation', 'schema', 'dictionaries','aws','cloudformation','python','rules','linter'],
     classifiers=[
