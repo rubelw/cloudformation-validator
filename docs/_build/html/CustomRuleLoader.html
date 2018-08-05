@@ -1,0 +1,226 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>CustomRuleLoader &#8212; cloudformation_validator 0.2.33 documentation</title>
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="RuleDefinition" href="RuleDefinition.html" />
+    <link rel="prev" title="IpAddr" href="IpAddr.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="RuleDefinition.html" title="RuleDefinition"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="IpAddr.html" title="IpAddr"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">cloudformation_validator 0.2.33 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-cloudformation_validator.CustomRuleLoader">
+<span id="customruleloader"></span><h1>CustomRuleLoader<a class="headerlink" href="#module-cloudformation_validator.CustomRuleLoader" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="cloudformation_validator.CustomRuleLoader.CustomRuleLoader">
+<em class="property">class </em><code class="descclassname">cloudformation_validator.CustomRuleLoader.</code><code class="descname">CustomRuleLoader</code><span class="sig-paren">(</span><em>debug=False</em>, <em>rule_directory=None</em>, <em>extra_rule_directory=None</em>, <em>allow_suppression=True</em>, <em>print_suppression=False</em>, <em>isolate_custom_rule_exceptions=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cloudformation_validator/CustomRuleLoader.html#CustomRuleLoader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cloudformation_validator.CustomRuleLoader.CustomRuleLoader" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="cloudformation_validator.CustomRuleLoader.CustomRuleLoader.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>debug=False</em>, <em>rule_directory=None</em>, <em>extra_rule_directory=None</em>, <em>allow_suppression=True</em>, <em>print_suppression=False</em>, <em>isolate_custom_rule_exceptions=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cloudformation_validator/CustomRuleLoader.html#CustomRuleLoader.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cloudformation_validator.CustomRuleLoader.CustomRuleLoader.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize CustomRuleLoader
+:param debug:
+:param rule_directory:
+:param allow_suppression:
+:param print_suppression:
+:param isolate_custom_rule_exceptions:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cloudformation_validator.CustomRuleLoader.CustomRuleLoader.cfn_model_with_suppressed_resources_removed">
+<code class="descname">cfn_model_with_suppressed_resources_removed</code><span class="sig-paren">(</span><em>cfn_model</em>, <em>rule_id</em>, <em>allow_suppression</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cloudformation_validator/CustomRuleLoader.html#CustomRuleLoader.cfn_model_with_suppressed_resources_removed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cloudformation_validator.CustomRuleLoader.CustomRuleLoader.cfn_model_with_suppressed_resources_removed" title="Permalink to this definition">¶</a></dt>
+<dd><p>CFN model with suppressed resources removed
+:param cfn_model:
+:param rule_id:
+:param allow_suppression:
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cloudformation_validator.CustomRuleLoader.CustomRuleLoader.discover_rule_classes">
+<code class="descname">discover_rule_classes</code><span class="sig-paren">(</span><em>rule_directory</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cloudformation_validator/CustomRuleLoader.html#CustomRuleLoader.discover_rule_classes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cloudformation_validator.CustomRuleLoader.CustomRuleLoader.discover_rule_classes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Discover the rule classes
+:param rule_directory:
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cloudformation_validator.CustomRuleLoader.CustomRuleLoader.discover_rule_filenames">
+<code class="descname">discover_rule_filenames</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cloudformation_validator/CustomRuleLoader.html#CustomRuleLoader.discover_rule_filenames"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cloudformation_validator.CustomRuleLoader.CustomRuleLoader.discover_rule_filenames" title="Permalink to this definition">¶</a></dt>
+<dd><p>Discover the rule filenames
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cloudformation_validator.CustomRuleLoader.CustomRuleLoader.execute_custom_rules">
+<code class="descname">execute_custom_rules</code><span class="sig-paren">(</span><em>cfn_model</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cloudformation_validator/CustomRuleLoader.html#CustomRuleLoader.execute_custom_rules"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cloudformation_validator.CustomRuleLoader.CustomRuleLoader.execute_custom_rules" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute any custom rules, which are in addition to the regular rules
+:param cfn_model:
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cloudformation_validator.CustomRuleLoader.CustomRuleLoader.filter_rule_classes">
+<code class="descname">filter_rule_classes</code><span class="sig-paren">(</span><em>cfn_model</em>, <em>violations</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cloudformation_validator/CustomRuleLoader.html#CustomRuleLoader.filter_rule_classes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cloudformation_validator.CustomRuleLoader.CustomRuleLoader.filter_rule_classes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter rules
+:param cfn_model:
+:param violations:
+:return: violations</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cloudformation_validator.CustomRuleLoader.CustomRuleLoader.rule_definitions">
+<code class="descname">rule_definitions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cloudformation_validator/CustomRuleLoader.html#CustomRuleLoader.rule_definitions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cloudformation_validator.CustomRuleLoader.CustomRuleLoader.rule_definitions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads all the rule definitions from the rules directory in to the rules registry object and
+returns the rules registry object
+:return: rules registry</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cloudformation_validator.CustomRuleLoader.CustomRuleLoader.rule_registry_from_rule_class">
+<code class="descname">rule_registry_from_rule_class</code><span class="sig-paren">(</span><em>rule_class</em>, <em>directory</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cloudformation_validator/CustomRuleLoader.html#CustomRuleLoader.rule_registry_from_rule_class"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cloudformation_validator.CustomRuleLoader.CustomRuleLoader.rule_registry_from_rule_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the rule id, type and text for a specific rule
+:param rule_class: The rule name
+:return: rule_id, rule_type, rule_text</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cloudformation_validator.CustomRuleLoader.CustomRuleLoader.rules_to_suppress">
+<code class="descname">rules_to_suppress</code><span class="sig-paren">(</span><em>resource</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cloudformation_validator/CustomRuleLoader.html#CustomRuleLoader.rules_to_suppress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cloudformation_validator.CustomRuleLoader.CustomRuleLoader.rules_to_suppress" title="Permalink to this definition">¶</a></dt>
+<dd><p>Rules to suppress
+:param resource:
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cloudformation_validator.CustomRuleLoader.CustomRuleLoader.suppress_resource">
+<code class="descname">suppress_resource</code><span class="sig-paren">(</span><em>rules_to_suppress</em>, <em>rule_id</em>, <em>logical_resource_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cloudformation_validator/CustomRuleLoader.html#CustomRuleLoader.suppress_resource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cloudformation_validator.CustomRuleLoader.CustomRuleLoader.suppress_resource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Supress certain resources
+:param rules_to_suppress:
+:param rule_id:
+:param logical_resource_id:
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cloudformation_validator.CustomRuleLoader.CustomRuleLoader.validate_cfn_nag_metadata">
+<code class="descname">validate_cfn_nag_metadata</code><span class="sig-paren">(</span><em>cfn_model</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cloudformation_validator/CustomRuleLoader.html#CustomRuleLoader.validate_cfn_nag_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cloudformation_validator.CustomRuleLoader.CustomRuleLoader.validate_cfn_nag_metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validate the metadata
+:param cfn_model:
+:return:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="cloudformation_validator.CustomRuleLoader.CustomRuleLoader.validate_extra_rule_directory">
+<code class="descname">validate_extra_rule_directory</code><span class="sig-paren">(</span><em>rule_directory</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cloudformation_validator/CustomRuleLoader.html#CustomRuleLoader.validate_extra_rule_directory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cloudformation_validator.CustomRuleLoader.CustomRuleLoader.validate_extra_rule_directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Validate the extra rules directory
+:param rule_directory:
+:return:</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="cloudformation_validator.CustomRuleLoader.dump">
+<code class="descclassname">cloudformation_validator.CustomRuleLoader.</code><code class="descname">dump</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/cloudformation_validator/CustomRuleLoader.html#dump"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cloudformation_validator.CustomRuleLoader.dump" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="cloudformation_validator.CustomRuleLoader.lineno">
+<code class="descclassname">cloudformation_validator.CustomRuleLoader.</code><code class="descname">lineno</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/cloudformation_validator/CustomRuleLoader.html#lineno"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#cloudformation_validator.CustomRuleLoader.lineno" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the current line number in our program.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="IpAddr.html"
+                        title="previous chapter">IpAddr</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="RuleDefinition.html"
+                        title="next chapter">RuleDefinition</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/CustomRuleLoader.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="RuleDefinition.html" title="RuleDefinition"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="IpAddr.html" title="IpAddr"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">cloudformation_validator 0.2.33 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, δ.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
+  </body>
+</html>

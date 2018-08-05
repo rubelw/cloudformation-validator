@@ -1,0 +1,698 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>cloudformation_validator.ValidateUtility &#8212; cloudformation_validator 0.2.33 documentation</title>
+    <link rel="stylesheet" href="../../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">cloudformation_validator 0.2.33 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for cloudformation_validator.ValidateUtility</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">traceback</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">yaml</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">cfn_model.parser</span> <span class="k">import</span> <span class="n">CfnParser</span>
+<span class="kn">from</span> <span class="nn">cloudformation_validator.CustomRuleLoader</span> <span class="k">import</span> <span class="n">CustomRuleLoader</span>
+<span class="kn">from</span> <span class="nn">cloudformation_validator.ProfileLoader</span> <span class="k">import</span> <span class="n">ProfileLoader</span>
+<span class="kn">from</span> <span class="nn">cloudformation_validator.TemplateDiscovery</span> <span class="k">import</span> <span class="n">TemplateDiscovery</span>
+<span class="kn">from</span> <span class="nn">cloudformation_validator.Violation</span> <span class="k">import</span> <span class="n">Violation</span>
+<span class="kn">from</span> <span class="nn">cloudformation_validator.result_views.JsonResults</span> <span class="k">import</span> <span class="n">JsonResults</span>
+<span class="kn">from</span> <span class="nn">cloudformation_validator.result_views.SimpleStdoutResults</span> <span class="k">import</span> <span class="n">SimpleStdoutResults</span>
+<span class="kn">from</span> <span class="nn">cfn_model.parser.ParserError</span> <span class="k">import</span> <span class="n">ParserError</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">yaml</span> <span class="k">import</span> <span class="n">CLoader</span> <span class="k">as</span> <span class="n">Loader</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">yaml</span> <span class="k">import</span> <span class="n">Loader</span>
+
+<div class="viewcode-block" id="lineno"><a class="viewcode-back" href="../../ValidateUtility.html#cloudformation_validator.ValidateUtility.lineno">[docs]</a><span class="k">def</span> <span class="nf">lineno</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Returns the current line number in our program.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="s1">&#39; - ValidateUtility - line number: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">inspect</span><span class="o">.</span><span class="n">currentframe</span><span class="p">()</span><span class="o">.</span><span class="n">f_back</span><span class="o">.</span><span class="n">f_lineno</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="GenericScalar"><a class="viewcode-back" href="../../ValidateUtility.html#cloudformation_validator.ValidateUtility.GenericScalar">[docs]</a><span class="k">class</span> <span class="nc">GenericScalar</span><span class="p">:</span>
+<div class="viewcode-block" id="GenericScalar.__init__"><a class="viewcode-back" href="../../ValidateUtility.html#cloudformation_validator.ValidateUtility.GenericScalar.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tag</span> <span class="o">=</span> <span class="n">tag</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_style</span> <span class="o">=</span> <span class="n">style</span></div>
+
+<div class="viewcode-block" id="GenericScalar.to_yaml"><a class="viewcode-back" href="../../ValidateUtility.html#cloudformation_validator.ValidateUtility.GenericScalar.to_yaml">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">to_yaml</span><span class="p">(</span><span class="n">dumper</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="c1"># data is a GenericScalar</span>
+        <span class="k">return</span> <span class="n">dumper</span><span class="o">.</span><span class="n">represent_scalar</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">_tag</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">_value</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">_style</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="default_constructor"><a class="viewcode-back" href="../../ValidateUtility.html#cloudformation_validator.ValidateUtility.default_constructor">[docs]</a><span class="k">def</span> <span class="nf">default_constructor</span><span class="p">(</span><span class="n">loader</span><span class="p">,</span> <span class="n">tag_suffix</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">yaml</span><span class="o">.</span><span class="n">ScalarNode</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">GenericScalar</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">tag_suffix</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="n">node</span><span class="o">.</span><span class="n">style</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Node: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">node</span><span class="p">)))</span></div>
+
+
+
+<div class="viewcode-block" id="ValidateUtility"><a class="viewcode-back" href="../../ValidateUtility.html#cloudformation_validator.ValidateUtility.ValidateUtility">[docs]</a><span class="k">class</span> <span class="nc">ValidateUtility</span><span class="p">:</span>
+
+
+    <span class="n">_template</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="ValidateUtility.__init__"><a class="viewcode-back" href="../../ValidateUtility.html#cloudformation_validator.ValidateUtility.ValidateUtility.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_block</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Initialize ValidateUtility</span>
+<span class="sd">        :param config_block: </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_path</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">template_file</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">profile_path</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rules_directory</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">allow_suppression</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">print_suppression</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">isolate_custom_rule_exceptions</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">allow_suppression</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">print_suppression</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameter_values_path</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">isolate_custom_rule_exceptions</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">suppress_errors</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="n">config_block</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">config_block</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;config block was garbage&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">SystemError</span>
+
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">custom_rule_loader</span> <span class="o">=</span> <span class="n">CustomRuleLoader</span><span class="p">(</span><span class="n">isolate_custom_rule_exceptions</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">isolate_custom_rule_exceptions</span><span class="p">,</span><span class="n">allow_suppression</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">allow_suppression</span><span class="p">,</span><span class="n">print_suppression</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">print_suppression</span><span class="p">,</span><span class="n">debug</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">)</span>
+
+        <span class="c1"># If we have an extra rules directory</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rules_directory</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">custom_rule_loader</span><span class="o">.</span><span class="n">extra_rule_directory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rules_directory</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">custom_rule_loader</span><span class="o">.</span><span class="n">rule_directory</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="vm">__file__</span><span class="p">))</span><span class="o">+</span><span class="s1">&#39;/custom_rules&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validate_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input_path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">template_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validate_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">template_file</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rules_directory</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validate_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rules_directory</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">profile_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">validate_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_path</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ValidateUtility.validate"><a class="viewcode-back" href="../../ValidateUtility.html#cloudformation_validator.ValidateUtility.ValidateUtility.validate">[docs]</a>    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Validate a directory or file</span>
+<span class="sd">        :return: rendered results</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ValidateUtility - validate&#39;</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+
+        <span class="n">input_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_path</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;input_path: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">input_path</span><span class="p">)</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+
+
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">############################################&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;audit_audit_aggregate_across_files_and_render_results&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;################################################</span><span class="se">\n\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+
+        <span class="n">aggregate_results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">audit_aggregate_across_files_and_render_results</span><span class="p">(</span><span class="n">input_path</span><span class="o">=</span><span class="n">input_path</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;aggregate_results &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">aggregate_results</span><span class="p">)</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+
+        <span class="n">rendered_results</span> <span class="o">=</span>  <span class="bp">self</span><span class="o">.</span><span class="n">render_results</span><span class="p">(</span><span class="n">aggregate_results</span><span class="o">=</span><span class="n">aggregate_results</span><span class="p">,</span> <span class="n">output_format</span><span class="o">=</span><span class="s1">&#39;json&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;rendered_results: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">rendered_results</span><span class="p">)</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">rendered_results</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">rendered_results</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">e</span></div>
+
+
+<div class="viewcode-block" id="ValidateUtility.audit_aggregate_across_files_and_render_results"><a class="viewcode-back" href="../../ValidateUtility.html#cloudformation_validator.ValidateUtility.ValidateUtility.audit_aggregate_across_files_and_render_results">[docs]</a>    <span class="k">def</span> <span class="nf">audit_aggregate_across_files_and_render_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">input_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parameter_values_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">template_pattern</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Aggregate across files and render results</span>
+<span class="sd">        :param input_path: </span>
+<span class="sd">        :param parameter_values_path: </span>
+<span class="sd">        :param template_pattern: </span>
+<span class="sd">        :return: </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ValidateUtility - audit_aggregate_across_files_and_render_results&#39;</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+
+        <span class="n">aggregate_results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">audit_aggregate_across_files</span><span class="p">(</span><span class="n">input_path</span><span class="o">=</span><span class="n">input_path</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;results: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">aggregate_results</span><span class="p">)</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+
+        <span class="k">return</span> <span class="n">aggregate_results</span></div>
+
+<div class="viewcode-block" id="ValidateUtility.audit_aggregate_across_files"><a class="viewcode-back" href="../../ValidateUtility.html#cloudformation_validator.ValidateUtility.ValidateUtility.audit_aggregate_across_files">[docs]</a>    <span class="k">def</span> <span class="nf">audit_aggregate_across_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">input_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parameter_values_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">template_pattern</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Given a file or directory path, return aggregate results</span>
+<span class="sd">        :param input_path: </span>
+<span class="sd">        :param parameter_values_path: </span>
+<span class="sd">        :param template_pattern: </span>
+<span class="sd">        :return: </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ValidateUtility - audit_aggregate_across_files&#39;</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;input_path: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">input_path</span><span class="p">)</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+
+        <span class="k">if</span> <span class="n">parameter_values_path</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">parameter_values_path</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">myparamsfile</span><span class="p">:</span>
+                <span class="n">param_data</span> <span class="o">=</span> <span class="n">myparamsfile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+            <span class="n">parameter_values_string</span> <span class="o">=</span> <span class="n">param_data</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">parameter_values_string</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">template_file</span><span class="p">:</span>
+            <span class="n">templates_obj</span> <span class="o">=</span> <span class="n">TemplateDiscovery</span><span class="p">(</span><span class="n">input_json_path</span><span class="o">=</span><span class="n">input_path</span><span class="p">,</span><span class="n">debug</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">)</span>
+            <span class="n">templates</span> <span class="o">=</span> <span class="n">templates_obj</span><span class="o">.</span><span class="n">discover_templates</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">templates</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">template_file</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">templates</span><span class="p">)</span>
+
+        <span class="n">aggregate_results</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">template</span> <span class="ow">in</span> <span class="n">templates</span><span class="p">:</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;template: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">template</span><span class="p">)</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;type: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">template</span><span class="p">))</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">suppress_errors</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Evaluating: &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">template</span><span class="p">))</span>
+
+            <span class="n">json_matchObj</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;.*.json$&#39;</span><span class="p">,</span> <span class="n">template</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">M</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">)</span>
+            <span class="n">yaml_matchObj</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;.*.ya*ml$&#39;</span><span class="p">,</span><span class="n">template</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">M</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">json_matchObj</span><span class="p">:</span>
+
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">myfile</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">+</span><span class="s1">&#39;Auditing file: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">template</span><span class="p">)</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+
+                    <span class="n">json_acceptable_string</span> <span class="o">=</span> <span class="n">myfile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;&#39;&lt;&gt;() &quot;</span><span class="p">)</span>
+                    <span class="n">json_acceptable_string</span><span class="o">=</span><span class="n">json_acceptable_string</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\&#39;</span><span class="s2">&quot;</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="n">json_acceptable_string</span><span class="p">)</span>
+
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">json_acceptable_string</span><span class="p">)</span>
+                    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+
+                        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">suppress_errors</span><span class="p">:</span>
+                            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">##############################&quot;</span><span class="p">)</span>
+                            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Invalid json file - &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">template</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39; - skipping file&#39;</span><span class="p">)</span>
+                            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;################################</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+                    <span class="n">file_results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">audit</span><span class="p">(</span><span class="n">cloudformation_string</span><span class="o">=</span><span class="n">data</span><span class="p">,</span><span class="n">parameter_values_string</span><span class="o">=</span> <span class="n">parameter_values_string</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;file results: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">file_results</span><span class="p">)</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+
+                    <span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
+
+                    <span class="k">if</span> <span class="s1">&#39;failure_count&#39;</span> <span class="ow">in</span> <span class="n">file_results</span><span class="p">:</span>
+                        <span class="n">results</span><span class="p">[</span><span class="s1">&#39;failure_count&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">file_results</span><span class="p">[</span><span class="s1">&#39;failure_count&#39;</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">results</span><span class="p">[</span><span class="s1">&#39;failure_count&#39;</span><span class="p">]</span><span class="o">=</span> <span class="mi">1</span>
+                    <span class="n">results</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">template</span>
+                    <span class="n">results</span><span class="p">[</span><span class="s1">&#39;file_results&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">file_results</span>
+                    <span class="n">aggregate_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+
+            <span class="k">elif</span> <span class="n">yaml_matchObj</span><span class="p">:</span>
+
+                <span class="n">yaml</span><span class="o">.</span><span class="n">add_multi_constructor</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">default_constructor</span><span class="p">,</span> <span class="n">Loader</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">SafeLoader</span><span class="p">)</span>
+                <span class="n">yaml</span><span class="o">.</span><span class="n">add_representer</span><span class="p">(</span><span class="n">GenericScalar</span><span class="p">,</span> <span class="n">GenericScalar</span><span class="o">.</span><span class="n">to_yaml</span><span class="p">,</span> <span class="n">Dumper</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">SafeDumper</span><span class="p">)</span>
+
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">template</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">myfile</span><span class="p">:</span>
+                    <span class="k">try</span><span class="p">:</span>
+
+                        <span class="n">data</span> <span class="o">=</span> <span class="n">myfile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+                        <span class="n">data</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+                    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">##############################&quot;</span><span class="p">)</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Invalid yaml file - &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">template</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; - skipping file&#39;</span><span class="p">)</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;################################</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+                    <span class="n">file_results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">audit</span><span class="p">(</span><span class="n">cloudformation_string</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+                                              <span class="n">parameter_values_string</span><span class="o">=</span><span class="n">parameter_values_string</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;file results: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">file_results</span><span class="p">)</span> <span class="o">+</span> <span class="n">lineno</span><span class="p">())</span>
+
+                    <span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
+
+                    <span class="k">if</span> <span class="s1">&#39;failure_count&#39;</span> <span class="ow">in</span> <span class="n">file_results</span><span class="p">:</span>
+                        <span class="n">results</span><span class="p">[</span><span class="s1">&#39;failure_count&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">file_results</span><span class="p">[</span><span class="s1">&#39;failure_count&#39;</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">results</span><span class="p">[</span><span class="s1">&#39;failure_count&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+                    <span class="n">results</span><span class="p">[</span><span class="s1">&#39;filename&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">template</span>
+                    <span class="n">results</span><span class="p">[</span><span class="s1">&#39;file_results&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">file_results</span>
+                    <span class="n">aggregate_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">aggregate_results</span></div>
+
+<div class="viewcode-block" id="ValidateUtility.audit"><a class="viewcode-back" href="../../ValidateUtility.html#cloudformation_validator.ValidateUtility.ValidateUtility.audit">[docs]</a>    <span class="k">def</span> <span class="nf">audit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cloudformation_string</span><span class="p">,</span> <span class="n">parameter_values_string</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Audit files</span>
+<span class="sd">        :param cloudformation_string: </span>
+<span class="sd">        :param parameter_values_string: </span>
+<span class="sd">        :return: </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ValidateUtility - audit&#39;</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+
+        <span class="n">violations</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">parser</span> <span class="o">=</span> <span class="n">CfnParser</span><span class="o">.</span><span class="n">CfnParser</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">)</span>
+
+        <span class="n">schema_validation_errors</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">cfn_model</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">cloudformation_string</span><span class="p">,</span> <span class="n">parameter_values_string</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;exception: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;type: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">))</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="s1">&#39;to_hash&#39;</span><span class="p">):</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;to_hash: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">to_hash</span><span class="p">())</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+            <span class="n">cfn_model</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">tb</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">exc_info</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;tb: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">tb</span><span class="p">)</span> <span class="o">+</span> <span class="n">lineno</span><span class="p">())</span>
+            <span class="n">stk</span> <span class="o">=</span> <span class="n">traceback</span><span class="o">.</span><span class="n">extract_tb</span><span class="p">(</span><span class="n">tb</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;stk: &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">stk</span><span class="p">)</span> <span class="o">+</span> <span class="n">lineno</span><span class="p">())</span>
+            <span class="n">fname</span> <span class="o">=</span> <span class="n">stk</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">suppress_errors</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The failing function was&#39;</span><span class="p">,</span> <span class="n">fname</span><span class="p">,</span> <span class="n">lineno</span><span class="p">())</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;error:&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="s1">&#39;to_hash&#39;</span><span class="p">):</span>
+                <span class="n">schema_validation_errors</span><span class="o">=</span><span class="n">e</span><span class="o">.</span><span class="n">to_hash</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">schema_validation_errors</span><span class="o">=</span><span class="n">e</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">cfn_model</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;cfn_model: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">dir</span><span class="p">(</span><span class="n">cfn_model</span><span class="p">))</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;cfn_model: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">vars</span><span class="p">(</span><span class="n">cfn_model</span><span class="p">))</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+                <span class="nb">print</span><span class="p">(</span><span class="nb">dir</span><span class="p">(</span><span class="n">cfn_model</span><span class="p">))</span>
+
+                <span class="k">for</span> <span class="n">parameters</span> <span class="ow">in</span> <span class="n">cfn_model</span><span class="o">.</span><span class="n">parameters</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;parameter: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">parameters</span><span class="p">))</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">cfn_model</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">parameters</span><span class="p">])</span>
+
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">###############################&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Done parsing parameters&#39;</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;###############################</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+                <span class="k">for</span> <span class="n">resource</span> <span class="ow">in</span> <span class="n">cfn_model</span><span class="o">.</span><span class="n">resources</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;resource: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">resource</span><span class="p">))</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">cfn_model</span><span class="o">.</span><span class="n">resources</span><span class="p">[</span><span class="n">resource</span><span class="p">])</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;vars: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">vars</span><span class="p">(</span><span class="n">cfn_model</span><span class="o">.</span><span class="n">resources</span><span class="p">[</span><span class="n">resource</span><span class="p">])))</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;dir: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">dir</span><span class="p">(</span><span class="n">cfn_model</span><span class="o">.</span><span class="n">resources</span><span class="p">[</span><span class="n">resource</span><span class="p">])))</span>
+                    <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">cfn_model</span><span class="o">.</span><span class="n">resources</span><span class="p">[</span><span class="n">resource</span><span class="p">]):</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;obj.</span><span class="si">%s</span><span class="s2"> = </span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">cfn_model</span><span class="o">.</span><span class="n">resources</span><span class="p">[</span><span class="n">resource</span><span class="p">],</span> <span class="n">attr</span><span class="p">)))</span>
+
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">###############################&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Done parsing resources&#39;</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;###############################</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;model is loaded&#39;</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;vars: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">vars</span><span class="p">(</span><span class="n">cfn_model</span><span class="p">))</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;parameters: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">cfn_model</span><span class="o">.</span><span class="n">parameters</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">schema_validation_errors</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">cfn_model</span><span class="p">:</span>
+                <span class="c1"># Get any violations from custom rules</span>
+                <span class="c1"># custom rules are in addition to the normal rules</span>
+                <span class="n">violations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">custom_rule_loader</span><span class="o">.</span><span class="n">execute_custom_rules</span><span class="p">(</span><span class="n">cfn_model</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;violations: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">violations</span><span class="p">)</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">###############################&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Done loading custom rules&#39;</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;###############################</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">violations</span><span class="p">)</span><span class="o">&lt;</span><span class="mi">1</span><span class="p">:</span>
+                <span class="n">failure_count</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span>
+
+                <span class="n">failure_count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">count_failures</span><span class="p">(</span><span class="n">violations</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;failure count: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">failure_count</span><span class="p">)</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+
+                <span class="n">warning_count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">count_warnings</span><span class="p">(</span><span class="n">violations</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;warning count: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">warning_count</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;count: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">failure_count</span><span class="p">)</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+
+            <span class="n">violations</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter_violations_by_profile</span><span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;failure_count&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">count_failures</span><span class="p">(</span><span class="n">violations</span><span class="p">),</span>
+                    <span class="s1">&#39;violations&#39;</span> <span class="p">:</span> <span class="n">violations</span>
+                <span class="p">}</span>
+            <span class="p">)</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;violations: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">violations</span><span class="p">)</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+            <span class="k">return</span> <span class="n">violations</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;there are schema validation errors &#39;</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+
+            <span class="n">violation</span> <span class="o">=</span> <span class="n">Violation</span><span class="p">(</span><span class="s1">&#39;FATAL&#39;</span><span class="p">,</span><span class="s1">&#39;VIOLATION::FAILING_VIOLATION&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">schema_validation_errors</span><span class="p">))</span>
+            <span class="n">violations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">violation</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">violations</span></div>
+
+<div class="viewcode-block" id="ValidateUtility.filter_violations_by_profile"><a class="viewcode-back" href="../../ValidateUtility.html#cloudformation_validator.ValidateUtility.ValidateUtility.filter_violations_by_profile">[docs]</a>    <span class="k">def</span> <span class="nf">filter_violations_by_profile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">violations</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Filter the violation by profile</span>
+<span class="sd">        :param violations: </span>
+<span class="sd">        :return: filtered violations</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">profile</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="n">new_violations</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;violations: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">violations</span><span class="p">)</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+
+        <span class="n">failure_count</span> <span class="o">=</span> <span class="n">violations</span><span class="p">[</span><span class="s1">&#39;failure_count&#39;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_path</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;profile definition: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profile_path</span><span class="p">)</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">profile_loader</span> <span class="o">=</span> <span class="n">ProfileLoader</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">custom_rule_loader</span><span class="o">.</span><span class="n">rule_definitions</span><span class="p">(),</span><span class="n">debug</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">)</span>
+
+                <span class="n">profile</span> <span class="o">=</span> <span class="n">profile_loader</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">custom_rule_loader</span><span class="o">.</span><span class="n">rule_definitions</span><span class="p">())</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;rule ids in profile: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">profile</span><span class="o">.</span><span class="n">rule_ids</span><span class="p">)</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+
+            <span class="k">except</span> <span class="n">ParserError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;has a profile path &#39;</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Need to fix for loading a profile&#39;</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="c1">#profile = self.profile_path</span>
+
+        <span class="k">if</span> <span class="n">profile</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;violations: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">violations</span><span class="p">)</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;violations: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">violations</span><span class="p">[</span><span class="s1">&#39;violations&#39;</span><span class="p">])</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+
+            <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">violations</span><span class="p">[</span><span class="s1">&#39;violations&#39;</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;violation: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;violation: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="s1">&#39;id&#39;</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">id</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+                            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;id: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+
+                        <span class="k">if</span> <span class="n">profile</span><span class="o">.</span><span class="n">execute_rule</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">id</span><span class="p">):</span>
+                            <span class="n">new_violations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;new_violations: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">new_violations</span><span class="p">)</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+
+        <span class="n">results</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;failure_count&#39;</span><span class="p">:</span><span class="nb">str</span><span class="p">(</span><span class="n">failure_count</span><span class="p">),</span> <span class="s1">&#39;violations&#39;</span><span class="p">:</span><span class="n">new_violations</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">results</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_get_schemas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Get the schemas</span>
+<span class="sd">        :param type: </span>
+<span class="sd">        :return: </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ValidateUtility - _get_schemas&#39;</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+
+        <span class="n">results</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span><span class="o">+</span><span class="s1">&#39;/cloudformation_validator/test_templates/json&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">type</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;/cloudformation_validator/test_templates/json/&#39;</span><span class="o">+</span><span class="nb">type</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">results</span>
+
+    <span class="k">def</span> <span class="nf">_check_structure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conf_structure</span><span class="p">,</span> <span class="n">my_conf</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Check structure</span>
+<span class="sd">        :param conf_structure: </span>
+<span class="sd">        :param my_conf: </span>
+<span class="sd">        :return: </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ValidateUtility - check structure&#39;</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;type: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">conf_structure</span><span class="p">))</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;type: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">my_conf</span><span class="p">))</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">conf_structure</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">my_conf</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">!=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">conf_structure</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;sorted keys is not equal&#39;</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;keys in proper order&#39;</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">my_conf</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;key: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">my_conf</span><span class="p">[</span><span class="n">key</span><span class="p">])</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="nb">dict</span><span class="p">()):</span>
+                <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">my_conf</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">!=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">conf_structure</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">_fix_JSON</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">json_message</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Fix JSON</span>
+<span class="sd">        :param json_message: </span>
+<span class="sd">        :return: </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        
+        <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
+        
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">json_message</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="c1"># Find the offending character index:</span>
+            <span class="n">idx_to_replace</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;)&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span>
+            <span class="c1"># Remove the offending character:</span>
+            <span class="n">json_message</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">json_message</span><span class="p">)</span>
+            <span class="n">json_message</span><span class="p">[</span><span class="n">idx_to_replace</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span>
+            <span class="n">new_message</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">json_message</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fix_JSON</span><span class="p">(</span><span class="n">json_message</span><span class="o">=</span><span class="n">new_message</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+<div class="viewcode-block" id="ValidateUtility.render_results"><a class="viewcode-back" href="../../ValidateUtility.html#cloudformation_validator.ValidateUtility.ValidateUtility.render_results">[docs]</a>    <span class="k">def</span> <span class="nf">render_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">aggregate_results</span><span class="p">,</span> <span class="n">output_format</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Render results</span>
+<span class="sd">        :param aggregate_results: </span>
+<span class="sd">        :param output_format: </span>
+<span class="sd">        :return: rendered results</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ValidateUtility - render_results&#39;</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;aggregate_results: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">aggregate_results</span><span class="p">)</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+
+        <span class="n">renderer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">results_renderer</span><span class="p">(</span><span class="n">output_format</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">renderer</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">aggregate_results</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ValidateUtility.results_renderer"><a class="viewcode-back" href="../../ValidateUtility.html#cloudformation_validator.ValidateUtility.ValidateUtility.results_renderer">[docs]</a>    <span class="k">def</span> <span class="nf">results_renderer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_format</span><span class="o">=</span><span class="s1">&#39;txt&#39;</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Sets the format for the rendered results</span>
+<span class="sd">        :param output_format: </span>
+<span class="sd">        :return: </span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ValidateUtility - results_renderer&#39;</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+
+        <span class="k">if</span> <span class="n">output_format</span><span class="o">==</span> <span class="s1">&#39;txt&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">SimpleStdoutResults</span><span class="p">()</span>
+
+        <span class="k">elif</span> <span class="n">output_format</span><span class="o">==</span><span class="s1">&#39;json&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">JsonResults</span><span class="p">(</span><span class="n">debug</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">,</span><span class="n">suppress_errors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">suppress_errors</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">suppress_errors</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;there is a problem&#39;</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="ValidateUtility.count_warnings"><a class="viewcode-back" href="../../ValidateUtility.html#cloudformation_validator.ValidateUtility.ValidateUtility.count_warnings">[docs]</a>    <span class="k">def</span> <span class="nf">count_warnings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">violations</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Counts the number of warnings</span>
+<span class="sd">        :param violations: </span>
+<span class="sd">        :return: warning count</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;count warnings&#39;</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+
+        <span class="k">if</span> <span class="n">violations</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;length: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">violations</span><span class="p">))</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+
+        <span class="n">count</span> <span class="o">=</span><span class="mi">0</span>
+
+        <span class="k">for</span> <span class="n">violation</span> <span class="ow">in</span> <span class="n">violations</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">violation</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">violation</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">violation</span><span class="p">,</span><span class="s1">&#39;type&#39;</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">violation</span><span class="o">.</span><span class="n">type</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">violation</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;VIOLATION::WARNING&#39;</span><span class="p">:</span>
+                            <span class="n">count</span><span class="o">+=</span><span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">violation</span><span class="o">.</span><span class="n">logical_resource_ids</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">count</span></div>
+
+<div class="viewcode-block" id="ValidateUtility.count_failures"><a class="viewcode-back" href="../../ValidateUtility.html#cloudformation_validator.ValidateUtility.ValidateUtility.count_failures">[docs]</a>    <span class="k">def</span> <span class="nf">count_failures</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">violations</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Count the number of failures</span>
+<span class="sd">        :param violations: </span>
+<span class="sd">        :return: returns the number of failures</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;count failures&#39;</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+
+        <span class="k">if</span> <span class="n">violations</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;violations: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">violations</span><span class="p">)</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;length: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">violations</span><span class="p">))</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+
+
+        <span class="n">count</span> <span class="o">=</span><span class="mi">0</span>
+        <span class="k">for</span> <span class="n">violation</span> <span class="ow">in</span> <span class="n">violations</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">violation</span><span class="p">)</span><span class="o">+</span><span class="n">lineno</span><span class="p">())</span>
+
+            <span class="k">if</span> <span class="n">violation</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">violation</span><span class="p">,</span><span class="s1">&#39;type&#39;</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">violation</span><span class="o">.</span><span class="n">type</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">violation</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;VIOLATION::FAILING_VIOLATION&#39;</span><span class="p">:</span>
+                            <span class="n">count</span><span class="o">+=</span><span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">violation</span><span class="o">.</span><span class="n">logical_resource_ids</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">count</span></div>
+
+
+<div class="viewcode-block" id="ValidateUtility.validate_path"><a class="viewcode-back" href="../../ValidateUtility.html#cloudformation_validator.ValidateUtility.ValidateUtility.validate_path">[docs]</a>    <span class="k">def</span> <span class="nf">validate_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">path</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">path</span><span class="p">:</span>
+            <span class="n">matchObj</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^\./(.*)&#39;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">M</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">matchObj</span><span class="p">:</span>
+
+                <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">matchObj</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)))</span>
+
+            <span class="n">matchObj</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^[a-zA-Z1-9].*&#39;</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">M</span> <span class="o">|</span> <span class="n">re</span><span class="o">.</span><span class="n">I</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">matchObj</span><span class="p">:</span>
+                <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">matchObj</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">)))</span>
+
+        <span class="k">return</span> <span class="n">path</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">cloudformation_validator 0.2.33 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, δ.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.
+    </div>
+  </body>
+</html>
