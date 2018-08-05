@@ -21,9 +21,10 @@ class IpAddr:
         if debug:
             print('ip4_open'+lineno())
             print("\ningress: "+str(ingress)+lineno())
-            print('vars: '+str(vars(ingress))+lineno())
-            if inspect.isclass(ingress):
-                print(str(vars(ingress)))
+            if hasattr(ingress,'__dict__'):
+                print('vars: '+str(vars(ingress))+lineno())
+                if inspect.isclass(ingress):
+                    print(str(vars(ingress)))
 
         if type(ingress)== type(dict()):
             if debug:
@@ -139,7 +140,8 @@ class IpAddr:
         if debug:
             print('ip6_open'+lineno())
             print('ingress: '+str(ingress)+lineno())
-            print('vars: '+str(vars(ingress))+lineno())
+            if hasattr(ingress,'__dict__'):
+                print('vars: '+str(vars(ingress))+lineno())
 
 
         if type(ingress)==type(dict()):
@@ -222,7 +224,33 @@ class IpAddr:
                 print('ingress is a dict: '+lineno())
 
             if 'CidrIp' in ingress:
-                if ingress['CidrIp'] == type(str()):
+
+                if debug:
+                    print('CidrIp in ingress '+lineno())
+                    print('type: '+str(type(ingress['CidrIp']))+lineno())
+
+                if type(ingress['CidrIp']) == type(str()):
+
+                    if debug:
+                        print('ip is: ' + str(ingress['CidrIp']) + lineno())
+
+                    # only care about literals.  if a Hash/Ref not going to chase it down
+                    # given likely a Parameter with external val
+                    if 'Ref' in ingress['CidrIp']:
+                        return True
+
+                    elif ingress['CidrIp'].endswith(suffix):
+
+                        if debug:
+                            print('ip ends with /32' + lineno())
+
+                        return True
+                    else:
+                        if debug:
+                            print('ip does not end with /32'+lineno())
+                        return False
+
+                if sys.version_info[0] < 3 and type(ingress['CidrIp']) == type(unicode()):
 
                     if debug:
                         print('ip is: ' + str(ingress['CidrIp']) + lineno())
@@ -247,7 +275,7 @@ class IpAddr:
 
             for item in ingress:
                 if 'CidrIp' in item:
-                    if item['CidrIp'] == type(str()):
+                    if type(item['CidrIp']) == type(str()):
 
                         if debug:
                             print('ip is: ' + str(item['CidrIp']) + lineno())
@@ -266,8 +294,7 @@ class IpAddr:
                                 print('ip does not end with /32'+lineno())
                             return False
 
-                    if sys.version_info[0] < 3:
-                        if item['CidrIp'] == type(unicode()):
+                    if sys.version_info[0] < 3 and type(item['CidrIp']) == type(unicode()):
 
                             if debug:
                                 print('ip is: ' + str(item['CidrIp']) + lineno())
@@ -298,7 +325,7 @@ class IpAddr:
 
                     for item in ingress:
                         if 'CidrIp' in item:
-                            if item['CidrIp'] == type(str()):
+                            if type(item['CidrIp']) == type(str()):
 
                                 if debug:
                                     print('ip is: ' + str(item['CidrIp']) + lineno())
@@ -320,8 +347,7 @@ class IpAddr:
                                         print('ip does not end with /32' + lineno())
                                     return False
 
-                            if sys.version_info[0] < 3:
-                                if item['CidrIp'] == type(unicode()):
+                            if sys.version_info[0] < 3 and type(item['CidrIp']) == type(unicode()):
 
                                     if debug:
                                         print('ip is: ' + str(item['CidrIp']) + lineno())
@@ -410,7 +436,7 @@ class IpAddr:
 
                     for item in ingress:
                         if 'CidrIp' in item:
-                            if item['CidrIp'] == type(str()):
+                            if type(item['CidrIp']) == type(str()):
 
                                 if debug:
                                     print('ip is: ' + str(item['CidrIp']) + lineno())
@@ -433,7 +459,7 @@ class IpAddr:
                                     return False
 
                             if sys.version_info[0] < 3:
-                                if item['CidrIp'] == type(unicode()):
+                                if type(item['CidrIp']) == type(unicode()):
 
                                     if debug:
                                         print('ip is: ' + str(item['CidrIp']) + lineno())
@@ -586,7 +612,7 @@ class IpAddr:
                                     return False
 
                         elif 'CidrIp' in item:
-                            if item['CidrIp'] == type(str()):
+                            if type(item['CidrIp']) == type(str()):
 
                                 if debug:
                                     print('ip is: ' + str(item['CidrIp']) + lineno())
@@ -605,8 +631,7 @@ class IpAddr:
                                         print('ip does not end with /32' + lineno())
                                     has_invalid_cidr= False
 
-                            if sys.version_info[0] < 3:
-                                if item['CidrIp'] == type(unicode()):
+                            if sys.version_info[0] < 3 and type(item['CidrIp']) == type(unicode()):
 
                                     if debug:
                                         print('ip is: ' + str(item['CidrIp']) + lineno())
@@ -695,7 +720,8 @@ class IpAddr:
         if debug:
               print('ip6_cidr_range ' + str(ingress) + lineno())
               print('type: ' + str(type(ingress)) + lineno())
-              print('vars: ' + str(vars(ingress)) + lineno())
+              if hasattr(ingress, '__dict__'):
+                  print('vars: ' + str(vars(ingress)) + lineno())
 
         suffix = "/128";
 
@@ -705,7 +731,11 @@ class IpAddr:
                 print('ingress is a dict: ' + lineno())
 
             if 'CidrIp' in ingress:
-                if ingress['CidrIp'] == type(str()):
+
+                if debug:
+                    print('CiderIp in ingress '+lineno())
+
+                if type(ingress['CidrIp']) == type(str()):
 
                     if debug:
                         print('ip is: ' + str(ingress['CidrIp']) + lineno())
@@ -724,8 +754,7 @@ class IpAddr:
                             print('ip does not end with /128' + lineno())
                         return False
 
-                if sys.version_info[0] < 3:
-                    if ingress['CidrIp'] == type(unicode()):
+                elif sys.version_info[0] < 3 and  type(ingress['CidrIp']) == type(unicode()):
 
                         if debug:
                             print('ip is: ' + str(ingress['CidrIp']) + lineno())
@@ -767,8 +796,7 @@ class IpAddr:
                                 print('ip does not end with /128' + lineno())
                             return False
 
-                    if sys.version_info[0] < 3:
-                        if item['CidrIp'] == type(unicode()):
+                    if sys.version_info[0] < 3 and  type(item['CidrIp']) == type(unicode()):
 
                             if debug:
                                 print('ip is: ' + str(item['CidrIp']) + lineno())
@@ -888,6 +916,114 @@ class IpAddr:
                     print('not sure what this is')
                     print('need to fix')
                     sys.exit(1)
+
+            elif sys.version_info[0] < 3 and type(ingress.cidrIpv6) == type(unicode()):
+
+                if debug:
+                    print('ip is: ' + str(ingress.cidrIpv6) + lineno())
+
+                if type(ingress.cidrIpv6) == type(list()):
+
+                    for item in ingress:
+                        if 'CidrIp' in item:
+                            if item['CidrIp'] == type(str()):
+
+                                if debug:
+                                    print('ip is: ' + str(item['CidrIp']) + lineno())
+
+                                # only care about literals.  if a Hash/Ref not going to chase it down
+                                # given likely a Parameter with external val
+                                if 'Ref' in item['CidrIp']:
+                                    return True
+
+                                elif item['CidrIp'].endswith(suffix):
+                                    if debug:
+                                        print('ip ends with /128' + lineno())
+                                    return True
+                                else:
+                                    if debug:
+                                        print('ip does not end with /128' + lineno())
+                                    return False
+                            if sys.version_info[0] < 3:
+                                if item['CidrIp'] == type(unicode()):
+
+                                    if debug:
+                                        print('ip is: ' + str(item['CidrIp']) + lineno())
+
+                                    # only care about literals.  if a Hash/Ref not going to chase it down
+                                    # given likely a Parameter with external val
+                                    if 'Ref' in item['CidrIp']:
+                                        return True
+
+                                    elif item['CidrIp'].endswith(suffix):
+                                        if debug:
+                                            print('ip ends with /128' + lineno())
+                                        return True
+                                    else:
+                                        if debug:
+                                            print('ip does not end with /128' + lineno())
+                                        return False
+
+                elif type(ingress.cidrIpv6) == type(dict()):
+
+                    for item in ingress.cidrIp:
+                        # only care about literals.  if a Hash/Ref not going to chase it down
+                        # given likely a Parameter with external val
+                        if 'Ref' in ingress.cidrIpv6[item]:
+                            return True
+
+                        elif ingress.cidrIpv6[item].endswith(suffix):
+                            if debug:
+                                print('ip ends with /128' + lineno())
+                            return True
+
+                        else:
+                            if debug:
+                                print('ip does not end with /128' + lineno())
+                            return False
+                elif type(ingress.cidrIpv6) == type(str()):
+
+                    # only care about literals.  if a Hash/Ref not going to chase it down
+                    # given likely a Parameter with external val
+                    if 'Ref' in ingress.cidrIpv6:
+                        return False
+
+                    elif ingress.cidrIpv6.endswith(suffix):
+                        if debug:
+                            print('ip ends with /128' + lineno())
+                        return True
+                    else:
+                        if debug:
+                            print('ip does not end with /128' + lineno())
+                        return False
+
+                elif sys.version_info[0] < 3 and type(ingress.cidrIpv6) == type(unicode()):
+
+                    # only care about literals.  if a Hash/Ref not going to chase it down
+                    # given likely a Parameter with external val
+                    if 'Ref' in ingress.cidrIpv6:
+                        return False
+
+                    elif ingress.cidrIpv6.endswith(suffix):
+                        if debug:
+                            print('ip ends with /128' + lineno())
+                        return True
+                    else:
+                        if debug:
+                            print('ip does not end with /128' + lineno())
+                        return False
+                else:
+                    print('not sure what this is')
+                    print('need to fix')
+                    sys.exit(1)
+
+
+
+
+
+
+
+
             else:
                 if debug:
                     print('ip is: ' + str(ingress.cidrIpv6) + lineno())
