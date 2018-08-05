@@ -1,0 +1,49 @@
+actionid: py37
+msg: developpkg
+cmdargs: ['/Users/rubelwi/projects/github/cloudformation-validator/.tox/py37/bin/pip', 'install', '-e', '/Users/rubelwi/projects/github/cloudformation-validator']
+
+Obtaining file:///Users/rubelwi/projects/github/cloudformation-validator
+Collecting boto3>=1.4.3 (from cloudformation-validator==0.6.0)
+  Using cached https://files.pythonhosted.org/packages/dd/80/515ffd88a5b9d35dc6fc29b64727a2ee4322690945e44b81bb8cdb47fecb/boto3-1.7.70-py2.py3-none-any.whl
+Collecting requests>=2.18 (from cloudformation-validator==0.6.0)
+  Using cached https://files.pythonhosted.org/packages/65/47/7e02164a2a3db50ed6d8a6ab1d6d60b69c4c3fdf57a284257925dfc12bda/requests-2.19.1-py2.py3-none-any.whl
+Collecting Click>=6.7 (from cloudformation-validator==0.6.0)
+  Using cached https://files.pythonhosted.org/packages/34/c1/8806f99713ddb993c5366c362b2f908f18269f8d792aff1abfd700775a77/click-6.7-py2.py3-none-any.whl
+Collecting PyYAML>=3.12 (from cloudformation-validator==0.6.0)
+Collecting pymongo>=3.4.0 (from cloudformation-validator==0.6.0)
+  Using cached https://files.pythonhosted.org/packages/0e/a6/1fd58307975e1ca888533337a4d5929c6f15bea4cfeda13f6b5b050158c6/pymongo-3.7.1-cp37-cp37m-macosx_10_6_intel.whl
+Collecting tabulate>=0.8 (from cloudformation-validator==0.6.0)
+Collecting configparser>=3.5.0 (from cloudformation-validator==0.6.0)
+Collecting jinja2>=2.10 (from cloudformation-validator==0.6.0)
+  Using cached https://files.pythonhosted.org/packages/7f/ff/ae64bacdfc95f27a016a7bed8e8686763ba4d277a78ca76f32659220a731/Jinja2-2.10-py2.py3-none-any.whl
+Collecting dill>=0.2.8 (from cloudformation-validator==0.6.0)
+Collecting pykwalify>=1.6.1 (from cloudformation-validator==0.6.0)
+  Using cached https://files.pythonhosted.org/packages/ce/d2/550d30b645425fd11e503d6e04fc19e91719941faf0e4e08a58d278b6345/pykwalify-1.6.1-py2.py3-none-any.whl
+Collecting schema>=0.6.8 (from cloudformation-validator==0.6.0)
+  Using cached https://files.pythonhosted.org/packages/7b/6e/2b6b764a9a3d3aa366a857f4c5f34d27de4fca54c2b9b88f93ccf2821353/schema-0.6.8-py2.py3-none-any.whl
+Collecting future>=0.16.0 (from cloudformation-validator==0.6.0)
+Requirement already satisfied: six>=1.11.0 in ./.tox/py37/lib/python3.7/site-packages (from cloudformation-validator==0.6.0) (1.11.0)
+Requirement already satisfied: pip in ./.tox/py37/lib/python3.7/site-packages (from cloudformation-validator==0.6.0) (18.0)
+Collecting botocore<1.11.0,>=1.10.70 (from boto3>=1.4.3->cloudformation-validator==0.6.0)
+  Using cached https://files.pythonhosted.org/packages/c9/d2/2412e4cb63931bf1bcd0cde9618c92f51f7bfe68db8dc2120cfabc76a0a8/botocore-1.10.70-py2.py3-none-any.whl
+Collecting s3transfer<0.2.0,>=0.1.10 (from boto3>=1.4.3->cloudformation-validator==0.6.0)
+  Using cached https://files.pythonhosted.org/packages/d7/14/2a0004d487464d120c9fb85313a75cd3d71a7506955be458eebfe19a6b1d/s3transfer-0.1.13-py2.py3-none-any.whl
+Collecting jmespath<1.0.0,>=0.7.1 (from boto3>=1.4.3->cloudformation-validator==0.6.0)
+  Using cached https://files.pythonhosted.org/packages/b7/31/05c8d001f7f87f0f07289a5fc0fc3832e9a57f2dbd4d3b0fee70e0d51365/jmespath-0.9.3-py2.py3-none-any.whl
+Collecting idna<2.8,>=2.5 (from requests>=2.18->cloudformation-validator==0.6.0)
+  Using cached https://files.pythonhosted.org/packages/4b/2a/0276479a4b3caeb8a8c1af2f8e4355746a97fab05a372e4a2c6a6b876165/idna-2.7-py2.py3-none-any.whl
+Collecting certifi>=2017.4.17 (from requests>=2.18->cloudformation-validator==0.6.0)
+  Using cached https://files.pythonhosted.org/packages/7c/e6/92ad559b7192d846975fc916b65f667c7b8c3a32bea7372340bfe9a15fa5/certifi-2018.4.16-py2.py3-none-any.whl
+Collecting chardet<3.1.0,>=3.0.2 (from requests>=2.18->cloudformation-validator==0.6.0)
+  Using cached https://files.pythonhosted.org/packages/bc/a9/01ffebfb562e4274b6487b4bb1ddec7ca55ec7510b22e4c51f14098443b8/chardet-3.0.4-py2.py3-none-any.whl
+Collecting urllib3<1.24,>=1.21.1 (from requests>=2.18->cloudformation-validator==0.6.0)
+  Using cached https://files.pythonhosted.org/packages/bd/c9/6fdd990019071a4a32a5e7cb78a1d92c53851ef4f56f62a3486e6a7d8ffb/urllib3-1.23-py2.py3-none-any.whl
+Collecting MarkupSafe>=0.23 (from jinja2>=2.10->cloudformation-validator==0.6.0)
+Collecting docopt>=0.6.2 (from pykwalify>=1.6.1->cloudformation-validator==0.6.0)
+Collecting python-dateutil>=2.4.2 (from pykwalify>=1.6.1->cloudformation-validator==0.6.0)
+  Using cached https://files.pythonhosted.org/packages/cf/f5/af2b09c957ace60dcfac112b669c45c8c97e32f94aa8b56da4c6d1682825/python_dateutil-2.7.3-py2.py3-none-any.whl
+Collecting docutils>=0.10 (from botocore<1.11.0,>=1.10.70->boto3>=1.4.3->cloudformation-validator==0.6.0)
+  Using cached https://files.pythonhosted.org/packages/36/fa/08e9e6e0e3cbd1d362c3bbee8d01d0aedb2155c4ac112b19ef3cae8eed8d/docutils-0.14-py3-none-any.whl
+Installing collected packages: jmespath, docutils, python-dateutil, botocore, s3transfer, boto3, idna, certifi, chardet, urllib3, requests, Click, PyYAML, pymongo, tabulate, configparser, MarkupSafe, jinja2, dill, docopt, pykwalify, schema, future, cloudformation-validator
+  Running setup.py develop for cloudformation-validator
+Successfully installed Click-6.7 MarkupSafe-1.0 PyYAML-3.13 boto3-1.7.70 botocore-1.10.70 certifi-2018.4.16 chardet-3.0.4 cloudformation-validator configparser-3.5.0 dill-0.2.8.2 docopt-0.6.2 docutils-0.14 future-0.16.0 idna-2.7 jinja2-2.10 jmespath-0.9.3 pykwalify-1.6.1 pymongo-3.7.1 python-dateutil-2.7.3 requests-2.19.1 s3transfer-0.1.13 schema-0.6.8 tabulate-0.8.2 urllib3-1.23

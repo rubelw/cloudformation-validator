@@ -1,0 +1,18 @@
+---
+type: map
+mapping:
+  Type:
+    type: str
+    required: yes
+    pattern: AWS::IAM::ManagedPolicy
+  Properties:
+    type: map
+    required: yes
+    mapping:
+      PolicyDocument:
+        type:   any
+        required: yes
+      =:
+        type: any
+  =:
+    type: any

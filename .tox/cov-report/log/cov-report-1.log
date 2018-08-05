@@ -1,0 +1,8 @@
+actionid: cov-report
+msg: getenv
+cmdargs: ['/Users/rubelwi/projects/github/cloudformation-validator/.tox/cov-report/bin/pip', 'install', 'coverage']
+
+Collecting coverage
+  Using cached https://files.pythonhosted.org/packages/8a/27/68ca17e26df117a993dec8f590929670f96a976de56d52e6b6c939156013/coverage-4.5.1-cp27-cp27m-macosx_10_12_x86_64.whl
+Installing collected packages: coverage
+Successfully installed coverage-4.5.1

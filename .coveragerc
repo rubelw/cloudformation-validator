@@ -1,2 +1,4 @@
 [run]
-source = cloudformation_validator
+source =
+    cloudformation_validator
+    cfn_model
