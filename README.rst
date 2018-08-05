@@ -419,11 +419,10 @@ Example of writing a rule which requires custom tags for EC2 instances
        ]
    }
 
--  No add tags property to the cloudformation template and run again
+-  Now, add tags property to the cloudformation template and run again
 
 ``{.sourceCode .console { "Parameters": { "subnetId": { "Type": "String", "Default": "subnet-4fd01116" } },} "Resources": {   "EC2I4LBA1": {     "Type": "AWS::EC2::Instance",     "Properties": {       "ImageId": "ami-6df1e514",       "InstanceType": "t2.micro",       "SubnetId": {         "Ref": "subnetId"       },       "Tags" : [         {"Key" : "Name", "Value":"value"},         {"Key":"ResourceOwner","Value":"resourceowner"},         {"Key":"DeployedBy","Value":"deployedby"},         {"Key":"Project","Value":"project"}       ]     },     "Metadata": {       "AWS::CloudFormation::Authentication": {         "testBasic" : {           "type" : "basic",           "username" : "biff",           "password" : "badpassword",           "uris" : [ "http://www.example.com/test" ]         }       }     }   } }``
 
-   }
 
 -  You should receive the following violations
 
@@ -458,21 +457,6 @@ Source
 
 I am just getting started on this, so any suggestions would be welcome.
 <https://github.com/rubelw/cloudformation-validator>
-
-
-.. toctree::
-    :maxdepth: 3
-
-    ValidateUtility
-    Violation
-    RuleRegistry
-    RuleDumper
-    ProfileLoader
-    Profile
-    IpAddr
-    CustomRuleLoader
-    RuleDefinition
-
 
 
 Copyright
