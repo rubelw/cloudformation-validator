@@ -13,7 +13,9 @@ def lineno():
 
 # Load rule profile
 class ProfileLoader:
-
+    """
+    Profile loader
+    """
 
     def __init__(self,rules_registry,debug=False):
         """

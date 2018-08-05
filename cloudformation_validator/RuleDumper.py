@@ -14,7 +14,9 @@ def lineno():
 
 
 class RuleDumper:
-
+    """
+    Rule Dumper
+    """
 
     def __init__(self, profile_definition=None, rule_directory=None, debug=False):
         """

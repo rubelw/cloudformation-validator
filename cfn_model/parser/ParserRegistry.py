@@ -11,9 +11,6 @@ from cfn_model.parser.IamRoleParser import IamRoleParser
 from cfn_model.parser.SecurityGroupParser import SecurityGroupParser
 from cfn_model.parser.WithPolicyDocumentParser import WithPolicyDocumentParser
 
-
-
-
 def lineno():
     """Returns the current line number in our program."""
     return str(' -  ParserRegistry- line number: '+str(inspect.currentframe().f_back.f_lineno))

@@ -9,7 +9,9 @@ def lineno():
 
 
 class RuleDefinition:
-
+    """
+    Rule definition
+    """
 
     def __init__(self, id, type,message, debug=False):
         """

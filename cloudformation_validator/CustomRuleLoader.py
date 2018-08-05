@@ -15,7 +15,9 @@ def dump(obj):
     print("obj.%s = %r" % (attr, getattr(obj, attr)))
 
 class CustomRuleLoader:
-
+    """
+    Custom rule loader
+    """
     def __init__(self, debug=False, rule_directory=None, extra_rule_directory=None, allow_suppression=True, print_suppression=False, isolate_custom_rule_exceptions=False,additional_rules_directory=None):
         """
         Initialize CustomRuleLoader

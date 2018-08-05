@@ -3,11 +3,9 @@ import inspect
 import sys
 from cfn_model.model.Principal import Principal
 
-
 def lineno():
     """Returns the current line number in our program."""
     return str(' - Statement - line number: '+str(inspect.currentframe().f_back.f_lineno))
-
 
 class Statement:
     """

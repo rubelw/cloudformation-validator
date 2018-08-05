@@ -9,9 +9,10 @@ def lineno():
     return str(' -  Error- line number: '+str(inspect.currentframe().f_back.f_lineno))
 
 
-# define Python user-defined exceptions
 class Error(Exception):
-   """Base class for other exceptions"""
+   """
+   Base class for other exceptions
+   """
 
    def __init__(self, message, debug=False):
        """

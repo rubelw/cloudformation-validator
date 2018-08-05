@@ -1,7 +1,9 @@
 from __future__ import absolute_import, division, print_function
-
+import sys
 class Serverless:
-
+    """
+    Serverless
+    """
 
     def __init__(self, debug=False):
         '''
@@ -27,12 +29,12 @@ class Serverless:
         resources = cfn_hash['Resources']
         if self.debug:
             print('resources: '+str(resources))
-        #resources = cfn_hash['Resources'].clone
+        # resources = cfn_hash['Resources'].clone
 
         for resource in resources:
             if self.debug:
                 print(resource)
-        #resources.each do |resource_name, resource|
+        # resources.each do |resource_name, resource|
         #  next unless resource['Type'].eql? 'AWS::Serverless::Function'
         #  replace_serverless_function cfn_hash, resource_name
 
@@ -91,18 +93,18 @@ class Serverless:
             print('replace_serverless_function')
           # FIXME
           sys.exit(1)
-          #resource = cfn_hash['Resources'][resource_name]
-          #code_uri = resource['Properties']['CodeUri']
+          # resource = cfn_hash['Resources'][resource_name]
+          # code_uri = resource['Properties']['CodeUri']
 
-          #lambda_fn_params = {
+          # lambda_fn_params = {
           #  handler: resource['Properties']['Handler'],
           #  runtime: resource['Properties']['Runtime']
-          #}
-          #if is_s3_uri? code_uri
+          # }
+          # if is_s3_uri? code_uri
           #  lambda_fn_params[:code_bucket] = bucket_from_uri code_uri
           #  lambda_fn_params[:code_key] = object_key_from_uri code_uri
-          #end
-          #cfn_hash['Resources'][resource_name] = \
+          # end
+          # cfn_hash['Resources'][resource_name] = \
           #  lambda_function lambda_fn_params
 
           # cfn_hash['Resources']['FunctionNameRole'] = function_name_role
@@ -145,15 +147,15 @@ class Serverless:
             print('lambda_function')
           # FIXME
           sys.exit(1)
-          #fn_resource = \
+          # fn_resource = \
           #    {'Type' = > 'AWS::Lambda::Function',
           #                'Properties' = > {
           #    'Handler' = > handler,
           #                  'Role' = > {'Fn::GetAtt' = > % w[FunctionNameRole
-          #Arn]},
-          #'Runtime' = > runtime
-          #}}
-          #if code_bucket & & code_key
+          # Arn]},
+          # 'Runtime' = > runtime
+          # }}
+          # if code_bucket & & code_key
           #    fn_resource['Properties']['Code'] = {
           #        'S3Bucket' = > code_bucket,
           #                       'S3Key' = > code_key

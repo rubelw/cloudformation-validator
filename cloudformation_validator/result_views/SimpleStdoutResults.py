@@ -7,7 +7,6 @@ def lineno():
     """Returns the current line number in our program."""
     return str(' - SimpleStdoutResults - line number: '+str(inspect.currentframe().f_back.f_lineno))
 
-
 class SimpleStdoutResults:
     """
     Simple standard out results
@@ -20,7 +19,7 @@ class SimpleStdoutResults:
 
     def message_violations(self, violations):
         print('message_violations'+lineno())
-        #FIXME
+        # FIXME
         sys.exit(1)
 
     def render(self, results):
@@ -29,7 +28,7 @@ class SimpleStdoutResults:
         :param results:
         :return:
         """
-        #FIXME
+        # FIXME
         sys.exit(1)
         return('render'+lineno())
 
@@ -42,5 +41,5 @@ class SimpleStdoutResults:
         :return:
         """
         print('message'+lineno())
-        #FIXME
+        # FIXME
         sys.exit(1)

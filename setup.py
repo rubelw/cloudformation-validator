@@ -8,7 +8,7 @@ import sys
 DESCRIPTION = ("Lightweight, extensible schema and data validation tool for "
                "Cloudformation Templates.")
 LONG_DESCRIPTION = open('README.rst').read()
-VERSION = '0.2.35'
+VERSION = '0.2.36'
 
 setup_requires = (
     ['pytest-runner'] if any(x in sys.argv for x in ('pytest', 'test', 'ptr')) else []
@@ -27,7 +27,7 @@ setup(
     include_package_data=True,
     setup_requires=setup_requires,
     package_data={'cfn_model': ['schema/*.json','schema/*.yml','schema/*.erb']},
-    tests_require=['pytest'],
+    tests_require=['pytest','mock'],
     test_suite="cloudformation_validator.tests",
     install_requires=[
         "boto3>=1.4.3",
@@ -42,7 +42,8 @@ setup(
         "pykwalify>=1.6.1",
         "schema>=0.6.8",
         "future>=0.16.0",
-        "six>=1.11.0"
+        "six>=1.11.0",
+        "pip"
     ],
     keywords=['validation', 'schema', 'dictionaries','aws','cloudformation','python','rules','linter'],
     classifiers=[

@@ -5,11 +5,9 @@ from pykwalify.core import Core
 from cfn_model.validator import SchemaGenerator
 from schema import Schema, And, Use, Optional, SchemaError
 
-
 def lineno():
     """Returns the current line number in our program."""
     return str(' -  CloudformationValidator- line number: '+str(inspect.currentframe().f_back.f_lineno))
-
 
 class CloudformationValidator:
     """

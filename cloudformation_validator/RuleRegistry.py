@@ -9,11 +9,11 @@ def lineno():
     """Returns the current line number in our program."""
     return str(' - RuleRegistry - line number: '+str(inspect.currentframe().f_back.f_lineno))
 
-
-
 class RuleRegistry:
-
-    def __init__(self,debug=False):
+    """
+    Rule registry
+    """
+    def __init__(self, debug=False):
         """
         Initialize RulesRegistry
         :param debug: 
@@ -36,7 +36,7 @@ class RuleRegistry:
         if self.debug:
             print('definition '+lineno())
 
-        rule_definition = RuleDefinition(id,type,message,debug=self.debug)
+        rule_definition = RuleDefinition(id, type, message, debug=self.debug)
 
         if self.debug:
             print('rule_definition: '+str(rule_definition)+lineno())
@@ -52,97 +52,86 @@ class RuleRegistry:
                 print('adding rule '+lineno())
             self.add_rule(rule_definition)
         else:
-          return existing_def
+            return existing_def
 
 
 
     def by_id(self, id):
-          """
-          Find rule definition by id
-          :param id:
-          :return:
-          """
-          if self.debug:
+        """
+        Find rule definition by id
+        :param id:
+        :return:
+        """
+        if self.debug:
             print('by_id'+lineno())
 
-          found_it = False
-          if len(self.rules)>0:
+        found_it = False
+        if len(self.rules)>0:
 
-              for rule in self.rules:
-                  if self.debug:
-                      print('rule: '+str(rule))
-                      print('rule id: '+str(rule.id)+lineno())
+            for rule in self.rules:
+                if self.debug:
+                  print('rule: '+str(rule))
+                  print('rule id: '+str(rule.id)+lineno())
 
 
-                  if rule.id == str(id):
-                      found_it=True
-                      break
+                if rule.id == str(id):
+                  found_it=True
+                  break
 
-          if self.debug:
-              print('found it: '+str(found_it)+lineno())
+        if self.debug:
+            print('found it: '+str(found_it)+lineno())
 
-          return found_it
+        return found_it
 
     def warnings(self):
-          """
-          Get rule warnings
-          :param self:
-          :return:
-          """
+        """
+        Get rule warnings
+        :param self:
+        :return:
+        """
 
-          rules = []
+        rules = []
 
-          if self.debug:
+        if self.debug:
             print('warnings'+lineno())
 
-
-          for rule in self.rules:
-              if self.debug:
-                  print(str(rule)+lineno())
-              if rule.type == 'VIOLATION::WARNING':
-                  rules.append(rule)
-          return rules
-
-          # FIXME
-          #@rules.select { |rule| rule.type == RuleDefinition::WARNING }
-          #sys.exit(1)
+        for rule in self.rules:
+            if self.debug:
+                print(str(rule)+lineno())
+            if rule.type == 'VIOLATION::WARNING':
+                rules.append(rule)
+        return rules
 
     def failings(self):
-          """
-          Get failing rules
-          :param self: 
-          :return: 
-          """
+        """
+        Get failing rules
+        :param self:
+        :return:
+        """
+        rules = []
 
-          rules = []
-
-          if self.debug:
+        if self.debug:
             print('failings'+lineno())
 
-          for rule in self.rules:
-              if self.debug:
-                  print(str(rule)+lineno())
-              if rule.type == 'VIOLATION::FAILING_VIOLATION':
-                  rules.append(rule)
-          return rules
-
-
-          # FIXME
-          #@rules.select { |rule| rule.type == RuleDefinition::FAILING_VIOLATION }
-          #sys.exit(1)
+        for rule in self.rules:
+            if self.debug:
+                print(str(rule)+lineno())
+            if rule.type == 'VIOLATION::FAILING_VIOLATION':
+                rules.append(rule)
+        return rules
 
     def add_rule(self, violation_def):
-          """
-          Add rule definition
-          :param self: 
-          :param violation_def: 
-          :return: 
-          """
-          if self.debug:
+        """
+        Add rule definition
+        :param self:
+        :param violation_def:
+        :return:
+        """
+        if self.debug:
             print('add_rule'+lineno())
             print('violation_def: '+str(violation_def)+lineno())
 
-          self.rules.append(violation_def)
+        self.rules.append(violation_def)
 
-          if self.debug:
-              print('registry rules are now: '+str(self.rules)+lineno())
+        if self.debug:
+            print('registry rules are now: '+str(self.rules)+lineno())

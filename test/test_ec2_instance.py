@@ -35,6 +35,7 @@ class TestEc2Instance(unittest.TestCase):
     """
     Test ec2 instance
     """
+
     def test_ec2_instance_authentication(self):
 
       expected_result =  {

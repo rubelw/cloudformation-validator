@@ -1,18 +1,15 @@
 from __future__ import absolute_import, division, print_function
 import inspect
 import sys
-from builtins import (str)
 from cloudformation_validator.custom_rules.BaseRule import BaseRule
 from collections import Iterable
 from six import StringIO, string_types
 from builtins import (str)
 
-
 def lineno():
     """Returns the current line number in our program."""
     return str(' -  EbsHasTagsRule - caller: ' + str(inspect.stack()[1][3]) + ' - line number: ' + str(
         inspect.currentframe().f_back.f_lineno))
-
 
 class EbsCustomTagsRule(BaseRule):
     """

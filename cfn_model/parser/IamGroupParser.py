@@ -5,12 +5,9 @@ import inspect
 from cfn_model.model.Policy import Policy
 from cfn_model.parser.PolicyDocumentParser import PolicyDocumentParser
 
-
-
 def lineno():
     """Returns the current line number in our program."""
     return str(' -  IamGroupParser- line number: '+str(inspect.currentframe().f_back.f_lineno))
-
 
 class IamGroupParser:
     """

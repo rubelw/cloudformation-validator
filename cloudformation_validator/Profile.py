@@ -8,7 +8,9 @@ def lineno():
     return str(' - Profile - line number: '+str(inspect.currentframe().f_back.f_lineno))
 
 class Profile:
-
+    """
+    Profile
+    """
     rules_registry = None
 
     def __init__(self, debug=False):

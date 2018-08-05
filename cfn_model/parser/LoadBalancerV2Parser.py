@@ -7,7 +7,6 @@ def lineno():
     """Returns the current line number in our program."""
     return str(' -  LoadBalancerV2Parser- line number: '+str(inspect.currentframe().f_back.f_lineno))
 
-
 class LoadBalancerV2Parser:
     """
     Load balancer v2 parser

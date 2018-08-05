@@ -6,11 +6,9 @@ from cfn_model.validator.ResourceTypeValidator import ResourceTypeValidator
 import inspect
 from builtins import (str)
 
-
 def lineno():
     """Returns the current line number in our program."""
     return str(' -  SchemaGenerator- line number: '+str(inspect.currentframe().f_back.f_lineno))
-
 
 class SchemaGenerator:
     """

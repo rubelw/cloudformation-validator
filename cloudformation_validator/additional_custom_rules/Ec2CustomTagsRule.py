@@ -13,7 +13,6 @@ def lineno():
     return str(' -  Ec2HasTagsRule - caller: ' + str(inspect.stack()[1][3]) + ' - line number: ' + str(
         inspect.currentframe().f_back.f_lineno))
 
-
 class Ec2CustomTagsRule(BaseRule):
     """
     Ec2 custom tags rule

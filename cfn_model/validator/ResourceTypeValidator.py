@@ -2,8 +2,6 @@ from __future__ import absolute_import, division, print_function
 import inspect
 from cfn_model.parser import ParserError
 
-
-
 def lineno():
     """Returns the current line number in our program."""
     return str(' -  ResourceTypeValidator- line number: '+str(inspect.currentframe().f_back.f_lineno))

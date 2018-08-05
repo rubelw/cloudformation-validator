@@ -12,7 +12,7 @@ needs_sphinx = '1.4'
 templates_path = ['_templates']
 
 # Suffix(es) of source filenames. Ex: source_suffix = ['.rst', '.md']
-source_suffix = '.rst'
+source_suffix = ['.rst', '.md']
 
 # Master toctree document
 master_doc = 'index'
@@ -114,3 +114,7 @@ htmlhelp_basename = 'Cloudformation-Validator'
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 # man_pages = [(master_doc, 'alina', 'Alina', [author], 1)]
+
+source_parsers = {
+    '.md': 'recommonmark.parser.CommonMarkParser',
+}

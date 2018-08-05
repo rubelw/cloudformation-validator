@@ -13,7 +13,6 @@ def lineno():
     return str(' -  S3HasTagsRule - caller: ' + str(inspect.stack()[1][3]) + ' - line number: ' + str(
         inspect.currentframe().f_back.f_lineno))
 
-
 class S3CustomTagsRule(BaseRule):
     """
     S3 custom tags rule

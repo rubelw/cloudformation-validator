@@ -3,7 +3,6 @@ import inspect
 from cfn_model.transforms import Serverless
 
 
-
 def lineno():
     """Returns the current line number in our program."""
     return str(' -  TransformRegistry- line number: '+str(inspect.currentframe().f_back.f_lineno))

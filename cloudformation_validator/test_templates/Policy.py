@@ -3,16 +3,16 @@ import inspect
 import sys
 from cloudformation_validator.RuleDefinition import RuleDefinition
 
-
-
 def lineno():
     """Returns the current line number in our program."""
     return str(' - Policy - line number: '+str(inspect.currentframe().f_back.f_lineno))
 
 
-
 class Policy(RuleDefinition):
-
+    """
+    Policy
+    """
+    
     def __init__(self, id, type, message, logical_resource_ids=None, debug=False):
         """
         Initialize Violation
@@ -41,9 +41,8 @@ class Policy(RuleDefinition):
         """
         if self.debug:
             print('to string'+lineno())
-        #FIXME
-        sys.exit(1)
-        #"#{super} #{@logical_resource_ids}"
+            
+        return "id: "+str(self.id)+', type: '+str(self.type)+', message: '+str(self.message)+', logical_resource_ids: '+str(logical_resource_ids)
 
 
     def to_hash(self):

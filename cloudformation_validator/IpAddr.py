@@ -8,7 +8,9 @@ def lineno():
 
 
 class IpAddr:
-
+    """
+    Ip address
+    """
     @staticmethod
     def ip4_open(ingress, debug=False):
         """

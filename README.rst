@@ -1,5 +1,5 @@
-========================
-cloudformation_validator
+
+Cloudformation-Validator
 ========================
 
 Features

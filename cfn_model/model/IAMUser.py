@@ -3,7 +3,9 @@ from cfn_model.model.ModelElement import ModelElement
 
 
 class IAMUser(ModelElement):
-
+    """
+    IAM user model
+    """
     def __init__(self, cfn_model):
         """
         Initialize

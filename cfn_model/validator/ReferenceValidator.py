@@ -6,8 +6,6 @@ from cfn_model.parser import ParserError
 import inspect
 from builtins import (str)
 
-
-
 def lineno():
     """Returns the current line number in our program."""
     return str(' -  ReferenceValidator- line number: '+str(inspect.currentframe().f_back.f_lineno))

@@ -10,7 +10,6 @@ def lineno():
     """Returns the current line number in our program."""
     return str(' -  WithPolicyDocumentParser- line number: '+str(inspect.currentframe().f_back.f_lineno))
 
-
 class WithPolicyDocumentParser:
     """
     With policy document parser

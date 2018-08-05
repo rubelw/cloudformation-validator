@@ -10,3 +10,4 @@ rm -rf .pytest_cache
 rm -rf .tox
 rm -rf .eggs
 rm test/pytestdebug.log
+rm -rf docs/_build

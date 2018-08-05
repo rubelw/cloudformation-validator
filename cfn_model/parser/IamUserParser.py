@@ -9,7 +9,6 @@ def lineno():
     """Returns the current line number in our program."""
     return str(' -  IamUserParser- line number: '+str(inspect.currentframe().f_back.f_lineno))
 
-
 class IamUserParser:
     """
     IAM User Parser
