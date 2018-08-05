@@ -33,7 +33,7 @@ class RdsCustomTagsRule(BaseRule):
         """
         if self.debug:
             print('rule_text' + lineno())
-        return 'Rds instance does not have the required tags'
+        return 'Rds instance does not have the required tags of Name, ResourceOwner, DeployedBy, Project'
 
     def rule_type(self):
         """

@@ -29,7 +29,7 @@ class EbsCustomTagsRule(BaseRule):
         """
         if self.debug:
             print('rule_text' + lineno())
-        return 'Ebs volume does not have the required tags'
+        return 'Ebs volume does not have the required tags of Name, ResourceOwner, DeployedBy, Project'
 
     def rule_type(self):
         """

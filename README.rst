@@ -5,7 +5,8 @@ Cloudformation-Validator
 Features
 ========
 
-cloudformation_validator provides type checking and other base
+cloudformation_validator validates cloudformation schemas and templates against
+a variety of security and non-security rules, and provides type checking and other base
 functionality out of the box and is designed to be non-blocking and
 easily extensible, allowing for custom validation. It has no
 dependencies and is thoroughly tested under Python 2.7, Python 3.3,
