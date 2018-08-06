@@ -1,4 +1,0 @@
-
-        [console_scripts]
-        cfn-validator=cloudformation_validator.command:cli
-    

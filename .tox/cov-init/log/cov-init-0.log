@@ -1,8 +1,0 @@
-actionid: cov-init
-msg: getenv
-cmdargs: ['/usr/local/opt/python@2/bin/python2.7', '-m', 'virtualenv', '--python', '/usr/local/opt/python@2/bin/python2.7', 'cov-init']
-
-Already using interpreter /usr/local/opt/python@2/bin/python2.7
-New python executable in /Users/rubelwi/projects/github/cloudformation-validator/.tox/cov-init/bin/python2.7
-Also creating executable in /Users/rubelwi/projects/github/cloudformation-validator/.tox/cov-init/bin/python
-Installing setuptools, pip, wheel...done.
