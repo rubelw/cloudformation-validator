@@ -435,7 +435,7 @@ Run unit tests
 
 .. code:: console
 
-   (python3) => pytest
+   (python3) => tox
    ================================================ test session starts =================================================
    collected 22 items
 
@@ -451,6 +451,132 @@ Run unit tests
    test/test_security_group.py ........                                                                           [ 90%]
    test/test_sns_policy.py .                                                                                      [ 95%]
    test/test_sqs_policy.py .                                                                                      [100%]
+
+   ...
+   Name                                                                                      Stmts   Miss  Cover
+   -------------------------------------------------------------------------------------------------------------
+   cfn_model/__init__.py                                                                         0      0   100%
+   cfn_model/model/CfnModel.py                                                                 128     72    44%
+   cfn_model/model/EC2Instance.py                                                                9      0   100%
+   cfn_model/model/EC2NetworkInterface.py                                                       11     11     0%
+   cfn_model/model/EC2SecurityGroup.py                                                          11      0   100%
+   cfn_model/model/EC2SecurityGroupEgress.py                                                     9      1    89%
+   cfn_model/model/EC2SecurityGroupIngress.py                                                    9      1    89%
+   cfn_model/model/ElasticLoadBalancingLoadBalancer.py                                          17      0   100%
+   cfn_model/model/ElasticLoadBalancingV2LoadBalancer.py                                        11      7    36%
+   cfn_model/model/IAMGroup.py                                                                   9      5    44%
+   cfn_model/model/IAMManagedPolicy.py                                                          12      7    42%
+   cfn_model/model/IAMPolicy.py                                                                  9      5    44%
+   cfn_model/model/IAMRole.py                                                                   10      0   100%
+   cfn_model/model/IAMUser.py                                                                   10      0   100%
+   cfn_model/model/LambdaPrincipal.py                                                           13      0   100%
+   cfn_model/model/ModelElement.py                                                              35     18    49%
+   cfn_model/model/Parameter.py                                                                 26     13    50%
+   cfn_model/model/Policy.py                                                                    12      2    83%
+   cfn_model/model/PolicyDocument.py                                                           114     43    62%
+   cfn_model/model/Principal.py                                                                 56     21    63%
+   cfn_model/model/References.py                                                                90     57    37%
+   cfn_model/model/S3BucketPolicy.py                                                             7      0   100%
+   cfn_model/model/SNSTopicPolicy.py                                                             9      0   100%
+   cfn_model/model/SQSQueuePolicy.py                                                             8      0   100%
+   cfn_model/model/Statement.py                                                                105     66    37%
+   cfn_model/model/__init__.py                                                                   0      0   100%
+   cfn_model/parser/CfnParser.py                                                               340    162    52%
+   cfn_model/parser/Ec2InstanceParser.py                                                        29     15    48%
+   cfn_model/parser/Ec2NetworkInterfaceParser.py                                                10      3    70%
+   cfn_model/parser/Error.py                                                                    17     10    41%
+   cfn_model/parser/IamGroupParser.py                                                           27     17    37%
+   cfn_model/parser/IamRoleParser.py                                                            28      6    79%
+   cfn_model/parser/IamUserParser.py                                                            48     30    38%
+   cfn_model/parser/LoadBalancerParser.py                                                       26     11    58%
+   cfn_model/parser/LoadBalancerV2Parser.py                                                     11      4    64%
+   cfn_model/parser/ParserError.py                                                              24      7    71%
+   cfn_model/parser/ParserRegistry.py                                                           20      2    90%
+   cfn_model/parser/PolicyDocumentParser.py                                                    126     66    48%
+   cfn_model/parser/SecurityGroupParser.py                                                     254    122    52%
+   cfn_model/parser/TransformRegistry.py                                                        23      9    61%
+   cfn_model/parser/WithPolicyDocumentParser.py                                                 18      4    78%
+   cfn_model/parser/__init__.py                                                                  0      0   100%
+   cfn_model/transforms/Serverless.py                                                           47     33    30%
+   cfn_model/transforms/__init__.py                                                              0      0   100%
+   cfn_model/validator/CloudformationValidator.py                                               40     18    55%
+   cfn_model/validator/ReferenceValidator.py                                                   156     79    49%
+   cfn_model/validator/ResourceTypeValidator.py                                                 34     13    62%
+   cfn_model/validator/SchemaGenerator.py                                                       81     20    75%
+   cfn_model/validator/__init__.py                                                               0      0   100%
+   cloudformation_validator/CustomRuleLoader.py                                                272    130    52%
+   cloudformation_validator/IpAddr.py                                                          714    564    21%
+   cloudformation_validator/Profile.py                                                          22      6    73%
+   cloudformation_validator/ProfileLoader.py                                                    58     23    60%
+   cloudformation_validator/RuleDefinition.py                                                   27     14    48%
+   cloudformation_validator/RuleDumper.py                                                       39     27    31%
+   cloudformation_validator/RuleRegistry.py                                                     70     33    53%
+   cloudformation_validator/TemplateDiscovery.py                                                40     30    25%
+   cloudformation_validator/ValidateUtility.py                                                 384    172    55%
+   cloudformation_validator/Violation.py                                                        35      9    74%
+   cloudformation_validator/__init__.py                                                          9      0   100%
+   cloudformation_validator/additional_custom_rules/EbsCustomTagsRule.py                        56     11    80%
+   cloudformation_validator/additional_custom_rules/Ec2CustomTagsRule.py                        57     11    81%
+   cloudformation_validator/additional_custom_rules/RdsCustomTagsRule.py                        57     11    81%
+   cloudformation_validator/additional_custom_rules/S3CustomTagsRule.py                         57     11    81%
+   cloudformation_validator/additional_custom_rules/__init__.py                                  0      0   100%
+   cloudformation_validator/command.py                                                         109     60    45%
+   cloudformation_validator/custom_rules/BaseRule.py                                            31      9    71%
+   cloudformation_validator/custom_rules/CloudFormationAuthenticationRule.py                    50      9    82%
+   cloudformation_validator/custom_rules/CloudFrontDistributionAccessLoggingRule.py             42      9    79%
+   cloudformation_validator/custom_rules/EbsVolumeHasSseRule.py                                 47     11    77%
+   cloudformation_validator/custom_rules/ElasticLoadBalancerAccessLoggingRule.py                38      7    82%
+   cloudformation_validator/custom_rules/IamManagedPolicyNotActionRule.py                       46     20    57%
+   cloudformation_validator/custom_rules/IamManagedPolicyNotResourceRule.py                     43     18    58%
+   cloudformation_validator/custom_rules/IamManagedPolicyWildcardActionRule.py                  52     26    50%
+   cloudformation_validator/custom_rules/IamManagedPolicyWildcardResourceRule.py                50     24    52%
+   cloudformation_validator/custom_rules/IamPolicyNotActionRule.py                              43     16    63%
+   cloudformation_validator/custom_rules/IamPolicyNotResourceRule.py                            42     16    62%
+   cloudformation_validator/custom_rules/IamPolicyWildcardActionRule.py                         42     16    62%
+   cloudformation_validator/custom_rules/IamPolicyWildcardResourceRule.py                       42     16    62%
+   cloudformation_validator/custom_rules/IamRoleNotActionOnPermissionsPolicyRule.py             47     13    72%
+   cloudformation_validator/custom_rules/IamRoleNotActionOnTrustPolicyRule.py                   47     16    66%
+   cloudformation_validator/custom_rules/IamRoleNotPrincipalOnTrustPolicyRule.py                44     15    66%
+   cloudformation_validator/custom_rules/IamRoleNotResourceOnPermissionsPolicyRule.py           47     13    72%
+   cloudformation_validator/custom_rules/IamRoleWildcardActionOnPermissionsPolicyRule.py        46     11    76%
+   cloudformation_validator/custom_rules/IamRoleWildcardActionOnTrustPolicyRule.py              46     13    72%
+   cloudformation_validator/custom_rules/IamRoleWildcardResourceOnPermissionsPolicyRule.py      59     17    71%
+   cloudformation_validator/custom_rules/LambdaPermissionInvokeFunctionActionRule.py            42     13    69%
+   cloudformation_validator/custom_rules/LambdaPermissionWildcardPrincipalRule.py               42      9    79%
+   cloudformation_validator/custom_rules/ManagedPolicyOnUserRule.py                             40     14    65%
+   cloudformation_validator/custom_rules/PolicyOnUserRule.py                                    37     11    70%
+   cloudformation_validator/custom_rules/RDSInstanceMasterUserPasswordRule.py                   62     18    71%
+   cloudformation_validator/custom_rules/RDSInstanceMasterUsernameRule.py                       64     19    70%
+   cloudformation_validator/custom_rules/RDSInstancePubliclyAccessibleRule.py                   40      8    80%
+   cloudformation_validator/custom_rules/S3BucketPolicyNotActionRule.py                         44     11    75%
+   cloudformation_validator/custom_rules/S3BucketPolicyNotPrincipalRule.py                      42     10    76%
+   cloudformation_validator/custom_rules/S3BucketPolicyWildcardActionRule.py                    43      9    79%
+   cloudformation_validator/custom_rules/S3BucketPolicyWildcardPrincipalRule.py                 44      9    80%
+   cloudformation_validator/custom_rules/S3BucketPublicReadAclRule.py                           39      7    82%
+   cloudformation_validator/custom_rules/S3BucketPublicReadWriteAclRule.py                      39      7    82%
+   cloudformation_validator/custom_rules/SecurityGroupEgressOpenToWorldRule.py                  50     16    68%
+   cloudformation_validator/custom_rules/SecurityGroupEgressPortRangeRule.py                    60     26    57%
+   cloudformation_validator/custom_rules/SecurityGroupIngressCidrNon32Rule.py                  132     76    42%
+   cloudformation_validator/custom_rules/SecurityGroupIngressOpenToWorldRule.py                 57     19    67%
+   cloudformation_validator/custom_rules/SecurityGroupIngressPortRangeRule.py                   65     22    66%
+   cloudformation_validator/custom_rules/SecurityGroupMissingEgressRule.py                      36      7    81%
+   cloudformation_validator/custom_rules/SnsTopicPolicyNotActionRule.py                         41      9    78%
+   cloudformation_validator/custom_rules/SnsTopicPolicyNotPrincipalRule.py                      39      8    79%
+   cloudformation_validator/custom_rules/SnsTopicPolicyWildcardPrincipalRule.py                 48     13    73%
+   cloudformation_validator/custom_rules/SqsQueuePolicyNotActionRule.py                         43      9    79%
+   cloudformation_validator/custom_rules/SqsQueuePolicyNotPrincipalRule.py                      43     11    74%
+   cloudformation_validator/custom_rules/SqsQueuePolicyWildcardActionRule.py                    40      8    80%
+   cloudformation_validator/custom_rules/SqsQueuePolicyWildcardPrincipalRule.py                 40      8    80%
+   cloudformation_validator/custom_rules/UserHasInlinePolicyRule.py                             35      8    77%
+   cloudformation_validator/custom_rules/UserMissingGroupRule.py                                38      8    79%
+   cloudformation_validator/custom_rules/WafWebAclDefaultActionRule.py                          40     14    65%
+   cloudformation_validator/custom_rules/__init__.py                                             0      0   100%
+   cloudformation_validator/result_views/JsonResults.py                                        107     43    60%
+   cloudformation_validator/result_views/RulesView.py                                           49     38    22%
+   cloudformation_validator/result_views/SimpleStdoutResults.py                                 17      8    53%
+   cloudformation_validator/result_views/__init__.py                                             0      0   100%
+   -------------------------------------------------------------------------------------------------------------
+   TOTAL                                                                                      6557   2863    56%
 
 Source
 ======

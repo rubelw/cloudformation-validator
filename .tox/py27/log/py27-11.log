@@ -1,0 +1,44 @@
+actionid: py27
+msg: envreport
+cmdargs: ['/Users/rubelwi/projects/github/cloudformation-validator/.tox/py27/bin/pip', 'freeze']
+
+atomicwrites==1.1.5
+attrs==18.1.0
+boto3==1.7.70
+botocore==1.10.70
+certifi==2018.4.16
+chardet==3.0.4
+click==6.7
+-e git+https://github.com/rubelw/cloudformation-validator.git@2e0a7bce58bd45dfb16595699574c28470c46887#egg=cloudformation_validator
+configparser==3.5.0
+cov-core==1.15.0
+coverage==4.5.1
+dill==0.2.8.2
+docopt==0.6.2
+docutils==0.14
+funcsigs==1.0.2
+future==0.16.0
+futures==3.2.0
+idna==2.7
+Jinja2==2.10
+jmespath==0.9.3
+MarkupSafe==1.0
+mock==2.0.0
+more-itertools==4.3.0
+pathlib2==2.3.2
+pbr==4.2.0
+pluggy==0.7.1
+py==1.5.4
+pykwalify==1.6.1
+pymongo==3.7.1
+pytest==3.7.1
+pytest-cov==2.5.1
+python-dateutil==2.7.3
+PyYAML==3.13
+requests==2.19.1
+s3transfer==0.1.13
+scandir==1.8
+schema==0.6.8
+six==1.11.0
+tabulate==0.8.2
+urllib3==1.23

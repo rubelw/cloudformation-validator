@@ -98,6 +98,8 @@ class RuleRegistry:
         for rule in self.rules:
             if self.debug:
                 print(str(rule)+lineno())
+                print('rule type: '+str(rule.type)+lineno())
+
             if rule.type == 'VIOLATION::WARNING':
                 rules.append(rule)
         return rules
@@ -116,6 +118,8 @@ class RuleRegistry:
         for rule in self.rules:
             if self.debug:
                 print(str(rule)+lineno())
+                print('rule type: '+str(vars(rule))+lineno())
+
             if rule.type == 'VIOLATION::FAILING_VIOLATION':
                 rules.append(rule)
         return rules

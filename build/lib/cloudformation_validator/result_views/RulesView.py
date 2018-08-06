@@ -1,6 +1,9 @@
 from __future__ import absolute_import, division, print_function
 import inspect
 import sys
+import json
+from collections import OrderedDict
+
 
 
 def lineno():
@@ -58,8 +61,18 @@ class  RulesView:
         print("########## WARNINGS ##############")
         print("##################################")
 
-        for key in keylist:
-            print("%s" % (warnings_data[key]))
+        order_of_keys = ["id", "type", "message"]
+        #print(warnings_data)
+        if warnings_data:
+            for warn_key in warnings_data:
+                list_of_tuples = [(key, warnings_data[warn_key][key]) for key in order_of_keys]
+                new_results = OrderedDict(list_of_tuples)
+
+                print("%s" % json.dumps(new_results))
+
+        #for key in keylist:
+        #    print("%s" % (warnings_data[key]))
+
 
         # FIXME FOR profile
         #do | warning |
@@ -101,13 +114,24 @@ class  RulesView:
         print("########## FAILINGS #############")
         print("##################################")
 
-        for key in keylist:
-            print("%s" % (failings_data[key]))
+        order_of_keys = ["id", "type", "message"]
+        #print(warnings_data)
+        if failings_data:
+            for fail_key in failings_data:
+                list_of_tuples = [(key, failings_data[fail_key][key]) for key in order_of_keys]
+                new_results = OrderedDict(list_of_tuples)
 
 
-        #elsif
-        #profile.execute_rule?(failing.id)
-        #puts
-        #"#{failing.id} #{failing.message}"
+                print("%s" % json.dumps(new_results))
+
+
+        #for key in keylist:
+        #    print("%s" % (failings_data[key]))
+
+        # FIXME for profile
+        # elsif
+        # profile.execute_rule?(failing.id)
+        # puts
+        # "#{failing.id} #{failing.message}"
 
 

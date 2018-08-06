@@ -1,5 +1,5 @@
 from __future__ import absolute_import, division, print_function
-from cfn_model import ModelElement
+from cfn_model.model.ModelElement import ModelElement
 
 
 class EC2NetworkInterface(ModelElement):

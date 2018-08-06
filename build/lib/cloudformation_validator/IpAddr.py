@@ -36,7 +36,11 @@ class IpAddr:
             if debug:
                 print("ingress is a list"+lineno())
             for item in ingress:
-                if item == 'CidrIp' and item['CidrIp'] == '0.0.0.0/0':
+
+                if debug:
+                    print('item is: '+str(item)+lineno())
+
+                if 'CidrIp' in item and item['CidrIp'] == '0.0.0.0/0':
                     return True
 
         elif hasattr(ingress, 'cfn_model'):
@@ -151,7 +155,7 @@ class IpAddr:
         elif type(ingress) == type(list()):
 
             for item in ingress:
-                if item == 'CidrIp' and item['CidrIp'] == '::/0':
+                if 'CidrIp' in item and item['CidrIp'] == '::/0':
                     return True
 
         elif hasattr(ingress,'cfn_model'):
@@ -272,6 +276,8 @@ class IpAddr:
                         return False
 
         elif type(ingress) == type(list()):
+            if debug:
+                print('is a list: '+lineno())
 
             for item in ingress:
                 if 'CidrIp' in item:
@@ -1016,13 +1022,6 @@ class IpAddr:
                     print('not sure what this is')
                     print('need to fix')
                     sys.exit(1)
-
-
-
-
-
-
-
 
             else:
                 if debug:
