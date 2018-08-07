@@ -5,7 +5,7 @@ Cloudformation-Validator
 Features
 ========
 
-cloudformation_validator validates cloudformation schemas and templates against
+Cloudformation Validator validates cloudformation schemas and templates against
 a variety of security and non-security rules, and provides type checking and other base
 functionality out of the box and is designed to be non-blocking and
 easily extensible, allowing for custom validation. It has no
@@ -15,7 +15,7 @@ Python 3.4, Python 3.5, Python 3.6.
 Funding
 =======
 
-cloudformation_validator is a open source, collaboratively funded
+Cloudformation Validator is a open source, collaboratively funded
 project. If you run a business and are using cloudformation_validator in
 a revenue-generating product, it would make business sense to sponsor
 its development: it ensures the project that your product relies on
@@ -24,7 +24,7 @@ to make a recurring pledge or a one time donation if cfn-validator has
 helped you in your work or personal projects.
 
 Every single sign-up makes a significant impact towards making
-cloudformation_validator possible.
+Cloudformation Validator possible.
 
 Want Custom Rules and Support For Your Application
 ==================================================

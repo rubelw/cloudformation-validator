@@ -45,7 +45,13 @@ class References:
 
                 else:
                     if type(ref_id) == type(str()):
+                        if debug:
+                            print('ref id is a string '+lineno())
+                            print('params: '+str(cfn_model))
                         if str(ref_id) in cfn_model.parameters:
+                            if debug:
+                                print('ref id in parameters - id is: '+str(ref_id)+lineno())
+                                print('returning: '+str(value))
                             return value
                             # return value if cfn_model.parameters[ref_id].synthesized_value.nil?
                             # return cfn_model.parameters[ref_id].synthesized_value

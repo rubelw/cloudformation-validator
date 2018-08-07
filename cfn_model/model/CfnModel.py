@@ -3,6 +3,7 @@ import copy
 import inspect
 from builtins import (str)
 from cfn_model.model.References import References
+from cfn_model.model.Parameter import Parameter
 
 
 def lineno():
@@ -224,3 +225,32 @@ class CfnModel:
 
             # leave it alone since external ref or something we don't grok
             return security_group_reference
+
+    def transform_hash_into_parameters(self, cfn_hash):
+        """
+        Transform hash into parameters
+        :param cfn_hash:
+        :return:
+        """
+
+        if self.debug:
+            print('CfnParser - transform_hash_into_parameters'+lineno())
+            print('cfn_hash: '+str(cfn_hash)+lineno())
+
+
+        if 'Parameters' in cfn_hash:
+
+            for param in cfn_hash['Parameters']:
+
+                if self.debug:
+                    print(param+lineno())
+                    print(str(cfn_hash['Parameters'][param])+lineno())
+
+                parameter = Parameter(debug=self.debug)
+                parameter.id = param
+                parameter.type = cfn_hash['Parameters'][param]['Type']
+
+                parameter.instance_variables.append(param+'='+cfn_hash['Parameters'][param]['Type'].lower().replace('-','_'))
+
+                self.parameters[param] = parameter
+
