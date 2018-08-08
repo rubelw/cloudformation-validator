@@ -89,7 +89,10 @@ set the rules directory to the bucket name.
 
 .. code:: console
 
-   cfn-validator validate --template-file=template.json --rules-directory=customer-rules --s3-profile=will
+   # Without a profile
+   cfn-validator validate --template-file=template.json --s3-bucket-name=custom-rules
+   # With a profile
+   cfn-validator validate --template-file=template.json --s3-bucket-name=custom-rules --s3-profile=will
 
 
 Disable PyPi Package Update Check
