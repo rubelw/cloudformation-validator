@@ -69,6 +69,40 @@ Listing Rules
    {'id': 'W1', 'type': 'VIOLATION::WARNING', 'message': 'Specifying credentials in the template itself is probably not the safest thing'}
    ...
 
+
+Excluding Certain Rules From Evaluation
+=======================================
+
+If you know that certain rules should be excluded, for example a load balancer with a security group open to 0.0.0.0/0, then exclude
+the rule using the exclude rules option, and a commad delimited list.
+
+.. code:: console
+
+   cfn-validator validate --template-file=rds_instances_with_public_credentials.json --excluded-rules=F23,F24
+
+
+Using an S3 Bucket For Custom Rules
+===================================
+
+If you want to store your organization's custom rules in an S3 bucket, then you must pass-in in s3-profile flag and
+set the rules directory to the bucket name.
+
+.. code:: console
+
+   cfn-validator validate --template-file=template.json --rules-directory=customer-rules --s3-profile=will
+
+
+Disable PyPi Package Update Check
+=================================
+
+Cloudformation validator will automatically check for pypi updates.  To disable these automatic checks, pass-in
+the --disable-pypi-check flag
+
+.. code:: console
+
+cfn-validator validate --template-file=missing_one_required_tags.json --disable-pypi-check
+
+
 Example
 =======
 

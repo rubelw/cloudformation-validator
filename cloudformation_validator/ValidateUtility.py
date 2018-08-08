@@ -7,6 +7,8 @@ import traceback
 import inspect
 import yaml
 import re
+import tempfile
+import shutil
 from cfn_model.parser import CfnParser
 from cloudformation_validator.CustomRuleLoader import CustomRuleLoader
 from cloudformation_validator.ProfileLoader import ProfileLoader
@@ -64,12 +66,17 @@ class ValidateUtility:
         self.allow_suppression = True
         self.print_suppression = False
         self.isolate_custom_rule_exceptions = False
-        self.allow_suppression = False
         self.print_suppression = True
         self.parameter_values_path = None
         self.isolate_custom_rule_exceptions = True
         self.suppress_errors = False
         self.use_optional_rules = False
+        self.excluded_rules = []
+        self.s3_bucket_name = None
+        self.s3_profile = None
+
+
+
 
         if config_block:
             self._config = config_block
@@ -83,7 +90,27 @@ class ValidateUtility:
         if self.use_optional_rules:
             self.optional_rules_directory = os.path.dirname(os.path.realpath(__file__))+'/additional_custom_rules'
 
-        self.custom_rule_loader = CustomRuleLoader(isolate_custom_rule_exceptions=self.isolate_custom_rule_exceptions, allow_suppression=self.allow_suppression, print_suppression=self.print_suppression, debug=self.debug, additional_rules_directory = self.optional_rules_directory)
+        if self.s3_bucket_name:
+            self.temp_dir_path = tempfile.mkdtemp()
+        else:
+            self.temp_dir_path = None
+
+        if self.debug:
+            print('s3 bucket: '+str(self.s3_bucket_name))
+            print('temp directory: '+str(self.temp_dir_path))
+
+
+
+        self.custom_rule_loader = CustomRuleLoader(
+            isolate_custom_rule_exceptions=self.isolate_custom_rule_exceptions,
+            allow_suppression=self.allow_suppression,
+            print_suppression=self.print_suppression,
+            debug=self.debug,
+            additional_rules_directory = self.optional_rules_directory,
+            excluded_rules=self.excluded_rules,
+            s3_bucket_name = self.s3_bucket_name,
+            temp_dir_path = self.temp_dir_path,
+            s3_profile = self.s3_profile)
 
         # If we have an extra rules directory
         if self.rules_directory:
@@ -577,7 +604,8 @@ class ValidateUtility:
                 if hasattr(violation,'type'):
                     if violation.type:
                         if violation.type == 'VIOLATION::WARNING':
-                            count+=int(len(violation.logical_resource_ids))
+                            if str(violation.id) not in self.excluded_rules:
+                                count+=int(len(violation.logical_resource_ids))
         return count
 
     def count_failures(self, violations):
@@ -602,9 +630,13 @@ class ValidateUtility:
 
             if violation:
                 if hasattr(violation,'type'):
+
+
                     if violation.type:
                         if violation.type == 'VIOLATION::FAILING_VIOLATION':
-                            count+=int(len(violation.logical_resource_ids))
+
+                            if str(violation.id) not in self.excluded_rules:
+                                count+=int(len(violation.logical_resource_ids))
 
         return count
 

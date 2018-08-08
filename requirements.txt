@@ -6,3 +6,4 @@ bumpversion>=0.5
 pymongo>=3.4.0
 future
 pytest>=3.4.2
+boto3>=1.6.8

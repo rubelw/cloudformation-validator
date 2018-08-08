@@ -4,6 +4,8 @@ import os
 import copy
 import importlib
 import inspect
+import boto3
+from botocore.exceptions import ClientError
 from cloudformation_validator.RuleRegistry import RuleRegistry
 
 def lineno():
@@ -18,7 +20,17 @@ class CustomRuleLoader:
     """
     Custom rule loader
     """
-    def __init__(self, debug=False, rule_directory=None, extra_rule_directory=None, allow_suppression=True, print_suppression=False, isolate_custom_rule_exceptions=False,additional_rules_directory=None):
+    def __init__(self, debug=False,
+                 rule_directory=None,
+                 extra_rule_directory=None,
+                 allow_suppression=True,
+                 print_suppression=False,
+                 isolate_custom_rule_exceptions=False,
+                 additional_rules_directory=None,
+                 excluded_rules=[],
+                 s3_bucket_name=None,
+                 s3_profile = None,
+                 temp_dir_path=None):
         """
         Initialize CustomRuleLoader
         :param debug: 
@@ -35,6 +47,10 @@ class CustomRuleLoader:
         self.print_suppression = print_suppression
         self.isolate_custom_rule_exceptions = isolate_custom_rule_exceptions
         self.validate_extra_rule_directory = self.rule_directory
+        self.excluded_rules = excluded_rules
+        self.s3_bucket_name = s3_bucket_name
+        self.temp_dir_path= temp_dir_path
+        self.s3_profile = s3_profile
 
         if self.debug:
             print('CustomRuleLoader init'+lineno())
@@ -74,7 +90,8 @@ class CustomRuleLoader:
                     print('type: '+str(type)+lineno())
                     print('message: '+str(message)+lineno())
 
-                rule_registry.definition(id, type, message)
+                if str(id) not in self.excluded_rules:
+                    rule_registry.definition(id, type, message)
 
         if self.debug:
             print('rules registry rules are now: '+str(rule_registry.rules)+lineno())
@@ -387,6 +404,20 @@ class CustomRuleLoader:
         else:
             return os.path.isdir(rule_directory)
 
+    def download_dir(self, client, resource, dist, local='/tmp', bucket='your_bucket'):
+        paginator = client.get_paginator('list_objects')
+        for result in paginator.paginate(Bucket=bucket, Delimiter='/', Prefix=dist):
+            if result.get('CommonPrefixes') is not None:
+                for subdir in result.get('CommonPrefixes'):
+                    download_dir(client, resource, subdir.get('Prefix'), local, bucket)
+            if result.get('Contents') is not None:
+                for file in result.get('Contents'):
+                    if not os.path.exists(os.path.dirname(local + os.sep + file.get('Key'))):
+                        os.makedirs(os.path.dirname(local + os.sep + file.get('Key')))
+                    resource.meta.client.download_file(bucket, file.get('Key'), local + os.sep + file.get('Key'))
+
+
+
     def discover_rule_filenames(self):
         """
         Discover the rule filenames
@@ -446,6 +477,58 @@ class CustomRuleLoader:
                             print('new filename: '+str(new_filename)+lineno())
 
                         rule_filenames['extra_rules_directory'][str(temp_file).replace('.py', '')] = str(self.extra_rule_directory)
+
+        if self.s3_bucket_name:
+
+            try:
+
+                if self.s3_profile:
+                    if self.debug:
+                        print('trying to create boto3 session to: '+str(self.s3_profile))
+                    session = boto3.Session(profile_name=str(self.s3_profile))
+
+                    # Any clients created from this session will use credentials
+                    # from the [dev] section of ~/.aws/credentials.
+                    s3 = session.resource('s3')
+
+                else:
+                    s3 = boto3.resource('s3')
+
+                # select bucket
+                my_bucket = s3.Bucket(self.s3_bucket_name)
+
+                if self.debug:
+                    print('bucket: '+str(self.s3_bucket_name))
+                    print('tmp directory: '+str(self.temp_dir_path))
+
+                # download file into current directory
+                for object in my_bucket.objects.all():
+                    my_bucket.download_file(object.key, os.path.join(self.temp_dir_path, object.key))
+
+            except ClientError as e:
+                print('Error getting custom rules from S3 bucket.  Check your profile and bucket name')
+                print(str(e))
+                sys.exit(1)
+
+            # Get all the files downloaded from S3 to the temp directory
+            temp_rule_filenames = os.listdir(self.temp_dir_path)
+
+            if self.debug:
+                print('rules directory: ' + str(self.temp_dir_path) + lineno())
+
+            for temp_file in temp_rule_filenames:
+                if not temp_file.startswith('__'):
+
+                    if temp_file.endswith('.py'):
+
+                        new_filename = temp_file.replace('.py', '')
+
+                        if self.debug:
+                            print('new filename: ' + str(new_filename) + lineno())
+
+                        rule_filenames['extra_rules_directory'][str(temp_file).replace('.py', '')] = str(
+                            self.temp_dir_path)
+
 
         if self.debug:
             print('rule filenames: '+str(rule_filenames)+lineno())

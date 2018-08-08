@@ -16,6 +16,7 @@ def lineno():
     """Returns the current line number in our program."""
     return str(' - ValidateUtility - line number: '+str(inspect.currentframe().f_back.f_lineno))
 
+
 @click.group()
 @click.version_option(version='0.5.4')
 def cli():
@@ -23,6 +24,10 @@ def cli():
 
 
 @cli.command()
+@click.option('--disable-pypi-check',help='Turn off package update checking', required=False, is_flag=True)
+@click.option('--s3-profile', is_flag=False, default='default', help="AWS profile")
+@click.option('--s3-bucket-name', is_flag=False ,help='S3 Bucket name for custom rules')
+@click.option('--excluded-rules', is_flag=False,default='',help='Comma separated string of rules to exclude')
 @click.option('--suppress-errors','-s',help='Suppress warnings like bad file format, etc', required=False, is_flag=True)
 @click.option('--template-path', '-t', help='base directory to search for templates', required=False)
 @click.option('--template-file', '-f', help='single_template_file', required=False)
@@ -35,8 +40,21 @@ def cli():
 @click.option('--isolate-custom-rule-exceptions', '-i', help='Isolate custom rule exceptions - just emit the exception without stack trace and keep chugging',is_flag=True)
 @click.option('--version', '-v', help='Print version and exit', required=False, is_flag=True)
 @click.option('--use-optional-rules',help='Use optional rules', required=False, is_flag=True)
-def validate(suppress_errors,template_path,template_file,debug,rules_directory,profile_path,allow_suppression,print_suppression,parameter_values_path,
-             isolate_custom_rule_exceptions,version, use_optional_rules):
+def validate(suppress_errors,
+             template_path,
+             template_file,
+             debug,rules_directory,
+             profile_path,
+             allow_suppression,
+             print_suppression,
+             parameter_values_path,
+             isolate_custom_rule_exceptions,
+             version,
+             use_optional_rules,
+             excluded_rules,
+             s3_bucket_name,
+             s3_profile,
+             disable_pypi_check):
     '''
     primary function for validating a template
     :param template_path:
@@ -50,6 +68,9 @@ def validate(suppress_errors,template_path,template_file,debug,rules_directory,p
     :param isolate_custom_rule_exceptions:
     :param version:
     :param use_optional_rules
+    :param excluded_rules
+    :param s3_bucket_name
+    :param s3_profile
     :return:
     '''
 
@@ -66,6 +87,13 @@ def validate(suppress_errors,template_path,template_file,debug,rules_directory,p
             print('Must have either an input_path or template_file')
             sys.exit(1)
 
+        excluded_rules = excluded_rules.split(",")
+
+        new_excluded_rules = []
+        for items in excluded_rules:
+            j = items.replace(' ', '')
+            new_excluded_rules.append(j)
+
         start_validate(
             suppress_errors,
             template_path,
@@ -77,7 +105,11 @@ def validate(suppress_errors,template_path,template_file,debug,rules_directory,p
             print_suppression,
             parameter_values_path,
             isolate_custom_rule_exceptions,
-            use_optional_rules
+            use_optional_rules,
+            new_excluded_rules,
+            s3_bucket_name,
+            s3_profile,
+            disable_pypi_check
         )
 
 
@@ -136,7 +168,11 @@ def start_validate(
         print_suppression,
         parameter_values_path,
         isolate_custom_rule_exceptions,
-        use_optional_rules):
+        use_optional_rules,
+        excluded_rules,
+        s3_bucket_name,
+        s3_profile,
+        disable_pypi_check):
     '''
     Starts the validation
     :param template_path:
@@ -149,13 +185,17 @@ def start_validate(
     :param parameter_values_path:
     :param isolate_custom_rule_exceptions:
     :param use_optional_rules
+    :param s3_bucket_name
+    :param s3_profile
     :return:
     '''
     if debug:
         print('command - start_validate'+lineno())
         print('input_path: '+str(template_path))
 
-    check_for_updates(debug=debug)
+
+    if not disable_pypi_check:
+        check_for_updates(debug=debug)
 
 
     config_dict = {}
@@ -170,6 +210,9 @@ def start_validate(
     config_dict['parameter_values_path'] = parameter_values_path
     config_dict['isolate_custom_rule_exceptions'] = isolate_custom_rule_exceptions
     config_dict['use_optional_rules'] = use_optional_rules
+    config_dict['excluded_rules'] = excluded_rules
+    config_dict['s3_bucket_name'] = s3_bucket_name
+    config_dict['s3_profile'] = s3_profile
     validator = ValidateUtility(config_dict)
     if debug:
         print('print have validator')
@@ -205,8 +248,15 @@ def get_current_pip_version(debug=False):
 def check_for_updates(debug=False):
 
     try:
-        current_pip_version = get_current_pip_version(debug=debug)
-        current_local_version = str(cloudformation_validator.__version__).rstrip('\n').strip()
+
+        if sys.version_info[0] < 3:
+            current_pip_version = get_current_pip_version(debug=debug).decode("utf-8")
+            current_local_version = str(cloudformation_validator.__version__).rstrip('\n').strip().decode("utf-8")
+
+        else:
+            current_pip_version = get_current_pip_version(debug=debug)
+            current_local_version = str(cloudformation_validator.__version__).rstrip('\n').strip()
+
         if debug:
             print('current pypi version: '+str(current_pip_version))
             print('current local version: '+str(current_local_version))
