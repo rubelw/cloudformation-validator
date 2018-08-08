@@ -100,7 +100,7 @@ the --disable-pypi-check flag
 
 .. code:: console
 
-cfn-validator validate --template-file=missing_one_required_tags.json --disable-pypi-check
+    cfn-validator validate --template-file=missing_one_required_tags.json --disable-pypi-check
 
 
 Example
