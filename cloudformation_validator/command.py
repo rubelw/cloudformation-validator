@@ -18,13 +18,13 @@ def lineno():
 
 
 @click.group()
-@click.version_option(version='0.6.6')
+@click.version_option(version='0.6.7')
 def cli():
     pass
 
 
 @cli.command()
-@click.option('--disable-pypi-check',help='Turn off package update checking', required=False, is_flag=True)
+@click.option('--pypi-update-check/--no-pypi-update-check', help='Whether to enable pypi check', default=False, required=False)
 @click.option('--s3-profile', is_flag=False, default='default', help="AWS profile")
 @click.option('--s3-bucket-name', is_flag=False ,help='S3 Bucket name for custom rules')
 @click.option('--excluded-rules', is_flag=False,default='',help='Comma separated string of rules to exclude')
@@ -54,7 +54,8 @@ def validate(suppress_errors,
              excluded_rules,
              s3_bucket_name,
              s3_profile,
-             disable_pypi_check):
+             pypi_update_check
+             ):
     '''
     primary function for validating a template
     :param template_path:
@@ -71,6 +72,7 @@ def validate(suppress_errors,
     :param excluded_rules
     :param s3_bucket_name
     :param s3_profile
+    :param pypi_update_check
     :return:
     '''
 
@@ -109,7 +111,7 @@ def validate(suppress_errors,
             new_excluded_rules,
             s3_bucket_name,
             s3_profile,
-            disable_pypi_check
+            pypi_update_check
         )
 
 
@@ -172,7 +174,7 @@ def start_validate(
         excluded_rules,
         s3_bucket_name,
         s3_profile,
-        disable_pypi_check):
+        pypi_update_check):
     '''
     Starts the validation
     :param template_path:
@@ -192,9 +194,9 @@ def start_validate(
     if debug:
         print('command - start_validate'+lineno())
         print('input_path: '+str(template_path))
+        print('pypi update checK: '+str(pypi_update_check))
 
-
-    if not disable_pypi_check:
+    if pypi_update_check:
         check_for_updates(debug=debug)
 
 
