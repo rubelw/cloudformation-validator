@@ -317,9 +317,11 @@ class SecurityGroupParser:
                 print("##############################################################\n")
 
             if 'Properties' in security_group_ingress.cfn_model:
-                print('security group ingress cfn model has properties'+lineno())
+                if debug:
+                    print('security group ingress cfn model has properties'+lineno())
                 if 'GroupId' in security_group_ingress.cfn_model['Properties']:
-                    print('security group ingress has groupid '+str(security_group_ingress.cfn_model['Properties']['GroupId'])+lineno())
+                    if debug:
+                        print('security group ingress has groupid '+str(security_group_ingress.cfn_model['Properties']['GroupId'])+lineno())
 
                     group_id = References.resolve_security_group_id(security_group_ingress.cfn_model['Properties']['GroupId'],debug=debug)
                     if debug:

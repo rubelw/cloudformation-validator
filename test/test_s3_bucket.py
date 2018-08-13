@@ -34,7 +34,8 @@ class TestS3Bucket(unittest.TestCase):
     """
     def test_s3_bucket(self):
 
-      expected_result = {
+      expected_result = [
+            {
                 'failure_count': '1',
                 'filename': '/json/s3_bucket/buckets_with_insecure_acl.json',
                 'file_results': [
@@ -42,20 +43,17 @@ class TestS3Bucket(unittest.TestCase):
                         'id': 'F14',
                         'type': 'VIOLATION::FAILING_VIOLATION',
                         'message': 'S3 Bucket should not have a public read-write acl',
-                        'logical_resource_ids': [
-                            'S3BucketReadWrite'
-                        ]
+                        'logical_resource_ids': "['S3BucketReadWrite']"
                     },
                     {
                         'id': 'W31',
                         'type': 'VIOLATION::WARNING',
                         'message': 'S3 Bucket likely should not have a public read acl',
-                        'logical_resource_ids': [
-                            'S3BucketRead'
-                        ]
+                        'logical_resource_ids': "['S3BucketRead']"
                     }
                 ]
             }
+        ]
 
       if sys.version_info[0] < 3:
 

@@ -1,6 +1,7 @@
 from __future__ import absolute_import, division, print_function
 import inspect
 import sys
+from cfn_model.parser.ParserError import ParserError
 
 
 def lineno():
@@ -20,23 +21,27 @@ class LoadBalancerV2Parser:
         :return: 
         """
 
-        if self.debug:
+        if debug:
             print('parse'+lineno())
-        # FIXME
-        sys.exit(1)
-        #load_balancer = resource
+            print('resource: '+str(resource))
+            print('subnects: '+str(resource.subnets))
 
-        ##could be a List<Subnet::Id>
-        ## if load_balancer.subnets.size < 2
-        ##   raise ParserError.new("Load Balancer must have at least two subnets: #{load_balancer.logical_resource_id}")
-        ## end
+        if resource.subnets and len(resource.subnets)<2:
 
-        #if load_balancer.securityGroups.is_a? Array
-        #  load_balancer.security_groups = load_balancer.securityGroups.map do |security_group_reference|
-        #    cfn_model.find_security_group_by_group_id(security_group_reference)
-        #  end
-        #else
-          # er... list of ids or comma separated list.  just punt.
-        #  load_balancer.security_groups = []
-        #end
-        #load_balancer
+            try:
+                raise ParserError('"Load Balancer must have at least two subnets:'+str(resource.subnets), None,debug=self.debug)
+            except ParserError as e:
+
+                raise ParserError('"Load Balancer must have at least two subnets:'+str(resource.subnets), None,debug=self.debug)
+            #    #sys.exit(exc)
+
+        if type(resource.securityGroups) == type(list()):
+            for sg in resource.securityGroups:
+                cfn_model.find_security_group_by_group_id(sg)
+
+        else:
+            # er... list of ids or comma separated list.  just punt.
+            resource.security_groups = []
+
+        return resource
+

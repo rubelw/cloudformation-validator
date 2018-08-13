@@ -2,8 +2,10 @@ from __future__ import absolute_import, division, print_function
 import inspect
 import re
 import sys
+import os
 from builtins import (str)
 from collections import OrderedDict
+from cloudformation_validator.Violation import Violation
 
 def lineno():
     """Returns the current line number in our program."""
@@ -23,6 +25,8 @@ class JsonResults:
         if self.debug:
             print('JsonResults - init'+lineno())
 
+
+
     def pretty(self, value, htchar='\t', lfchar='\n', indent=0):
         """
         Prints pretty json
@@ -34,29 +38,38 @@ class JsonResults:
         """
 
         if self.debug:
-            print('### type: '+str(type(value))+lineno())
-            if type(value) == type(OrderedDict()):
-                print('found it')
+            print('### type: '+str(type(value))+lineno()+lineno())
+        if type(value) == type(OrderedDict()):
+            print('found it'+lineno())
+        print('value: '+str(value)+lineno())
+
 
         nlch = lfchar + htchar * (indent + 1)
         if type(value) == type(dict()) or type(value) == type(OrderedDict()):
             if (self.debug):
-                print('is dict')
+                print("##############################\n")
+                print('is dict'+lineno())
+                print("##############################\n")
+
             items = [
                 nlch + repr(key) + ': ' + self.pretty(value[key], htchar, lfchar, indent + 1)
                 for key in value
             ]
             return '{%s}' % (','.join(items) + lfchar + htchar * indent)
+
         elif type(value) == type(list()):
             if (self.debug):
-                print('is list')
+                print("##############################\n")
+                print('is list'+lineno())
+                print("##############################\n")
 
             items = [
                 nlch + self.pretty(item, htchar, lfchar, indent + 1)
                 for item in value
             ]
-            print('items: '+str(items))
-            print('items type: '+str(type(items)))
+            if self.debug:
+                print('items: '+str(items)+lineno())
+                print('items type: '+str(type(items))+lineno())
             if items:
                 items = sorted(items)
             [str(item) for item in items]
@@ -64,15 +77,26 @@ class JsonResults:
 
         elif type(value) is tuple:
             if (self.debug):
-                print('is tuple')
+                print("##############################\n")
+                print('is tuple'+lineno())
+                print("##############################\n")
+
             items = [
                 nlch + self.pretty(item, htchar, lfchar, indent + 1)
                 for item in value
             ]
+
+            if self.debug:
+                print('returning: '+str('(%s)' % (','.join(items) + lfchar + htchar * indent))+lineno())
             return '(%s)' % (','.join(items) + lfchar + htchar * indent)
+
         else:
             if (self.debug):
-                print('is other')
+                print("##############################\n")
+                print('is other: '+str(type(value))+lineno())
+                print('returning: '+str(value))
+                print("##############################\n")
+
             return repr(str(value))
 
 
@@ -83,20 +107,32 @@ class JsonResults:
         :return:
         """
         if self.debug:
+            print("########################################")
             print('render:'+lineno())
 
             print('results: '+str(results)+lineno())
             print('type: '+str(type(results))+lineno())
+            print("#########################################\n")
+        array_of_results = []
 
+        # This is an array of violations
         if type(results)==type(list()):
 
             if self.debug:
                 print('is a list: '+lineno())
+                print('list count: '+str(len(results))+lineno())
 
+            ordered_violations_by_filename = {}
+
+            # Iterate over each of the violqtions
             for r in results:
                 if self.debug:
-                    print('r: '+str(r)+lineno())
 
+                    print("\n"+'################################')
+                    print('violation: '+str(r)+lineno())
+                    print('###################################'+"\n")
+
+                # Not doing anything
                 if 'filename' in r:
 
                     if self.debug:
@@ -109,56 +145,152 @@ class JsonResults:
                         r['filename'] = matchObj.group(2)
                     else:
                         if self.debug:
-                            print("No match!!")
+                            print('no match '+lineno())
 
+
+                # Not doing anything
                 if 'file_results' in r:
-                    new_violations = []
+                    if self.debug:
+                        print('threre are file results: '+str(r['file_results'])+lineno())
 
                     if 'failure_count' in r['file_results']:
                         r['file_results'].pop('failure_count', None)
 
-                    if 'violations' in r['file_results']:
+                new_violations_list = []
+                # If there are violations in the file results
+                # Lets put the violations in to an OrderedDict
+                if 'violations' in r['file_results']:
 
+                    if self.debug:
+                        print('found violations: '+lineno())
+                        print('type: '+str(type(r['file_results']['violations']))+lineno())
+
+                    # Lets first just iterate over the violations and get the id so
+                    # we can sort
+                    if type(r['file_results']['violations']) == type(list()):
+
+                        # We are trying to convert each violation in the list to an ordered dictionary
+                        # and put the ordered lists in order by violation id
                         if self.debug:
-                            print('found violations: '+lineno())
-                            print('type: '+str(type(r['file_results']['violations']))+lineno())
+                            print('type is a list'+lineno())
+                        new_violations = []
+                        for violation in r['file_results']['violations']:
 
-                        if type(r['file_results']['violations']) == type(list()):
+                            if type(violation) == type(list()):
+                                if self.debug:
+                                    print('violation is a list'+lineno())
 
-                            if self.debug:
-                                print('is a list'+lineno())
 
-                            for violation in r['file_results']['violations']:
+                                temp_list = []
+
+                                for items in violation:
+                                    temp_list.append(items.to_hash())
+
+                                new_violations.append(temp_list)
+
+                            elif hasattr(violation, '__class__') and hasattr(violation.__class__,'__name__') and violation.__class__.__name__ == 'Violation':
+                                 if self.debug:
+                                     print('has class' + lineno())
+                                     print('class: ' + str(violation.__class__.__name__) + lineno())
+
+                                 new_violations.append(violation.to_hash())
+                            else:
 
                                 if self.debug:
-                                    print('violation: '+str(violation))
-                                    print('type: '+str(type(violation))+lineno())
+                                    print('violation is not a list: '+lineno())
 
                                 new_violations.append(violation.to_hash())
 
-                        elif type(r['file_results']['violations']) == type(dict()):
-                            if self.debug:
-                                print('is a dict'+lineno())
-                            new_violations.append((r['file_results']))
+                        r['file_results'] = new_violations
 
-                    else:
+
+                    elif type(r['file_results']['violations']) == type(dict()):
                         if self.debug:
-                            print('type:'+str(r['file_results'])+lineno())
-                        for item in r['file_results']:
+                            print('is a dict'+lineno())
+                        r['file_results'] = [violation.to_hash()]
+
+
+                # If there are no violations in file results
+                else:
+                    if self.debug:
+                        print('there are no violations: '+lineno())
+                        print('type:'+str(type(r['file_results']))+lineno())
+                    for item in r['file_results']:
+                        if self.debug:
+                            print('item: '+str(item)+lineno())
+                            print('type: '+str(type(item))+lineno())
+                        if hasattr(item,'__name__'):
                             if self.debug:
-                                print(str(item.to_hash())+lineno())
+                                print('has name'+lineno())
+                                print('name: '+str(item.__name__)+lineno())
+                        if hasattr(item, '__class__') and hasattr(item.__class__,'__name__') and item.__class__.__name__ == 'Violation':
+                            if self.debug:
+                                print('has class' + lineno())
+                                print('class: ' + str(item.__class__.__name__) + lineno())
+                                print('dirs:'+str(dir(item))+lineno())
 
-                            new_violations.append(item.to_hash())
 
-                    r['file_results'] = new_violations
+                                print('vars: '+str(vars(item))+lineno())
+
+                            r['file_results'] = [item.to_hash()]
+
 
             hash = results
 
             order_of_keys = ["failure_count", "filename", "file_results"]
-            list_of_tuples = [(key, hash[0][key]) for key in order_of_keys]
-            hash= OrderedDict(list_of_tuples)
 
+
+            if hash:
+                print("\n"+'## there is a hash: '+str(hash)+lineno())
+
+                if type(hash) == type(list()):
+                    if self.debug:
+                        print('ist a list: '+str(lineno()))
+                    # Iterate over each violation
+                    for item in hash:
+                        if self.debug:
+                            print("\n#################################")
+                            print('item: '+str(item)+lineno())
+                            print("#####################################\n")
+
+                        my_ordered_dict= OrderedDict()
+                        for key in order_of_keys:
+                            my_ordered_dict[key] = item[key]
+
+                        if self.debug:
+                            print("\n"+'ordered dict is: '+str(my_ordered_dict)+lineno())
+
+                        array_of_results.append(my_ordered_dict)
+
+                        if self.debug:
+                            print("\n"+'results: '+str(array_of_results)+lineno())
+
+                # if not a list - FIXME
+                else:
+                    if self.debug:
+                        print('is not a list: '+lineno())
+                    for item in hash:
+                        if self.debug:
+                            print('item: '+str(item)+lineno())
+                            print('hash item: '+str(hash[item])+lineno())
+
+                        my_ordered_dict = OrderedDict()
+
+                        for key in order_of_keys:
+                            my_ordered_dict[key]= item[key]
+
+                    if self.debug:
+                        print('my ordered dict: '+str(my_ordered_dict)+lineno())
+
+
+                    array_of_results.append(my_ordered_dict)
+
+
+        # If the results is not a list, then assuming it is a hash...FIXME
         else:
+            if self.debug:
+                print('results is not a list: '+lineno())
+
             order_of_keys = ["failure_count", "filename", "file_results"]
             list_of_tuples = [(key, results[key]) for key in order_of_keys]
             new_results = OrderedDict(list_of_tuples)
@@ -171,9 +303,10 @@ class JsonResults:
                 for item in result:
 
                     if item:
-                        hash.append(item.to_hash())
+                        array_of_results.append(item.to_hash())
 
-        if self.debug:
-            print('returning: '+str(hash)+lineno())
+            if self.debug:
+                print('returning: '+str(hash)+lineno())
 
-        return self.pretty(hash)
+        print('array of results: '+str(array_of_results)+lineno())
+        return self.pretty(array_of_results)

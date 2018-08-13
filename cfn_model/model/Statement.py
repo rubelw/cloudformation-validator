@@ -99,14 +99,26 @@ class Statement:
                 print('resource: '+str(resource)+lineno())
                 print('type: '+str(type(resource))+lineno())
 
+            if type(resource) == None:
+                if self.debug:
+                    print('is none: '+lineno())
+                continue
             if type(resource)== type(str()):
+                if self.debug:
+                    print('is string '+lineno())
                 if '*' in resource:
                     resources.append(resource)
 
             if sys.version_info[0] < 3:
+                if self.debug:
+                    print('is python2 '+lineno())
+
                 if type(resource) == type(unicode()):
-                    if '*' in resource:
-                        resources.append(resource)
+                    if self.debug:
+                        if hasattr(item, '__iter__'):
+                            if '*' in resource:
+                                resources.append(resource)
+
 
             if type(resource)== type(dict()):
                 if self.debug:
@@ -148,9 +160,12 @@ class Statement:
 
             if type(resource) == type(list()):
                 for item in resource:
-
-                    if '*' in item:
-                        resources.append(item)
+                    if self.debug:
+                        print('item: '+str(item)+lineno())
+                    if hasattr(item,'__iter__'):
+                        if type(item) == str():
+                            if '*' in item:
+                                resources.append(item)
                     else:
                         if self.debug:
                             print("No match!!"+lineno())

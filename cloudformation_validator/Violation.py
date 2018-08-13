@@ -36,6 +36,18 @@ class Violation(RuleDefinition):
             print('Violation - init'+lineno())
 
 
+    def id(self):
+        return self.id()
+
+    def type(self):
+        return self.type()
+
+    def message(self):
+        return self.message()
+
+    def logical_resource_ids(self):
+        return self.logical_resource_ids()
+
     def to_string(self):
         """
         Returns violation as a string
@@ -55,12 +67,13 @@ class Violation(RuleDefinition):
         """
         if self.debug:
             print('to hash'+lineno())
+            print('logical resource ids: '+str(self.logical_resource_ids)+lineno())
             print('logical id type: '+str(type(self.logical_resource_ids))+lineno())
-            print('message: '+str(self.message))
+            print('message: '+str(self.message)+lineno())
 
 
 
-        hash = {'id': self.id,'type':self.type ,'message': self.message, 'logical_resource_ids': self.logical_resource_ids}
+        hash = {'id': self.id,'type':self.type ,'message': self.message, 'logical_resource_ids': str(self.logical_resource_ids)}
 
         order_of_keys = ["id", "type", "message","logical_resource_ids"]
         list_of_tuples = [(key, hash[key]) for key in order_of_keys]
@@ -69,6 +82,9 @@ class Violation(RuleDefinition):
 
 
         if self.debug:
+            print('#####################################')
             print('hash is: '+str(new_results)+lineno())
+            print('#####################################')
 
         return new_results
+

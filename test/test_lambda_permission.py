@@ -34,7 +34,8 @@ class TestLambdaPermission(unittest.TestCase):
     """
     def test_lambda_permission_with_some_out_of_ord_items(self):
 
-      expected_result = {
+      expected_result = [
+            {
                 'failure_count': '2',
                 'filename': '/json/lambda_permission/lambda_with_wildcard_principal_and_non_invoke_function_permission.json',
                 'file_results': [
@@ -42,28 +43,23 @@ class TestLambdaPermission(unittest.TestCase):
                         'id': 'F13',
                         'type': 'VIOLATION::FAILING_VIOLATION',
                         'message': 'Lambda permission principal should not be wildcard',
-                        'logical_resource_ids': [
-                            'lambdaPermission'
-                        ]
+                        'logical_resource_ids': "['lambdaPermission']"
                     },
                     {
                         'id': 'F3',
                         'type': 'VIOLATION::FAILING_VIOLATION',
                         'message': 'IAM role should not allow * action on its permissions policy',
-                        'logical_resource_ids': [
-                            'LambdaExecutionRole'
-                        ]
+                        'logical_resource_ids': "['LambdaExecutionRole']"
                     },
                     {
                         'id': 'W11',
                         'type': 'VIOLATION::WARNING',
                         'message': 'IAM role should not allow * resource on its permissions policy',
-                        'logical_resource_ids': [
-                            'LambdaExecutionRole'
-                        ]
+                        'logical_resource_ids': "['LambdaExecutionRole']"
                     }
                 ]
             }
+        ]
 
 
       if sys.version_info[0] < 3:

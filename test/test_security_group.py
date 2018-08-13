@@ -34,7 +34,8 @@ class TestSecurityGroup(unittest.TestCase):
     """
 
     def test_dangling_egress_rule(self):
-        expected_result = {
+        expected_result = [
+            {
                 'failure_count': '1',
                 'filename': '/json/security_group/dangling_egress_rule.json',
                 'file_results': [
@@ -46,6 +47,7 @@ class TestSecurityGroup(unittest.TestCase):
                     }
                 ]
             }
+        ]
 
         if sys.version_info[0] < 3:
 
@@ -83,7 +85,7 @@ class TestSecurityGroup(unittest.TestCase):
 
         template_name = os.path.dirname(os.path.dirname(
             os.path.realpath(__file__))) + '/cloudformation_validator/test_templates/json/security_group/dangling_egress_rule.json'
-        debug = False
+        debug = True
 
         config_dict = {}
         config_dict['template_file'] = template_name
@@ -105,20 +107,24 @@ class TestSecurityGroup(unittest.TestCase):
 
         self.assertEqual(expected_result, real_result)
 
+
+
     def test_security_group_missing_properties(self):
 
-        expected_result = {
-            'failure_count': '1',
-            'filename': '/json/security_group/sg_missing_properties.json',
-            'file_results': [
-                {
-                    'id': 'FATAL',
-                    'type': 'VIOLATION::FAILING_VIOLATION',
-                    'message': "{'Basic CloudFormation syntax error': [Cannot find required key 'Properties'. Path: '/Resources/sg']}",
-                    'logical_resource_ids': 'None'
-                }
-            ]
-        }
+        expected_result = [
+            {
+                'failure_count': '1',
+                'filename': '/json/security_group/sg_missing_properties.json',
+                'file_results': [
+                    {
+                        'id': 'FATAL',
+                        'type': 'VIOLATION::FAILING_VIOLATION',
+                        'message': "{'Basic CloudFormation syntax error': [Cannot find required key 'Properties'. Path: '/Resources/sg']}",
+                        'logical_resource_ids': 'None'
+                    }
+                ]
+            }
+        ]
 
         if sys.version_info[0] < 3:
 
@@ -143,7 +149,7 @@ class TestSecurityGroup(unittest.TestCase):
 
         template_name = os.path.dirname(os.path.dirname(
             os.path.realpath(__file__))) + '/cloudformation_validator/test_templates/json/security_group/sg_missing_properties.json'
-        debug = False
+        debug = True
 
         config_dict = {}
         config_dict['template_file'] = template_name
@@ -165,8 +171,10 @@ class TestSecurityGroup(unittest.TestCase):
 
         self.assertEqual(expected_result, real_result)
 
+
     def test_security_group_when_egress_is_empty(self):
-        expected_result = {
+        expected_result = [
+            {
                 'failure_count': '1',
                 'filename': '/json/security_group/single_security_group_empty_ingress.json',
                 'file_results': [
@@ -174,12 +182,11 @@ class TestSecurityGroup(unittest.TestCase):
                         'id': 'F1000',
                         'type': 'VIOLATION::FAILING_VIOLATION',
                         'message': 'Missing egress rule means all traffic is allowed outbound.  Make this explicit if it is desired configuration',
-                        'logical_resource_ids': [
-                            'sg'
-                        ]
+                        'logical_resource_ids': "['sg']"
                     }
                 ]
             }
+        ]
 
         if sys.version_info[0] < 3:
 
@@ -227,7 +234,8 @@ class TestSecurityGroup(unittest.TestCase):
         self.assertEqual(expected_result, real_result)
 
     def test_security_group_when_inline_sg_is_open_to_world(self):
-        expected_result = {
+        expected_result = [
+            {
                 'failure_count': '2',
                 'filename': '/json/security_group/two_security_group_two_cidr_ingress.json',
                 'file_results': [
@@ -235,40 +243,29 @@ class TestSecurityGroup(unittest.TestCase):
                         'id': 'F1000',
                         'type': 'VIOLATION::FAILING_VIOLATION',
                         'message': 'Missing egress rule means all traffic is allowed outbound.  Make this explicit if it is desired configuration',
-                        'logical_resource_ids': [
-                            'sg',
-                            'sg2'
-                        ]
+                        'logical_resource_ids': "['sg', 'sg2']"
                     },
                     {
                         'id': 'W2',
                         'type': 'VIOLATION::WARNING',
                         'message': 'Security Groups found with cidr open to world on ingress.  This should never be true on instance.  Permissible on ELB',
-                        'logical_resource_ids': [
-                            'sg2'
-                        ]
+                        'logical_resource_ids': "['sg2']"
                     },
                     {
                         'id': 'W27',
                         'type': 'VIOLATION::WARNING',
                         'message': 'Security Groups found ingress with port range instead of just a single port',
-                        'logical_resource_ids': [
-                            'sg',
-                            'sg2',
-                            'sg2'
-                        ]
+                        'logical_resource_ids': "['sg', 'sg2', 'sg2']"
                     },
                     {
                         'id': 'W9',
                         'type': 'VIOLATION::WARNING',
                         'message': 'Security Groups found with ingress cidr that is not /32',
-                        'logical_resource_ids': [
-                            'sg2'
-                        ]
+                        'logical_resource_ids': "['sg2']"
                     }
                 ]
             }
-
+        ]
         if sys.version_info[0] < 3:
 
 
@@ -316,12 +313,14 @@ class TestSecurityGroup(unittest.TestCase):
         self.assertEqual(expected_result, real_result)
 
     def test_security_group_when_has_multiple_inline_egress_rules(self):
-        expected_result = {
+        expected_result = [
+            {
                 'failure_count': '0',
                 'filename': '/json/security_group/multiple_inline_egress.json',
                 'file_results': [
                 ]
             }
+        ]
 
         if sys.version_info[0] < 3:
 
@@ -369,7 +368,8 @@ class TestSecurityGroup(unittest.TestCase):
         self.assertEqual(expected_result, real_result)
 
     def test_two_security_groups_ingress_standalone_with_non32_cidr(self):
-        expected_result = {
+        expected_result = [
+            {
                 'failure_count': '0',
                 'filename': '/json/security_group/non_32_cidr_standalone_ingress.json',
                 'file_results': [
@@ -377,15 +377,11 @@ class TestSecurityGroup(unittest.TestCase):
                         'id': 'W9',
                         'type': 'VIOLATION::WARNING',
                         'message': 'Security Groups found with ingress cidr that is not /32',
-                        'logical_resource_ids': [
-                            'securityGroupIngress2',
-                            'securityGroupIngress3',
-                            'securityGroupIngress4',
-                            'securityGroupIngress5'
-                        ]
+                        'logical_resource_ids': "['securityGroupIngress2', 'securityGroupIngress3', 'securityGroupIngress4', 'securityGroupIngress5']"
                     }
                 ]
             }
+        ]
 
         if sys.version_info[0] < 3:
 
@@ -434,7 +430,8 @@ class TestSecurityGroup(unittest.TestCase):
         self.assertEqual(expected_result, real_result)
 
     def test_two_security_groups_with_non32_cidr(self):
-        expected_result = {
+        expected_result = [
+            {
                 'failure_count': '0',
                 'filename': '/json/security_group/non_32_cidr.json',
                 'file_results': [
@@ -442,14 +439,11 @@ class TestSecurityGroup(unittest.TestCase):
                         'id': 'W9',
                         'type': 'VIOLATION::WARNING',
                         'message': 'Security Groups found with ingress cidr that is not /32',
-                        'logical_resource_ids': [
-                            'sg',
-                            'sg2'
-                        ]
+                        'logical_resource_ids': "['sg', 'sg2']"
                     }
                 ]
             }
-
+        ]
         if sys.version_info[0] < 3:
 
             new_file_results = []
@@ -497,7 +491,8 @@ class TestSecurityGroup(unittest.TestCase):
 
     def test_multiple_security_groups(self):
 
-      expected_result = {
+      expected_result = [
+            {
                 'failure_count': '0',
                 'filename': '/json/security_group/multiple_ingress_security_groups.json',
                 'file_results': [
@@ -505,12 +500,11 @@ class TestSecurityGroup(unittest.TestCase):
                         'id': 'W5',
                         'type': 'VIOLATION::WARNING',
                         'message': 'Security Groups found with cidr open to world on egress',
-                        'logical_resource_ids': [
-                            'emrSecurityGroup'
-                        ]
+                        'logical_resource_ids': "['emrSecurityGroup']"
                     }
                 ]
             }
+        ]
 
       if sys.version_info[0] < 3:
 

@@ -38,20 +38,20 @@ class TestEbsVolume(unittest.TestCase):
 
     def test_ebs_volume_no_tags(self):
 
-      expected_result =  {
-            'failure_count': '1',
-            'filename': '/json/ec2_volume/no_tags.json',
-            'file_results': [
-                {
-                    'id': 'F89',
-                    'type': 'VIOLATION::FAILING_VIOLATION',
-                    'message': 'Ebs volume does not have the required tags of Name, ResourceOwner, DeployedBy, Project',
-                    'logical_resource_ids': [
-                        'NewVolume'
-                    ]
-                }
-            ]
-        }
+      expected_result =  [
+            {
+                'failure_count': '1',
+                'filename': '/json/ec2_volume/no_tags.json',
+                'file_results': [
+                    {
+                        'id': 'F89',
+                        'type': 'VIOLATION::FAILING_VIOLATION',
+                        'message': 'Ebs volume does not have the required tags of Name, ResourceOwner, DeployedBy, Project',
+                        'logical_resource_ids': "['NewVolume']"
+                    }
+                ]
+            }
+        ]
 
       if sys.version_info[0] < 3:
 
@@ -104,13 +104,14 @@ class TestEbsVolume(unittest.TestCase):
 
     def test_ec2_volume_has_required_tags(self):
 
-      expected_result =  {
-        'failure_count': '0',
-        'filename': '/json/ec2_volume/has_required_tags.json',
-        'file_results': [
-
-            ]
-        }
+      expected_result =   [
+            {
+                'failure_count': '0',
+                'filename': '/json/ec2_volume/has_required_tags.json',
+                'file_results': [
+                ]
+            }
+        ]
 
 
       if sys.version_info[0] < 3:
@@ -164,20 +165,20 @@ class TestEbsVolume(unittest.TestCase):
 
     def test_ebs_volume_missing_one_tags(self):
 
-      expected_result =  {
-            'failure_count': '1',
-            'filename': '/json/ec2_volume/missing_one_required_tags.json',
-            'file_results': [
-                {
-                    'id': 'F89',
-                    'type': 'VIOLATION::FAILING_VIOLATION',
-                    'message': 'Ebs volume does not have the required tags of Name, ResourceOwner, DeployedBy, Project',
-                    'logical_resource_ids': [
-                        'NewVolume'
-                    ]
-                }
-            ]
-        }
+      expected_result =  [
+            {
+                'failure_count': '1',
+                'filename': '/json/ec2_volume/missing_one_required_tags.json',
+                'file_results': [
+                    {
+                        'id': 'F89',
+                        'type': 'VIOLATION::FAILING_VIOLATION',
+                        'message': 'Ebs volume does not have the required tags of Name, ResourceOwner, DeployedBy, Project',
+                        'logical_resource_ids': "['NewVolume']"
+                    }
+                ]
+            }
+        ]
 
       if sys.version_info[0] < 3:
 
@@ -203,7 +204,7 @@ class TestEbsVolume(unittest.TestCase):
       expected_result = pretty(expected_result)
 
       template_name = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))+'/cloudformation_validator/test_templates/json/ec2_volume/missing_one_required_tags.json'
-      debug = False
+      debug =  True
 
       config_dict = {}
       config_dict['template_file'] = template_name

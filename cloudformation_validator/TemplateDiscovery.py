@@ -57,7 +57,9 @@ class TemplateDiscovery:
 
                     if self.debug:
                         print(os.path.join(root, filename))
-                    template_filenames.append(os.path.join(root, filename))
+
+                    if 'AWSTemplateFormatVersion' in open(os.path.join(root,filename)).read():
+                        template_filenames.append(os.path.join(root, filename))
 
         return template_filenames
 

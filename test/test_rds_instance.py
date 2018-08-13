@@ -34,7 +34,8 @@ class TestRdsInstance(unittest.TestCase):
     """
     def test_rds_instance_with_public_access(self):
 
-      expected_result = {
+      expected_result = [
+            {
                 'failure_count': '1',
                 'filename': '/json/rds_instance/rds_instance_publicly_accessible.json',
                 'file_results': [
@@ -42,12 +43,11 @@ class TestRdsInstance(unittest.TestCase):
                         'id': 'F22',
                         'type': 'VIOLATION::FAILING_VIOLATION',
                         'message': 'RDS instance should not be publicly accessible',
-                        'logical_resource_ids': [
-                            'PublicDB'
-                        ]
+                        'logical_resource_ids': "['PublicDB']"
                     }
                 ]
             }
+        ]
 
 
       if sys.version_info[0] < 3:
@@ -99,7 +99,8 @@ class TestRdsInstance(unittest.TestCase):
 
     def test_rds_instance_with_default_credentials_and_no_echo_is_true(self):
 
-      expected_result = {
+      expected_result = [
+            {
                 'failure_count': '1',
                 'filename': '/json/rds_instance/rds_instance_no_echo_with_default_password.json',
                 'file_results': [
@@ -107,12 +108,11 @@ class TestRdsInstance(unittest.TestCase):
                         'id': 'F23',
                         'type': 'VIOLATION::FAILING_VIOLATION',
                         'message': 'RDS instance master user password must be Ref to NoEcho Parameter. Default credentials are not recommended',
-                        'logical_resource_ids': [
-                            'BadDb2'
-                        ]
+                        'logical_resource_ids': "['BadDb2']"
                     }
                 ]
             }
+        ]
 
       if sys.version_info[0] < 3:
 
@@ -161,7 +161,8 @@ class TestRdsInstance(unittest.TestCase):
 
     def test_rds_instance_with_non_encrypted_credentials(self):
 
-      expected_result =  {
+      expected_result = [
+            {
                 'failure_count': '4',
                 'filename': '/json/rds_instance/rds_instances_with_public_credentials.json',
                 'file_results': [
@@ -169,22 +170,17 @@ class TestRdsInstance(unittest.TestCase):
                         'id': 'F23',
                         'type': 'VIOLATION::FAILING_VIOLATION',
                         'message': 'RDS instance master user password must be Ref to NoEcho Parameter. Default credentials are not recommended',
-                        'logical_resource_ids': [
-                            'BadDb1',
-                            'BadDb2'
-                        ]
+                        'logical_resource_ids': "['BadDb1', 'BadDb2']"
                     },
                     {
                         'id': 'F24',
                         'type': 'VIOLATION::FAILING_VIOLATION',
                         'message': 'RDS instance master username must be Ref to NoEcho Parameter. Default credentials are not recommended',
-                        'logical_resource_ids': [
-                            'BadDb1',
-                            'BadDb2'
-                        ]
+                        'logical_resource_ids': "['BadDb1', 'BadDb2']"
                     }
                 ]
             }
+        ]
 
 
       if sys.version_info[0] < 3:

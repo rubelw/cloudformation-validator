@@ -37,19 +37,20 @@ class TestCloudDistribution(unittest.TestCase):
     """
     def test_cloudformation(self):
 
-        expected_result = {
-            'failure_count': '0',
-            'filename': '/json/cloudfront_distribution/cloudfront_distribution_without_logging.json',
-            'file_results': [{
-                'id': 'W10',
-                'type': 'VIOLATION::WARNING',
-                'message': 'CloudFront Distribution should enable access logging',
-                'logical_resource_ids': [
-                    'rDistribution2'
+        expected_result = [
+            {
+                'failure_count': '0',
+                'filename': '/json/cloudfront_distribution/cloudfront_distribution_without_logging.json',
+                'file_results': [
+                    {
+                        'id': 'W10',
+                        'type': 'VIOLATION::WARNING',
+                        'message': 'CloudFront Distribution should enable access logging',
+                        'logical_resource_ids': "['rDistribution2']"
+                    }
                 ]
-            }]
-        }
-
+            }
+        ]
         if sys.version_info[0] < 3:
 
               new_file_results = []
@@ -73,7 +74,7 @@ class TestCloudDistribution(unittest.TestCase):
 
         expected_result =pretty(expected_result)
         template_name = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))+'/cloudformation_validator/test_templates/json/cloudfront_distribution/cloudfront_distribution_without_logging.json'
-        debug = False
+        debug = True
 
         config_dict = {}
         config_dict['template_file'] = template_name
@@ -89,6 +90,9 @@ class TestCloudDistribution(unittest.TestCase):
         validator = class_to_test(config_dict)
 
         real_results =  validator.validate()
+
+        print('expected results: '+str(expected_result))
+        print('real result: '+str(real_results))
 
         self.maxDiff = None
         self.assertEqual(expected_result, real_results)

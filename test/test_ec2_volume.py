@@ -34,12 +34,14 @@ class TestEc2Volume(unittest.TestCase):
     """
     def test_ec2_volumen_with_encryption(self):
 
-      expected_result ={
+      expected_result =[
+            {
                 'failure_count': '0',
                 'filename': '/json/ec2_volume/ebs_volume_with_encryption.json',
                 'file_results': [
                 ]
             }
+        ]
 
 
       if sys.version_info[0] < 3:
@@ -95,40 +97,38 @@ class TestEc2Volume(unittest.TestCase):
 
     def test_ec2_volumen_without_encryption(self):
 
-      expected_result = {
-            'failure_count': '2',
-            'filename': '/json/ec2_volume/two_ebs_volumes_with_no_encryption.json',
-            'file_results': [
-                {
-                    'id': 'F1',
-                    'type': 'VIOLATION::FAILING_VIOLATION',
-                    'message': 'EBS volume should have server-side encryption enabled',
-                    'logical_resource_ids': [
-                        'NewVolume1',
-                        'NewVolume2'
-                    ]
-                }
-            ]
-        }
+      expected_result = [
+            {
+                'failure_count': '2',
+                'filename': '/json/ec2_volume/two_ebs_volumes_with_no_encryption.json',
+                'file_results': [
+                    {
+                        'id': 'F1',
+                        'type': 'VIOLATION::FAILING_VIOLATION',
+                        'message': 'EBS volume should have server-side encryption enabled',
+                        'logical_resource_ids': "['NewVolume1', 'NewVolume2']"
+                    }
+                ]
+            }
+        ]
 
 
       if sys.version_info[0] < 3:
 
-          expected_result = {
-              'failure_count': '2',
-              'filename': '/json/ec2_volume/two_ebs_volumes_with_no_encryption.json',
-              'file_results': [
-                  {
-                      'id': 'F1',
-                      'type': 'VIOLATION::FAILING_VIOLATION',
-                      'message': 'EBS volume should have server-side encryption enabled',
-                      'logical_resource_ids': [
-                          'NewVolume1',
-                          'NewVolume2'
-                      ]
-                  }
-              ]
-          }
+          expected_result = [
+            {
+                'failure_count': '2',
+                'filename': '/json/ec2_volume/two_ebs_volumes_with_no_encryption.json',
+                'file_results': [
+                    {
+                        'id': 'F1',
+                        'type': 'VIOLATION::FAILING_VIOLATION',
+                        'message': 'EBS volume should have server-side encryption enabled',
+                        'logical_resource_ids': "['NewVolume1', 'NewVolume2']"
+                    }
+                ]
+            }
+        ]
           new_file_results = []
 
           if 'file_results' in expected_result:

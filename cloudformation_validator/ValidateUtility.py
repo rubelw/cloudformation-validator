@@ -146,10 +146,11 @@ class ValidateUtility:
 
         aggregate_results = self.audit_aggregate_across_files_and_render_results(input_path=input_path)
 
-        if self.debug:
-            print('aggregate_results '+str(aggregate_results)+lineno())
+        #if self.debug:
+        print('aggregate_results '+str(aggregate_results)+lineno())
 
         rendered_results =  self.render_results(aggregate_results=aggregate_results, output_format='json')
+
 
         if self.debug:
             print('rendered_results: '+str(rendered_results)+lineno())
@@ -243,6 +244,7 @@ class ValidateUtility:
                             print("Invalid json file - "+str(template)+' - skipping file')
                             print("################################\n")
 
+                        data = {}
                     file_results = self.audit(cloudformation_string=data,parameter_values_string= parameter_values_string)
 
                     if self.debug:

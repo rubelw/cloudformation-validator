@@ -34,23 +34,20 @@ class TestSnsPolicy(unittest.TestCase):
     """
     def test_sns_policy(self):
 
-        expected_result =  {
-            'failure_count': '4',
-            'filename': '/json/sns_topic_policy/sns_topic_with_wildcard_principal.json',
-            'file_results': [
-                {
-                    'id': 'F18',
-                    'type': 'VIOLATION::FAILING_VIOLATION',
-                    'message': 'SNS topic policy should not allow * principal',
-                    'logical_resource_ids': [
-                        'mysnspolicy0',
-                        'mysnspolicy1',
-                        'mysnspolicy2',
-                        'mysnspolicy3'
-                    ]
-                }
-            ]
-        }
+        expected_result =  [
+            {
+                'failure_count': '4',
+                'filename': '/json/sns_topic_policy/sns_topic_with_wildcard_principal.json',
+                'file_results': [
+                    {
+                        'id': 'F18',
+                        'type': 'VIOLATION::FAILING_VIOLATION',
+                        'message': 'SNS topic policy should not allow * principal',
+                        'logical_resource_ids': "['mysnspolicy0', 'mysnspolicy1', 'mysnspolicy2', 'mysnspolicy3']"
+                    }
+                ]
+            }
+        ]
 
         if sys.version_info[0] < 3:
 

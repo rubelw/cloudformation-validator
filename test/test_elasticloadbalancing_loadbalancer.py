@@ -34,7 +34,8 @@ class TestLoadBalancer(unittest.TestCase):
     """
     def test_two_loadbalancers_without_access_logging_enabled(self):
 
-      expected_result = {
+      expected_result = [
+            {
                 'failure_count': '0',
                 'filename': '/json/elasticloadbalancing_loadbalancer/two_load_balancers_with_no_logging.json',
                 'file_results': [
@@ -42,12 +43,11 @@ class TestLoadBalancer(unittest.TestCase):
                         'id': 'W26',
                         'type': 'VIOLATION::WARNING',
                         'message': 'Elastic Load Balancer should have access logging enabled',
-                        'logical_resource_ids': [
-                            'elb2'
-                        ]
+                        'logical_resource_ids': "['elb2']"
                     }
                 ]
             }
+        ]
 
       if sys.version_info[0] < 3:
 

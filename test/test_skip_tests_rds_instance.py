@@ -35,13 +35,14 @@ class TestRdsInstance(unittest.TestCase):
 
     def test_rds_instance_with_non_encrypted_credentials_exclude_rules(self):
 
-      expected_result =  {
-            'failure_count': '0',
-            'filename': '/json/rds_instance/rds_instances_with_public_credentials.json',
-            'file_results': [
-            ]
-        }
-
+      expected_result =  [
+            {
+                'failure_count': '0',
+                'filename': '/json/rds_instance/rds_instances_with_public_credentials.json',
+                'file_results': [
+                ]
+            }
+        ]
 
       if sys.version_info[0] < 3:
 
@@ -96,7 +97,8 @@ class TestRdsInstance(unittest.TestCase):
 
     def test_rds_instance_with_non_encrypted_credentials_exclude_one_rule(self):
 
-      expected_result =  {
+      expected_result =  [
+            {
                 'failure_count': '2',
                 'filename': '/json/rds_instance/rds_instances_with_public_credentials.json',
                 'file_results': [
@@ -104,13 +106,11 @@ class TestRdsInstance(unittest.TestCase):
                         'id': 'F23',
                         'type': 'VIOLATION::FAILING_VIOLATION',
                         'message': 'RDS instance master user password must be Ref to NoEcho Parameter. Default credentials are not recommended',
-                        'logical_resource_ids': [
-                            'BadDb1',
-                            'BadDb2'
-                        ]
+                        'logical_resource_ids': "['BadDb1', 'BadDb2']"
                     }
                 ]
             }
+        ]
 
 
       if sys.version_info[0] < 3:

@@ -38,20 +38,20 @@ class TestS3(unittest.TestCase):
 
     def test_s3_no_tags(self):
 
-      expected_result =  {
-            'failure_count': '1',
-            'filename': '/json/s3_bucket/no_tags.json',
-            'file_results': [
-                {
-                    'id': 'F87',
-                    'type': 'VIOLATION::FAILING_VIOLATION',
-                    'message': 'S3 bucket does not have the required tags of Name, ResourceOwner, DeployedBy, Project',
-                    'logical_resource_ids': [
-                        'S3Bucket'
-                    ]
-                }
-            ]
-        }
+      expected_result =  [
+            {
+                'failure_count': '1',
+                'filename': '/json/s3_bucket/no_tags.json',
+                'file_results': [
+                    {
+                        'id': 'F87',
+                        'type': 'VIOLATION::FAILING_VIOLATION',
+                        'message': 'S3 bucket does not have the required tags of Name, ResourceOwner, DeployedBy, Project',
+                        'logical_resource_ids': "['S3Bucket']"
+                    }
+                ]
+            }
+        ]
 
       if sys.version_info[0] < 3:
 
@@ -104,13 +104,14 @@ class TestS3(unittest.TestCase):
 
     def test_s3_has_required_tags(self):
 
-      expected_result =  {
-        'failure_count': '0',
-        'filename': '/json/s3_bucket/has_required_tags.json',
-        'file_results': [
-
-            ]
-        }
+      expected_result =  [
+            {
+                'failure_count': '0',
+                'filename': '/json/s3_bucket/has_required_tags.json',
+                'file_results': [
+                ]
+            }
+        ]
 
 
       if sys.version_info[0] < 3:
@@ -166,20 +167,20 @@ class TestS3(unittest.TestCase):
 
     def test_s3_missing_tags(self):
 
-      expected_result =  {
-            'failure_count': '1',
-            'filename': '/json/s3_bucket/missing_one_required_tags.json',
-            'file_results': [
-                {
-                    'id': 'F87',
-                    'type': 'VIOLATION::FAILING_VIOLATION',
-                    'message': 'S3 bucket does not have the required tags of Name, ResourceOwner, DeployedBy, Project',
-                    'logical_resource_ids': [
-                        'S3Bucket'
-                    ]
-                }
-            ]
-        }
+      expected_result = [
+            {
+                'failure_count': '1',
+                'filename': '/json/s3_bucket/missing_one_required_tags.json',
+                'file_results': [
+                    {
+                        'id': 'F87',
+                        'type': 'VIOLATION::FAILING_VIOLATION',
+                        'message': 'S3 bucket does not have the required tags of Name, ResourceOwner, DeployedBy, Project',
+                        'logical_resource_ids': "['S3Bucket']"
+                    }
+                ]
+            }
+        ]
 
       if sys.version_info[0] < 3:
 

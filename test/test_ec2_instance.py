@@ -38,20 +38,20 @@ class TestEc2Instance(unittest.TestCase):
 
     def test_ec2_instance_authentication(self):
 
-      expected_result =  {
-            'failure_count': '0',
-            'filename': '/json/ec2_instance/cfn_authentication.json',
-            'file_results': [
-                {
-                    'id': 'W1',
-                    'type': 'VIOLATION::WARNING',
-                    'message': 'Specifying credentials in the template itself is probably not the safest thing',
-                    'logical_resource_ids': [
-                        'EC2I4LBA1'
-                    ]
-                }
-            ]
-        }
+      expected_result =  [
+            {
+                'failure_count': '0',
+                'filename': '/json/ec2_instance/cfn_authentication.json',
+                'file_results': [
+                    {
+                        'id': 'W1',
+                        'type': 'VIOLATION::WARNING',
+                        'message': 'Specifying credentials in the template itself is probably not the safest thing',
+                        'logical_resource_ids': "['EC2I4LBA1']"
+                    }
+                ]
+            }
+        ]
 
       if sys.version_info[0] < 3:
 
@@ -103,28 +103,26 @@ class TestEc2Instance(unittest.TestCase):
 
     def test_ec2_instance_insensitive_authentication(self):
 
-      expected_result = {
-            'failure_count': '1',
-            'filename': '/json/ec2_instance/cfn_insensitive_authentication.json',
-            'file_results': [
-                {
-                    'id': 'F3',
-                    'type': 'VIOLATION::FAILING_VIOLATION',
-                    'message': 'IAM role should not allow * action on its permissions policy',
-                    'logical_resource_ids': [
-                        'RootRole'
-                    ]
-                },
-                {
-                    'id': 'W11',
-                    'type': 'VIOLATION::WARNING',
-                    'message': 'IAM role should not allow * resource on its permissions policy',
-                    'logical_resource_ids': [
-                        'RootRole'
-                    ]
-                }
-            ]
-        }
+      expected_result = [
+            {
+                'failure_count': '1',
+                'filename': '/json/ec2_instance/cfn_insensitive_authentication.json',
+                'file_results': [
+                    {
+                        'id': 'F3',
+                        'type': 'VIOLATION::FAILING_VIOLATION',
+                        'message': 'IAM role should not allow * action on its permissions policy',
+                        'logical_resource_ids': "['RootRole']"
+                    },
+                    {
+                        'id': 'W11',
+                        'type': 'VIOLATION::WARNING',
+                        'message': 'IAM role should not allow * resource on its permissions policy',
+                        'logical_resource_ids': "['RootRole']"
+                    }
+                ]
+            }
+        ]
 
       if sys.version_info[0] < 3:
 

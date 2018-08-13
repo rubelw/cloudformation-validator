@@ -34,7 +34,8 @@ class TestIamUser(unittest.TestCase):
     """
     def test_iam_user_has_no_group_membership(self):
 
-      expected_result = {
+      expected_result = [
+            {
                 'failure_count': '1',
                 'filename': '/json/iam_user/iam_user_with_no_group.json',
                 'file_results': [
@@ -42,12 +43,11 @@ class TestIamUser(unittest.TestCase):
                         'id': 'F2000',
                         'type': 'VIOLATION::FAILING_VIOLATION',
                         'message': 'User is not assigned to a group',
-                        'logical_resource_ids': [
-                            'myuser2'
-                        ]
+                        'logical_resource_ids': "['myuser2']"
                     }
                 ]
             }
+        ]
 
       if sys.version_info[0] < 3:
 

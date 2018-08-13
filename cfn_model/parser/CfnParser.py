@@ -341,12 +341,8 @@ class CfnParser:
                 if self.debug:
                     print('The failing function was', fname,lineno())
                     print('parser error '+lineno())
-            #    # FIXME
-            #    if self.debug:
-            #        print('would stop but not stopping'+lineno())
-            #    print('ParserError'+str(e)+lineno())
+                # FIXME
                 raise ParserError('Basic CloudFormation syntax error', errors,debug=self.debug)
-            #    #sys.exit(exc)
 
 
     def validate_references(self, cfn_hash):

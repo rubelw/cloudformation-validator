@@ -34,21 +34,20 @@ class TestSqs(unittest.TestCase):
     """
     def test_sqs_policy(self):
 
-          expected_result =  {
-                    'failure_count': '0',
-                    'filename': '/json/sqs_queue_policy/sqs_policy_with_not_action.json',
-                    'file_results': [
-                        {
-                            'id': 'W18',
-                            'type': 'VIOLATION::WARNING',
-                            'message': 'SQS Queue policy should not allow Allow+NotAction',
-                            'logical_resource_ids': [
-                                'QueuePolicyWithNotAction',
-                                'QueuePolicyWithNotAction2'
-                            ]
-                        }
-                    ]
-                }
+          expected_result =  [
+            {
+                'failure_count': '0',
+                'filename': '/json/sqs_queue_policy/sqs_policy_with_not_action.json',
+                'file_results': [
+                    {
+                        'id': 'W18',
+                        'type': 'VIOLATION::WARNING',
+                        'message': 'SQS Queue policy should not allow Allow+NotAction',
+                        'logical_resource_ids': "['QueuePolicyWithNotAction', 'QueuePolicyWithNotAction2']"
+                    }
+                ]
+            }
+        ]
 
           if sys.version_info[0] < 3:
 

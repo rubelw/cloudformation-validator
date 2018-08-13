@@ -34,7 +34,8 @@ class TestS3BucketPolicy(unittest.TestCase):
     """
     def test_s3_bucket_policy_with_wildcards(self):
 
-          expected_result = {
+          expected_result = [
+                {
                     'failure_count': '3',
                     'filename': '/json/s3_bucket_policy/s3_bucket_with_wildcards.json',
                     'file_results': [
@@ -42,21 +43,17 @@ class TestS3BucketPolicy(unittest.TestCase):
                             'id': 'F15',
                             'type': 'VIOLATION::FAILING_VIOLATION',
                             'message': 'S3 Bucket policy should not allow * action',
-                            'logical_resource_ids': [
-                                'S3BucketPolicy',
-                                'S3BucketPolicy2'
-                            ]
+                            'logical_resource_ids': "['S3BucketPolicy', 'S3BucketPolicy2']"
                         },
                         {
                             'id': 'F16',
                             'type': 'VIOLATION::FAILING_VIOLATION',
                             'message': 'S3 Bucket policy should not allow * principal',
-                            'logical_resource_ids': [
-                                'S3BucketPolicy2'
-                            ]
+                            'logical_resource_ids': "['S3BucketPolicy2']"
                         }
                     ]
                 }
+            ]
 
           if sys.version_info[0] < 3:
 

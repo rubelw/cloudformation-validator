@@ -38,20 +38,20 @@ class TestEbsInstance(unittest.TestCase):
 
     def test_ebs_volume_no_tags(self):
 
-      expected_result =  {
-            'failure_count': '1',
-            'filename': '/json/rds_instance/no_tags.json',
-            'file_results': [
-                {
-                    'id': 'F88',
-                    'type': 'VIOLATION::FAILING_VIOLATION',
-                    'message': 'Rds instance does not have the required tags of Name, ResourceOwner, DeployedBy, Project',
-                    'logical_resource_ids': [
-                        'PublicDB'
-                    ]
-                }
-            ]
-        }
+      expected_result =  [
+            {
+                'failure_count': '1',
+                'filename': '/json/rds_instance/no_tags.json',
+                'file_results': [
+                    {
+                        'id': 'F88',
+                        'type': 'VIOLATION::FAILING_VIOLATION',
+                        'message': 'Rds instance does not have the required tags of Name, ResourceOwner, DeployedBy, Project',
+                        'logical_resource_ids': "['PublicDB']"
+                    }
+                ]
+            }
+        ]
 
       if sys.version_info[0] < 3:
 
@@ -105,13 +105,14 @@ class TestEbsInstance(unittest.TestCase):
 
     def test_rds_instance_has_required_tags(self):
 
-      expected_result =  {
-        'failure_count': '0',
-        'filename': '/json/rds_instance/has_required_tags.json',
-        'file_results': [
-
-            ]
-        }
+      expected_result =  [
+            {
+                'failure_count': '0',
+                'filename': '/json/rds_instance/has_required_tags.json',
+                'file_results': [
+                ]
+            }
+        ]
 
 
       if sys.version_info[0] < 3:
@@ -167,20 +168,20 @@ class TestEbsInstance(unittest.TestCase):
 
     def test_rds_instance_missing_one_required_tag(self):
 
-      expected_result =  {
-            'failure_count': '1',
-            'filename': '/json/rds_instance/missing_one_required_tags.json',
-            'file_results': [
-                {
-                    'id': 'F88',
-                    'type': 'VIOLATION::FAILING_VIOLATION',
-                    'message': 'Rds instance does not have the required tags of Name, ResourceOwner, DeployedBy, Project',
-                    'logical_resource_ids': [
-                        'PublicDB'
-                    ]
-                }
-            ]
-        }
+      expected_result = [
+            {
+                'failure_count': '1',
+                'filename': '/json/rds_instance/missing_one_required_tags.json',
+                'file_results': [
+                    {
+                        'id': 'F88',
+                        'type': 'VIOLATION::FAILING_VIOLATION',
+                        'message': 'Rds instance does not have the required tags of Name, ResourceOwner, DeployedBy, Project',
+                        'logical_resource_ids': "['PublicDB']"
+                    }
+                ]
+            }
+        ]
 
       if sys.version_info[0] < 3:
 

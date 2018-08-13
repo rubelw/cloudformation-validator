@@ -38,20 +38,20 @@ class TestEc2Instance(unittest.TestCase):
 
     def test_ec2_instance_no_tags(self):
 
-      expected_result =  {
-            'failure_count': '1',
-            'filename': '/json/ec2_instance/no_tags.json',
-            'file_results': [
-                {
-                    'id': 'F86',
-                    'type': 'VIOLATION::FAILING_VIOLATION',
-                    'message': 'EC2 instance does not have the required tags of Name, ResourceOwner, DeployedBy, Project',
-                    'logical_resource_ids': [
-                        'EC2I4LBA1'
-                    ]
-                }
-            ]
-        }
+      expected_result =  [
+            {
+                'failure_count': '1',
+                'filename': '/json/ec2_instance/no_tags.json',
+                'file_results': [
+                    {
+                        'id': 'F86',
+                        'type': 'VIOLATION::FAILING_VIOLATION',
+                        'message': 'EC2 instance does not have the required tags of Name, ResourceOwner, DeployedBy, Project',
+                        'logical_resource_ids': "['EC2I4LBA1']"
+                    }
+                ]
+            }
+        ]
 
       if sys.version_info[0] < 3:
 
@@ -105,13 +105,14 @@ class TestEc2Instance(unittest.TestCase):
 
     def test_ec2_instance_has_required_tags(self):
 
-      expected_result =  {
-        'failure_count': '0',
-        'filename': '/json/ec2_instance/has_required_tags.json',
-        'file_results': [
-
-            ]
-        }
+      expected_result =  [
+            {
+                'failure_count': '0',
+                'filename': '/json/ec2_instance/has_required_tags.json',
+                'file_results': [
+                ]
+            }
+        ]
 
 
       if sys.version_info[0] < 3:
@@ -166,20 +167,20 @@ class TestEc2Instance(unittest.TestCase):
 
     def test_ec2_instance_missing_one_tags(self):
 
-      expected_result =  {
-            'failure_count': '1',
-            'filename': '/json/ec2_instance/missing_one_required_tags.json',
-            'file_results': [
-                {
-                    'id': 'F86',
-                    'type': 'VIOLATION::FAILING_VIOLATION',
-                    'message': 'EC2 instance does not have the required tags of Name, ResourceOwner, DeployedBy, Project',
-                    'logical_resource_ids': [
-                        'EC2I4LBA2'
-                    ]
-                }
-            ]
-        }
+      expected_result =  [
+            {
+                'failure_count': '1',
+                'filename': '/json/ec2_instance/missing_one_required_tags.json',
+                'file_results': [
+                    {
+                        'id': 'F86',
+                        'type': 'VIOLATION::FAILING_VIOLATION',
+                        'message': 'EC2 instance does not have the required tags of Name, ResourceOwner, DeployedBy, Project',
+                        'logical_resource_ids': "['EC2I4LBA2']"
+                    }
+                ]
+            }
+        ]
 
       if sys.version_info[0] < 3:
 
