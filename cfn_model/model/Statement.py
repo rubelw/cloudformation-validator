@@ -65,8 +65,13 @@ class Statement:
             elif type(action)==type(list()):
                 for item in action:
 
-                    if '*' in item:
-                        actions.append(item)
+
+                    if hasattr(item,'__iter__'):
+                        if type(item) == str():
+                            if self.debug:
+                                print('is iterable'+lineno())
+                            if '*' in item:
+                                actions.append(item)
                     else:
                         if self.debug:
                             print("No match!!"+lineno())
@@ -114,10 +119,8 @@ class Statement:
                     print('is python2 '+lineno())
 
                 if type(resource) == type(unicode()):
-                    if self.debug:
-                        if hasattr(item, '__iter__'):
-                            if '*' in resource:
-                                resources.append(resource)
+                    if '*' in resource:
+                        resources.append(resource)
 
 
             if type(resource)== type(dict()):
@@ -162,11 +165,16 @@ class Statement:
                 for item in resource:
                     if self.debug:
                         print('item: '+str(item)+lineno())
-                    if hasattr(item,'__iter__'):
+
+                    try:
+                        some_object_iterator = iter(item)
                         if type(item) == str():
+                            if self.debug:
+                                print('is iterable' + lineno())
                             if '*' in item:
                                 resources.append(item)
-                    else:
+
+                    except TypeError as te:
                         if self.debug:
                             print("No match!!"+lineno())
 

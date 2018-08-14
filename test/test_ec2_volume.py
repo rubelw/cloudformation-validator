@@ -43,28 +43,26 @@ class TestEc2Volume(unittest.TestCase):
             }
         ]
 
-
       if sys.version_info[0] < 3:
-
           new_file_results = []
 
-          if 'file_results' in expected_result:
+          for info in expected_result[0]['file_results']:
+              print('info: ' + str(info))
+              print('type: ' + str(type(info)))
+              order_of_keys = ["id", "type", "message", "logical_resource_ids"]
 
-              for info in expected_result['file_results']:
-                  print('info: ' + str(info))
-                  print('type: ' + str(type(info)))
-                  order_of_keys = ["id", "type", "message", "logical_resource_ids"]
-                  list_of_tuples = [(key, info[key]) for key in order_of_keys]
-                  new_results = OrderedDict(list_of_tuples)
-                  new_file_results.append(new_results)
+              new_results = OrderedDict()
+              for key in order_of_keys:
+                  new_results[key] = info[key]
+
+              new_file_results.append(new_results)
               print('new file results: ' + str(new_file_results))
-              expected_result['file_results'] = new_file_results
+
+              expected_result[0]['file_results'] = new_file_results
 
           order_of_keys = ["failure_count", "filename", "file_results"]
-          list_of_tuples = [(key, expected_result[key]) for key in order_of_keys]
-          expected_result = OrderedDict(list_of_tuples)
-
-
+          list_of_tuples = [(key, expected_result[0][key]) for key in order_of_keys]
+          expected_result = [OrderedDict(list_of_tuples)]
 
       expected_result = pretty(expected_result)
 
@@ -116,47 +114,39 @@ class TestEc2Volume(unittest.TestCase):
       if sys.version_info[0] < 3:
 
           expected_result = [
-            {
-                'failure_count': '2',
-                'filename': '/json/ec2_volume/two_ebs_volumes_with_no_encryption.json',
-                'file_results': [
-                    {
-                        'id': 'F1',
-                        'type': 'VIOLATION::FAILING_VIOLATION',
-                        'message': 'EBS volume should have server-side encryption enabled',
-                        'logical_resource_ids': "['NewVolume1', 'NewVolume2']"
-                    }
-                ]
-            }
-        ]
+              {
+                  'failure_count': '2',
+                  'filename': '/json/ec2_volume/two_ebs_volumes_with_no_encryption.json',
+                  'file_results': [
+                      {
+                          'id': 'F1',
+                          'type': 'VIOLATION::FAILING_VIOLATION',
+                          'message': 'EBS volume should have server-side encryption enabled',
+                          'logical_resource_ids': "['NewVolume2', 'NewVolume1']"
+                      }
+                  ]
+              }
+          ]
+
           new_file_results = []
 
-          if 'file_results' in expected_result:
-              for info in expected_result['file_results']:
-                  print('info: ' + str(info))
-                  print('type: ' + str(type(info)))
-                  order_of_keys = ["id", "type", "message", "logical_resource_ids"]
-                  list_of_tuples = [(key, info[key]) for key in order_of_keys]
-                  new_results = OrderedDict(list_of_tuples)
+          for info in expected_result[0]['file_results']:
+              print('info: ' + str(info))
+              print('type: ' + str(type(info)))
+              order_of_keys = ["id", "type", "message", "logical_resource_ids"]
 
-                  for key, value in new_results.items():
-                      print('key: '+str(key)+' value: '+str(value))
+              new_results = OrderedDict()
+              for key in order_of_keys:
+                  new_results[key] = info[key]
 
-                      if key == 'logical_resource_ids' and type(value) == list():
-                          new_results[key]=value.sort()
-
-
-                  new_file_results.append(new_results)
+              new_file_results.append(new_results)
               print('new file results: ' + str(new_file_results))
 
-
-              expected_result['file_results'] = new_file_results
+              expected_result[0]['file_results'] = new_file_results
 
           order_of_keys = ["failure_count", "filename", "file_results"]
-          list_of_tuples = [(key, expected_result[key]) for key in order_of_keys]
-          expected_result = OrderedDict(list_of_tuples)
-
-
+          list_of_tuples = [(key, expected_result[0][key]) for key in order_of_keys]
+          expected_result = [OrderedDict(list_of_tuples)]
 
       expected_result = pretty(expected_result)
 

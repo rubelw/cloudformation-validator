@@ -56,25 +56,25 @@ class TestS3Bucket(unittest.TestCase):
         ]
 
       if sys.version_info[0] < 3:
-
           new_file_results = []
 
-          if 'file_results' in expected_result:
-              for info in expected_result['file_results']:
-                  print('info: ' + str(info))
-                  print('type: ' + str(type(info)))
-                  order_of_keys = ["id", "type", "message", "logical_resource_ids"]
-                  list_of_tuples = [(key, info[key]) for key in order_of_keys]
-                  new_results = OrderedDict(list_of_tuples)
-                  new_file_results.append(new_results)
+          for info in expected_result[0]['file_results']:
+              print('info: ' + str(info))
+              print('type: ' + str(type(info)))
+              order_of_keys = ["id", "type", "message", "logical_resource_ids"]
+
+              new_results = OrderedDict()
+              for key in order_of_keys:
+                  new_results[key] = info[key]
+
+              new_file_results.append(new_results)
               print('new file results: ' + str(new_file_results))
-              expected_result['file_results'] = new_file_results
+
+              expected_result[0]['file_results'] = new_file_results
 
           order_of_keys = ["failure_count", "filename", "file_results"]
-          list_of_tuples = [(key, expected_result[key]) for key in order_of_keys]
-          expected_result = OrderedDict(list_of_tuples)
-
-
+          list_of_tuples = [(key, expected_result[0][key]) for key in order_of_keys]
+          expected_result = [OrderedDict(list_of_tuples)]
 
       expected_result = pretty(expected_result)
 
