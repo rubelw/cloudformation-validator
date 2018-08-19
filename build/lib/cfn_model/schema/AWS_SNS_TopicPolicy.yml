@@ -1,0 +1,21 @@
+---
+type: map
+mapping:
+  Type:
+    type: str
+    required: yes
+    pattern: AWS::SNS::TopicPolicy
+  Properties:
+    type: map
+    required: yes
+    mapping:
+      PolicyDocument:
+        type:   any
+        required: yes
+      Topics:
+        type:   any
+        required: yes
+      =:
+        type: any
+  =:
+    type: any

@@ -1,0 +1,21 @@
+---
+type: map
+mapping:
+  Type:
+    type: str
+    required: yes
+    pattern: AWS::S3::BucketPolicy
+  Properties:
+    type: map
+    required: yes
+    mapping:
+      PolicyDocument:
+        type:   any
+        required: yes
+      Bucket:
+        type: any
+        required: yes
+      =:
+        type: any
+  =:
+    type: any

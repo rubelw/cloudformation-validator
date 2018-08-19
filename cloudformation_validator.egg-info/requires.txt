@@ -1,0 +1,14 @@
+boto3>=1.4.3
+requests>=2.18
+Click>=6.7
+PyYAML>=3.12
+pymongo>=3.4.0
+tabulate>=0.8
+configparser>=3.5.0
+jinja2>=2.10
+dill>=0.2.8
+pykwalify>=1.6.1
+schema>=0.6.8
+future>=0.16.0
+six>=1.11.0
+pip
