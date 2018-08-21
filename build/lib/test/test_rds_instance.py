@@ -212,13 +212,13 @@ class TestRdsInstance(unittest.TestCase):
                           'id': 'F23',
                           'type': 'VIOLATION::FAILING_VIOLATION',
                           'message': 'RDS instance master user password must be Ref to NoEcho Parameter. Default credentials are not recommended',
-                          'logical_resource_ids': "['BadDb2', 'BadDb1']"
+                          'logical_resource_ids': "['BadDb1', 'BadDb2']"
                       },
                       {
                           'id': 'F24',
                           'type': 'VIOLATION::FAILING_VIOLATION',
                           'message': 'RDS instance master username must be Ref to NoEcho Parameter. Default credentials are not recommended',
-                          'logical_resource_ids': "['BadDb2', 'BadDb1']"
+                          'logical_resource_ids': "['BadDb1', 'BadDb2']"
                       }
                   ]
               }

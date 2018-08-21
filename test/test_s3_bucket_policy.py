@@ -5,28 +5,44 @@ from collections import OrderedDict
 from cloudformation_validator.ValidateUtility import ValidateUtility as class_to_test
 
 def pretty(value, htchar='\t', lfchar='\n', indent=0):
-    nlch = lfchar + htchar * (indent + 1)
-    if type(value) == type(dict())  or type(value) == type(OrderedDict()):
+    """
+    Prints pretty json
+    :param value:
+    :param htchar:
+    :param lfchar:
+    :param indent:
+    :return: pretty json
+    """
 
+
+    nlch = lfchar + htchar * (indent + 1)
+    if type(value) == type(dict()) or type(value) == type(OrderedDict()):
         items = [
             nlch + repr(key) + ': ' + pretty(value[key], htchar, lfchar, indent + 1)
             for key in value
         ]
         return '{%s}' % (','.join(items) + lfchar + htchar * indent)
+
     elif type(value) == type(list()):
         items = [
             nlch + pretty(item, htchar, lfchar, indent + 1)
             for item in value
         ]
+
+        if items:
+            items = sorted(items)
+        [str(item) for item in items]
         return '[%s]' % (','.join(items) + lfchar + htchar * indent)
+
     elif type(value) is tuple:
         items = [
             nlch + pretty(item, htchar, lfchar, indent + 1)
             for item in value
         ]
         return '(%s)' % (','.join(items) + lfchar + htchar * indent)
+
     else:
-        return repr(value)
+        return repr(str(value))
 
 class TestS3BucketPolicy(unittest.TestCase):
     """
@@ -56,6 +72,28 @@ class TestS3BucketPolicy(unittest.TestCase):
             ]
 
           if sys.version_info[0] < 3:
+
+              expected_result = [
+                  {
+                      'failure_count': '3',
+                      'filename': '/json/s3_bucket_policy/s3_bucket_with_wildcards.json',
+                      'file_results': [
+                          {
+                              'id': 'F15',
+                              'type': 'VIOLATION::FAILING_VIOLATION',
+                              'message': 'S3 Bucket policy should not allow * action',
+                              'logical_resource_ids': "['S3BucketPolicy', 'S3BucketPolicy2']"
+                          },
+                          {
+                              'id': 'F16',
+                              'type': 'VIOLATION::FAILING_VIOLATION',
+                              'message': 'S3 Bucket policy should not allow * principal',
+                              'logical_resource_ids': "['S3BucketPolicy2']"
+                          }
+                      ]
+                  }
+              ]
+
               new_file_results = []
 
               for info in expected_result[0]['file_results']:

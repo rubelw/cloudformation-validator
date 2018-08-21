@@ -1,7 +1,9 @@
 from __future__ import absolute_import, division, print_function
+from future.types.newstr import newstr
 import inspect
 import re
 import sys
+import json
 import os
 from builtins import (str)
 from collections import OrderedDict
@@ -40,8 +42,9 @@ class JsonResults:
         if self.debug:
             print('### type: '+str(type(value))+lineno()+lineno())
         if type(value) == type(OrderedDict()):
-            print('found it'+lineno())
-        print('value: '+str(value)+lineno())
+            if self.debug:
+                print('found it'+lineno())
+                print('value: '+str(value)+lineno())
 
 
         nlch = lfchar + htchar * (indent + 1)
@@ -63,6 +66,7 @@ class JsonResults:
                 print('is list'+lineno())
                 print("##############################\n")
 
+
             items = [
                 nlch + self.pretty(item, htchar, lfchar, indent + 1)
                 for item in value
@@ -72,8 +76,8 @@ class JsonResults:
                 print('items type: '+str(type(items))+lineno())
             if items:
                 items = sorted(items)
-            [str(item) for item in items]
-            return '[%s]' % (','.join(items) + lfchar + htchar * indent)
+            [str(item) for item in sorted(items)]
+            return '[%s]' % (','.join(sorted(items)) + lfchar + htchar * indent)
 
         elif type(value) is tuple:
             if (self.debug):
@@ -83,17 +87,37 @@ class JsonResults:
 
             items = [
                 nlch + self.pretty(item, htchar, lfchar, indent + 1)
-                for item in value
+                for item in sorted(value)
             ]
 
             if self.debug:
                 print('returning: '+str('(%s)' % (','.join(items) + lfchar + htchar * indent))+lineno())
             return '(%s)' % (','.join(items) + lfchar + htchar * indent)
 
+        elif type(value) == type(newstr()):
+            if self.debug:
+                print('is a new string'+lineno())
+                print('value: '+str(value)+lineno())
+
+            if value.startswith('['):
+                if self.debug:
+                    print('starts with bracket'+lineno())
+                my_json = eval((value.replace('\'','"')))
+                my_new_list = []
+                for my_it in sorted(my_json):
+                    my_new_list.append(str(my_it))
+                return '"'+str(my_new_list)+'"'
+                #value = self.pretty(my_json, htchar, lfchar, indent + 1)
+
+
+
+            return repr(str(value))
+
         else:
             if (self.debug):
                 print("##############################\n")
                 print('is other: '+str(type(value))+lineno())
+                print('class name: '+str(value.__class__.__name__))
                 print('returning: '+str(value))
                 print("##############################\n")
 
@@ -241,13 +265,14 @@ class JsonResults:
 
 
             if hash:
-                print("\n"+'## there is a hash: '+str(hash)+lineno())
+                if self.debug:
+                    print("\n"+'## there is a hash: '+str(hash)+lineno())
 
                 if type(hash) == type(list()):
                     if self.debug:
                         print('ist a list: '+str(lineno()))
                     # Iterate over each violation
-                    for item in hash:
+                    for item in sorted(hash):
                         if self.debug:
                             print("\n#################################")
                             print('item: '+str(item)+lineno())
@@ -308,5 +333,4 @@ class JsonResults:
             if self.debug:
                 print('returning: '+str(hash)+lineno())
 
-        print('array of results: '+str(array_of_results)+lineno())
         return self.pretty(array_of_results)

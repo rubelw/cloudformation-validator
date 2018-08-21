@@ -76,7 +76,7 @@ class TestSnsPolicy(unittest.TestCase):
                                 'id': 'F18',
                                 'type': 'VIOLATION::FAILING_VIOLATION',
                                 'message': 'SNS topic policy should not allow * principal',
-                                'logical_resource_ids': "['mysnspolicy2', 'mysnspolicy3', 'mysnspolicy0', 'mysnspolicy1']"
+                                'logical_resource_ids': "['mysnspolicy0', 'mysnspolicy1', 'mysnspolicy2', 'mysnspolicy3']"
                             }
                         ]
                     }

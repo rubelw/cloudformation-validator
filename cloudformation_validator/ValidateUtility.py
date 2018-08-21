@@ -146,8 +146,8 @@ class ValidateUtility:
 
         aggregate_results = self.audit_aggregate_across_files_and_render_results(input_path=input_path)
 
-        #if self.debug:
-        print('aggregate_results '+str(aggregate_results)+lineno())
+        if self.debug:
+            print('aggregate_results '+str(aggregate_results)+lineno())
 
         rendered_results =  self.render_results(aggregate_results=aggregate_results, output_format='json')
 
@@ -223,6 +223,9 @@ class ValidateUtility:
             json_matchObj = re.match(r'.*.json$', template, re.M | re.I)
             yaml_matchObj = re.match(r'.*.ya*ml$',template, re.M | re.I)
 
+
+
+
             if json_matchObj:
 
                 with open(template, 'r') as myfile:
@@ -291,6 +294,59 @@ class ValidateUtility:
                     results['filename'] = template
                     results['file_results'] = file_results
                     aggregate_results.append(results)
+
+            else:
+                try:
+                    json_stuff = open(template)
+                    my_template = json.load(json_stuff)
+
+                    if my_template and 'Resources' in my_template:
+                        if self.debug:
+                            print('file is json '+lineno())
+
+                        with open(template, 'r') as myfile:
+                            if self.debug:
+                                print("\n" + 'Auditing file: ' + str(template) + lineno())
+
+                            json_acceptable_string = myfile.read().strip("'<>() ")
+                            json_acceptable_string = json_acceptable_string.replace("'", "\'")
+
+                            if self.debug:
+                                print(json_acceptable_string)
+
+                            try:
+                                data = json.loads(json_acceptable_string)
+                            except Exception as e:
+
+                                if not self.suppress_errors:
+                                    print("\n##############################")
+                                    print("Invalid json file - " + str(template) + ' - skipping file')
+                                    print("################################\n")
+
+                                data = {}
+                            file_results = self.audit(cloudformation_string=data,
+                                                      parameter_values_string=parameter_values_string)
+
+                            if self.debug:
+                                print('file results: ' + str(file_results) + lineno())
+
+                            results = {}
+
+                            if 'failure_count' in file_results:
+                                results['failure_count'] = file_results['failure_count']
+                            else:
+                                results['failure_count'] = 1
+                            results['filename'] = template
+                            results['file_results'] = file_results
+                            aggregate_results.append(results)
+
+                    else:
+                        if self.debug:
+                            print('file is not json template'+lineno())
+                except Exception as x:
+                    if self.debug:
+                        print('Exception caught in determining whether json template: '+str(x)+lineno())
+
 
         return aggregate_results
 

@@ -1,6 +1,7 @@
 from __future__ import absolute_import, division, print_function
 import inspect
 import sys
+import json
 from cloudformation_validator.RuleDefinition import RuleDefinition
 from collections import OrderedDict
 from builtins import (str)
@@ -73,10 +74,32 @@ class Violation(RuleDefinition):
 
 
 
+
         hash = {'id': self.id,'type':self.type ,'message': self.message, 'logical_resource_ids': str(self.logical_resource_ids)}
 
         order_of_keys = ["id", "type", "message","logical_resource_ids"]
-        list_of_tuples = [(key, hash[key]) for key in order_of_keys]
+
+        list_of_tuples = []
+        for key in order_of_keys:
+            if self.debug:
+                print('key: '+str(key)+lineno())
+                print('value: '+str(hash[key])+lineno())
+
+            if str(key) == 'logical_resource_ids' and type(hash[key])== type(list()):
+                if self.debug:
+                    print('is a list: '+lineno())
+                mylist = sorted(json.loads(str(hash[key]).replace("'",'"')))
+                my_newlist = []
+                for item in mylist:
+                    my_newlist.append(str(item))
+
+                list_of_tuples.append(tuple((key, str(my_newlist))))
+
+
+            else:
+                list_of_tuples.append(tuple((key, hash[key])))
+
+        #list_of_tuples = [(key, hash[key]) for key in order_of_keys]
         new_results = OrderedDict(list_of_tuples)
 
 

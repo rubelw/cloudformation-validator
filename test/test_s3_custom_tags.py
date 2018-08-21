@@ -27,14 +27,13 @@ def pretty(value, htchar='\t', lfchar='\n', indent=0):
     elif type(value) == type(list()):
         items = [
             nlch + pretty(item, htchar, lfchar, indent + 1)
-            for item in value
+            for item in sorted(value)
         ]
 
         if items:
             items = sorted(items)
         [str(item) for item in items]
         return '[%s]' % (','.join(items) + lfchar + htchar * indent)
-
     elif type(value) is tuple:
         items = [
             nlch + pretty(item, htchar, lfchar, indent + 1)

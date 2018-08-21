@@ -16,8 +16,12 @@ def pretty(value, htchar='\t', lfchar='\n', indent=0):
     elif type(value) == type(list()):
         items = [
             nlch + pretty(item, htchar, lfchar, indent + 1)
-            for item in value
+            for item in sorted(value)
         ]
+
+        if items:
+            items = sorted(items)
+        [str(item) for item in items]
         return '[%s]' % (','.join(items) + lfchar + htchar * indent)
     elif type(value) is tuple:
         items = [
@@ -122,7 +126,7 @@ class TestEc2Volume(unittest.TestCase):
                           'id': 'F1',
                           'type': 'VIOLATION::FAILING_VIOLATION',
                           'message': 'EBS volume should have server-side encryption enabled',
-                          'logical_resource_ids': "['NewVolume2', 'NewVolume1']"
+                          'logical_resource_ids': "['NewVolume1', 'NewVolume2']"
                       }
                   ]
               }
@@ -167,6 +171,10 @@ class TestEc2Volume(unittest.TestCase):
       validator = class_to_test(config_dict)
 
       real_result =  validator.validate()
+
+
+
+
       self.maxDiff = None
 
       print('expected results: ' + str(expected_result))

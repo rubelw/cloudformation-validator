@@ -22,7 +22,6 @@ def pretty(value, htchar='\t', lfchar='\n', indent=0):
             for key in value
         ]
         return '{%s}' % (','.join(items) + lfchar + htchar * indent)
-
     elif type(value) == type(list()):
         items = [
             nlch + pretty(item, htchar, lfchar, indent + 1)
@@ -304,7 +303,7 @@ class TestSecurityGroup(unittest.TestCase):
                             'id': 'F1000',
                             'type': 'VIOLATION::FAILING_VIOLATION',
                             'message': 'Missing egress rule means all traffic is allowed outbound.  Make this explicit if it is desired configuration',
-                            'logical_resource_ids': "['sg2', 'sg']"
+                            'logical_resource_ids': "['sg', 'sg2']"
                         },
                         {
                             'id': 'W2',
@@ -316,7 +315,7 @@ class TestSecurityGroup(unittest.TestCase):
                             'id': 'W27',
                             'type': 'VIOLATION::WARNING',
                             'message': 'Security Groups found ingress with port range instead of just a single port',
-                            'logical_resource_ids': "['sg2', 'sg2', 'sg']"
+                            'logical_resource_ids': "['sg', 'sg2', 'sg2']"
                         },
                         {
                             'id': 'W9',
@@ -460,7 +459,7 @@ class TestSecurityGroup(unittest.TestCase):
                             'id': 'W9',
                             'type': 'VIOLATION::WARNING',
                             'message': 'Security Groups found with ingress cidr that is not /32',
-                            'logical_resource_ids': "[u'securityGroupIngress3', u'securityGroupIngress2', u'securityGroupIngress5', u'securityGroupIngress4']"
+                            'logical_resource_ids': "['securityGroupIngress2', 'securityGroupIngress3', 'securityGroupIngress4', 'securityGroupIngress5']"
                         }
                     ]
                 }
@@ -540,7 +539,7 @@ class TestSecurityGroup(unittest.TestCase):
                             'id': 'W9',
                             'type': 'VIOLATION::WARNING',
                             'message': 'Security Groups found with ingress cidr that is not /32',
-                            'logical_resource_ids': "['sg2', 'sg']"
+                            'logical_resource_ids': "['sg', 'sg2']"
                         }
                     ]
                 }
