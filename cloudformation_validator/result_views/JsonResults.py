@@ -272,23 +272,43 @@ class JsonResults:
                     if self.debug:
                         print('ist a list: '+str(lineno()))
                     # Iterate over each violation
-                    for item in sorted(hash):
-                        if self.debug:
-                            print("\n#################################")
-                            print('item: '+str(item)+lineno())
-                            print("#####################################\n")
 
-                        my_ordered_dict= OrderedDict()
-                        for key in order_of_keys:
-                            my_ordered_dict[key] = item[key]
+                    if sys.version_info[0] < 3:
+                        for item in sorted(hash):
+                            if self.debug:
+                                print("\n#################################")
+                                print('item: '+str(item)+lineno())
+                                print("#####################################\n")
 
-                        if self.debug:
-                            print("\n"+'ordered dict is: '+str(my_ordered_dict)+lineno())
+                            my_ordered_dict= OrderedDict()
+                            for key in order_of_keys:
+                                my_ordered_dict[key] = item[key]
 
-                        array_of_results.append(my_ordered_dict)
+                            if self.debug:
+                                print("\n"+'ordered dict is: '+str(my_ordered_dict)+lineno())
 
-                        if self.debug:
-                            print("\n"+'results: '+str(array_of_results)+lineno())
+                            array_of_results.append(my_ordered_dict)
+
+                            if self.debug:
+                                print("\n"+'results: '+str(array_of_results)+lineno())
+                    else:
+                        for item in hash:
+                            if self.debug:
+                                print("\n#################################")
+                                print('item: ' + str(item) + lineno())
+                                print("#####################################\n")
+
+                            my_ordered_dict = OrderedDict()
+                            for key in order_of_keys:
+                                my_ordered_dict[key] = item[key]
+
+                            if self.debug:
+                                print("\n" + 'ordered dict is: ' + str(my_ordered_dict) + lineno())
+
+                            array_of_results.append(my_ordered_dict)
+
+                            if self.debug:
+                                print("\n" + 'results: ' + str(array_of_results) + lineno())
 
                 # if not a list - FIXME
                 else:
