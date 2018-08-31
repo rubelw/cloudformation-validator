@@ -45,14 +45,14 @@ class TestEbsVolume(unittest.TestCase):
 
       expected_result =  [
             {
-                'failure_count': '1',
-                'filename': '/json/ec2_volume/no_tags.json',
-                'file_results': [
+                "failure_count": "1",
+                "filename": "/json/ec2_volume/no_tags.json",
+                "file_results": [
                     {
-                        'id': 'F89',
-                        'type': 'VIOLATION::FAILING_VIOLATION',
-                        'message': 'Ebs volume does not have the required tags of Name, ResourceOwner, DeployedBy, Project',
-                        'logical_resource_ids': "['NewVolume']"
+                        "id": "F89",
+                        "type": "VIOLATION::FAILING_VIOLATION",
+                        "message": "Ebs volume does not have the required tags of Name, ResourceOwner, DeployedBy, Project",
+                        "logical_resource_ids": ["NewVolume"]
                     }
                 ]
             }
@@ -104,7 +104,7 @@ class TestEbsVolume(unittest.TestCase):
       print('expected results: '+str(expected_result))
       print('real results: '+str(real_result))
 
-      self.assertEqual(expected_result, real_result)
+      self.assertEqual(expected_result.replace('\'','"'), real_result)
 
 
     def test_ec2_volume_has_required_tags(self):
@@ -172,14 +172,14 @@ class TestEbsVolume(unittest.TestCase):
 
       expected_result =  [
             {
-                'failure_count': '1',
-                'filename': '/json/ec2_volume/missing_one_required_tags.json',
-                'file_results': [
+                "failure_count": "1",
+                "filename": "/json/ec2_volume/missing_one_required_tags.json",
+                "file_results": [
                     {
-                        'id': 'F89',
-                        'type': 'VIOLATION::FAILING_VIOLATION',
-                        'message': 'Ebs volume does not have the required tags of Name, ResourceOwner, DeployedBy, Project',
-                        'logical_resource_ids': "['NewVolume']"
+                        "id": "F89",
+                        "type": "VIOLATION::FAILING_VIOLATION",
+                        "message": "Ebs volume does not have the required tags of Name, ResourceOwner, DeployedBy, Project",
+                        "logical_resource_ids": ["NewVolume"]
                     }
                 ]
             }

@@ -58,7 +58,7 @@ class JsonResults:
                 nlch + repr(key) + ': ' + self.pretty(value[key], htchar, lfchar, indent + 1)
                 for key in value
             ]
-            return str('{%s}' % (','.join(items) + lfchar + htchar * indent)).replace('\'','"').replace(']"',']').replace('"[','[')
+            return str('{%s}' % (','.join(items) + lfchar + htchar * indent)).replace('\'','"').replace(']"',']').replace('"[','[').replace('"{"','{"').replace('"}"','"}').replace('"[\'','[\'').replace('\']"','\']')
 
         elif type(value) == type(list()):
             if (self.debug):
@@ -77,7 +77,7 @@ class JsonResults:
             if items:
                 items = sorted(items)
             [str(item) for item in sorted(items)]
-            return str('[%s]' % (','.join(sorted(items)) + lfchar + htchar * indent)).replace('\'','"').replace(']"',']').replace('"[','[')
+            return str('[%s]' % (','.join(sorted(items)) + lfchar + htchar * indent)).replace('\'','"').replace(']"',']').replace('"[','[').replace('"{"','{"').replace('"}"','"}').replace('"[\'','[\'').replace('\']"','\']')
 
         elif type(value) is tuple:
             if (self.debug):
@@ -92,7 +92,7 @@ class JsonResults:
 
             if self.debug:
                 print('returning: '+str('(%s)' % (','.join(items) + lfchar + htchar * indent))+lineno())
-            return str('(%s)' % (','.join(items) + lfchar + htchar * indent)).replace('\'','"').replace(']"',']').replace('"[','[')
+            return str('(%s)' % (','.join(items) + lfchar + htchar * indent)).replace('\'','"').replace(']"',']').replace('"[','[').replace('"{"','{"').replace('"}"','"}').replace('"[\'','[\'').replace('\']"','\']')
 
         elif type(value) == type(newstr()):
             if self.debug:
@@ -106,7 +106,7 @@ class JsonResults:
                 my_new_list = []
                 for my_it in sorted(my_json):
                     my_new_list.append(str(my_it))
-                return str('"'+str(my_new_list)+'"').replace(']"',']').replace('"[','[')
+                return str('"'+str(my_new_list)+'"').replace(']"',']').replace('"[','[').replace('"{"','{"').replace('"}"','"}').replace('"[\'','[\'').replace('\']"','\']')
                 #value = self.pretty(my_json, htchar, lfchar, indent + 1)
 
 
@@ -121,7 +121,7 @@ class JsonResults:
                 print('returning: '+str(value))
                 print("##############################\n")
 
-            return str(repr(str(value))).replace('\'','"').replace(']"',']').replace('"[','[')
+            return str(repr(str(value))).replace('\'','"').replace(']"',']').replace('"[','[').replace('"{"','{"').replace('"}"','"}').replace('"[\'','[\'').replace('\']"','\']')
 
 
     def render(self, results):

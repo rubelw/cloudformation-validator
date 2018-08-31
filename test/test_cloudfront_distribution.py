@@ -55,14 +55,16 @@ class TestCloudDistribution(unittest.TestCase):
 
         expected_result = [
             {
-                'failure_count': '0',
-                'filename': '/json/cloudfront_distribution/cloudfront_distribution_without_logging.json',
-                'file_results': [
+                "failure_count": "0",
+                "filename": "/json/cloudfront_distribution/cloudfront_distribution_without_logging.json",
+                "file_results": [
                     {
-                        'id': 'W10',
-                        'type': 'VIOLATION::WARNING',
-                        'message': 'CloudFront Distribution should enable access logging',
-                        'logical_resource_ids': "['rDistribution2']"
+                        "id": "W10",
+                        "type": "VIOLATION::WARNING",
+                        "message": "CloudFront Distribution should enable access logging",
+                        "logical_resource_ids": [
+                            "rDistribution2"
+                        ]
                     }
                 ]
             }
@@ -114,10 +116,10 @@ class TestCloudDistribution(unittest.TestCase):
 
 
 
-        print('expected results: '+str(expected_result))
+        print('expected results: '+str(expected_result.replace('\'','"')))
         print('real result: '+str(real_results))
 
         self.maxDiff = None
-        self.assertEqual(expected_result, real_results)
+        self.assertEqual(expected_result.replace('\'','"'), real_results)
 
 

@@ -319,7 +319,7 @@ class ValidateUtility:
                             except Exception as e:
 
                                 if not self.suppress_errors:
-                                    print("\n##############################")
+                                    print("\n#################################")
                                     print("Invalid json file - " + str(template) + ' - skipping file')
                                     print("################################\n")
 

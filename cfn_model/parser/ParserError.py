@@ -11,7 +11,7 @@ class ParserError(Error):
     """
     Parser error
     """
-    def __init__(self,message, validation_errors=None, debug=False):
+    def __init__(self,message, validation_errors="None", debug=False):
         """
         Initialize
         :param message: 
