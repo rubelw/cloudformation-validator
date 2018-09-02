@@ -3,16 +3,19 @@
 from __future__ import absolute_import, division, print_function
 from setuptools import setup, find_packages
 import sys
+from os import path
+from io import open
 
 
 DESCRIPTION = ("Lightweight, extensible schema and data validation tool for "
                "Cloudformation Templates.")
 
+this_directory = path.abspath(path.dirname(__file__))
 with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
     LONG_DESCRIPTION = f.read()
 
 
-VERSION = '0.6.25'
+VERSION = '0.6.26'
 
 setup_requires = (
     ['pytest-runner'] if any(x in sys.argv for x in ('pytest', 'test', 'ptr')) else []
@@ -26,7 +29,7 @@ setup(
     author='Will Rubel',
     author_email='willrubel@gmail.com',
     long_description=LONG_DESCRIPTION,
-    long_description_content_type='text/markdown'
+    long_description_content_type='text/markdown',
     platforms=["any"],
     packages=find_packages(),
     include_package_data=True,
