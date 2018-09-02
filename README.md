@@ -43,8 +43,11 @@ cloudformation\_validator is on PyPI so all you need is:
 $ pip install cfn-validator
 ```
 
+
 Testing
 =======
+
+[![Cloudformation Validator tutorial](images/cfngit.gif)]
 
 Just run:
 

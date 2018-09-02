@@ -1,0 +1,21 @@
+---
+type: map
+mapping:
+  Type:
+    type: str
+    required: yes
+    pattern: AWS::IAM::UserToGroupAddition
+  Properties:
+    type: map
+    required: yes
+    mapping:
+      GroupName:
+        type:   any
+        required: yes
+      Users:
+        type:   any
+        required: yes
+      =:
+        type: any
+  =:
+    type: any

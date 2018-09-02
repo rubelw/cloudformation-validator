@@ -47,6 +47,9 @@ cloudformation_validator is on PyPI so all you need is:
 Testing
 =======
 
+.. image:: images/cfngit.gif
+
+
 Just run:
 
 ``{.sourceCode .console $ pip install virtualenv $ which python $ virtualenv ~/virtualenvs/my_project -p /home/example_username/opt/python-3.6.2/bin/python3 $ git clone https://github.com/rubelw/cloudformation-validator.git $ cd cloudformation-validator $ pip install -r requirements-dev.txt $ python setup.py install --force $ python setup.py test}``
