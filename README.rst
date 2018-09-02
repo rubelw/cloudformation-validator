@@ -47,7 +47,7 @@ cloudformation_validator is on PyPI so all you need is:
 Testing
 =======
 
-.. image:: images/cfngit.gif
+.. image:: https://github.com/rubelw/cloudformation-validator/blob/master/images/cfngit.gif
    :height: 100px
    :width: 200 px
    :scale: 50 %

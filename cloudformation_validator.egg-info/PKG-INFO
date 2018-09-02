@@ -1,6 +1,6 @@
 Metadata-Version: 1.1
 Name: cloudformation-validator
-Version: 0.6.17
+Version: 0.6.18
 Summary: Lightweight, extensible schema and data validation tool for Cloudformation Templates.
 Home-page: https://github.com/rubelw/cloudformation-validator
 Author: Will Rubel
@@ -56,6 +56,11 @@ Description:
         =======
         
         .. image:: images/cfngit.gif
+           :height: 100px
+           :width: 200 px
+           :scale: 50 %
+           :alt: Example
+           :align: center
         
         
         Just run:
