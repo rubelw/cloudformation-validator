@@ -70,6 +70,7 @@ Or you can use tox to run the tests under all supported Python versions.
 Make sure the required python versions are installed and run:
 
 .. code:: console
+
     $ pip install virtualenv
     $ which python
     $ virtualenv ~/virtualenvs/my_project -p /home/example_username/opt/python-3.6.2/bin/python3
