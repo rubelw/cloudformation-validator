@@ -1,6 +1,5 @@
----
-title: 'cloudformation\_validator'
----
+Cloudformation-Validator
+========================
 
 Features
 ========
@@ -37,7 +36,7 @@ see what I can do to get it added.
 Installation
 ============
 
-cloudformation\_validator is on PyPI so all you need is:
+cloudformation-validator is on PyPI so all you need is:
 
 ``` {.sourceCode .console}
 $ pip install cfn-validator
@@ -47,7 +46,8 @@ $ pip install cfn-validator
 Demonstration
 =============
 
-![Cloudformation Validator tutorial](https://github.com/rubelw/cloudformation-validator/blob/master/images/cfngit.gif)
+<p><a target="_blank" rel="noopener noreferrer" href="https://github.com/rubelw/cloudformation-validator/blob/master/images/cfngit.gif"><img src="https://github.com/rubelw/cloudformation-validator/raw/master/images/cfngit.gif" alt="Cloudformation Validator tutorial" style="max-width:100%;"></a></p>
+
 
 Just run:
 

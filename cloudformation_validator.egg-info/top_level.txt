@@ -1,3 +1,0 @@
-cfn_model
-cloudformation_validator
-test
