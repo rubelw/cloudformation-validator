@@ -48,6 +48,11 @@ Testing
 =======
 
 .. image:: images/cfngit.gif
+   :height: 100px
+   :width: 200 px
+   :scale: 50 %
+   :alt: Example
+   :align: center
 
 
 Just run:
