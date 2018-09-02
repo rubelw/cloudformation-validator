@@ -44,25 +44,41 @@ cloudformation_validator is on PyPI so all you need is:
 
    $ pip install cfn-validator
 
-Testing
+Example
 =======
 
 .. image:: https://github.com/rubelw/cloudformation-validator/blob/master/images/cfngit.gif
-   :height: 100px
-   :width: 200 px
-   :scale: 50 %
-   :alt: Example
-   :align: center
 
+
+Testing
+=======
 
 Just run:
 
-``{.sourceCode .console $ pip install virtualenv $ which python $ virtualenv ~/virtualenvs/my_project -p /home/example_username/opt/python-3.6.2/bin/python3 $ git clone https://github.com/rubelw/cloudformation-validator.git $ cd cloudformation-validator $ pip install -r requirements-dev.txt $ python setup.py install --force $ python setup.py test}``
+.. code:: console
+
+   $ pip install virtualenv
+   $ which python
+   $ virtualenv ~/virtualenvs/my_project -p /home/example_username/opt/python-3.6.2/bin/python3
+   $ git clone https://github.com/rubelw/cloudformation-validator.git
+   $ cd cloudformation-validator
+   $ pip install -r requirements-dev.txt
+   $ python setup.py install --force
+   $ python setup.py test
 
 Or you can use tox to run the tests under all supported Python versions.
 Make sure the required python versions are installed and run:
 
-``{.sourceCode .console $ pip install virtualenv $ which python $ virtualenv ~/virtualenvs/my_project -p /home/example_username/opt/python-3.6.2/bin/python3 $ git clone https://github.com/rubelw/cloudformation-validator.git $ cd cloudformation-validator $ pip install -r requirements-dev.txt $ python setup.py install --force $ pip install tox  # first time only $ tox}``
+.. code:: console
+    $ pip install virtualenv
+    $ which python
+    $ virtualenv ~/virtualenvs/my_project -p /home/example_username/opt/python-3.6.2/bin/python3
+    $ git clone https://github.com/rubelw/cloudformation-validator.git
+    $ cd cloudformation-validator
+    $ pip install -r requirements-dev.txt
+    $ python setup.py install --force
+    $ pip install tox  # first time only
+    $ tox
 
 Listing Rules
 =============
