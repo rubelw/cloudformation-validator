@@ -44,8 +44,8 @@ cloudformation_validator is on PyPI so all you need is:
 
    $ pip install cfn-validator
 
-Example
-=======
+Demonstration
+=============
 
 .. image:: https://github.com/rubelw/cloudformation-validator/blob/master/images/cfngit.gif
 
