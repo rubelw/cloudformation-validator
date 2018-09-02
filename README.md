@@ -44,10 +44,10 @@ $ pip install cfn-validator
 ```
 
 
-Testing
-=======
+Demonstration
+=============
 
-[![Cloudformation Validator tutorial](https://github.com/rubelw/cloudformation-validator/blob/master/images/cfngit.gif)]
+![Cloudformation Validator tutorial](https://github.com/rubelw/cloudformation-validator/blob/master/images/cfngit.gif)
 
 Just run:
 
