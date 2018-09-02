@@ -7,8 +7,8 @@ import sys
 
 DESCRIPTION = ("Lightweight, extensible schema and data validation tool for "
                "Cloudformation Templates.")
-LONG_DESCRIPTION = open('README.rst').read()
-VERSION = '0.6.23'
+LONG_DESCRIPTION = open('README.md').read()
+VERSION = '0.6.24'
 
 setup_requires = (
     ['pytest-runner'] if any(x in sys.argv for x in ('pytest', 'test', 'ptr')) else []

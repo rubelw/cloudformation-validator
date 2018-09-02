@@ -48,7 +48,11 @@ Demonstration
 =============
 
 .. image:: https://github.com/rubelw/cloudformation-validator/blob/master/images/cfngit.gif
-
+   :height: 100px
+   :width: 200 px
+   :scale: 50 %
+   :alt: alternate text
+   :align: center
 
 Testing
 =======
