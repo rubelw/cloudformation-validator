@@ -25,6 +25,7 @@ setup(
     name='cloudformation_validator',
     version=VERSION,
     description=DESCRIPTION,
+    license='MIT',
     url='https://github.com/rubelw/cloudformation-validator',
     author='Will Rubel',
     author_email='willrubel@gmail.com',
