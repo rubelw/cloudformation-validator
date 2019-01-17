@@ -153,7 +153,7 @@ Evaluating: cloudfront_distribution_without_logging.json
 Validate all files in a path
 
 ``` {.sourceCode .console}
-$cfn-validator validate -f /projects
+$cfn-validator validate -t /projects
 ...
 ```
 
