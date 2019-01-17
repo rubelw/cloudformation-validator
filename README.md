@@ -39,7 +39,7 @@ Installation
 cloudformation-validator is on PyPI so all you need is:
 
 ``` {.sourceCode .console}
-$ pip install cfn-validator
+$ pip install cloudformation-validator
 ```
 
 
